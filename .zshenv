@@ -7,7 +7,6 @@ PS1="%F{cyan}%B%n%b%f%B%F{magenta} %f%b%B%F{red}%m${CHROOT_PROMPT}%f%b %F{green}
 BINDIR=$HOME/bin
 
 export LOCALE_ARCHIVE=$(readlink ~/.nix-profile/lib/locale)/locale-archive
-export QT_QPA_PLATFORMTHEME="qt5ct"
 
 ## Functions
 
