@@ -1327,6 +1327,7 @@ xkb_symbols "pc_us_us_2_inet(evdev)_terminate(ctrl_alt_bksp)" {
     };
     key <LFSH> {         [         Shift_L ] };
     key <BKSL> {
+        type[group2]= "ALPHABETIC",
         symbols[Group1]= [       backslash,             bar ],
         symbols[Group2]= [     Greek_lamda,     Greek_LAMDA ]
     };
