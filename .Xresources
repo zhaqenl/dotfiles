@@ -1,0 +1,35 @@
+! .Xresources
+
+!---------------------------------------------------------------------------------------------------
+! Ĝeneralaj
+!---------------------------------------------------------------------------------------------------
+
+URxvt*font: xft:Cousine:antialias=true:size=7,xft:Monospace:antialias=true:size=7
+URxvt*scrollBar: false
+URxvt*cursorBlink: false
+URxvt.perl-ext-common: "default, -searchable-scrollback"
+URxvt.iso14755: false
+
+
+!---------------------------------------------------------------------------------------------------
+! Koloroj
+!---------------------------------------------------------------------------------------------------
+
+URxvt*background: #000000
+URxvt*foreground: #FFFFFF
+URxvt*color0: #000000
+URxvt*color1: #a40000
+URxvt*color2: #37A93A
+URxvt*color3: #C4A000
+URxvt*color4: #3465A4
+URxvt*color5: #75507B
+URxvt*color6: #CE5C00
+URxvt*color7: #BABDB9
+URxvt*color8: #555753
+URxvt*color9: #ED3434
+URxvt*color10: #96FF96
+URxvt*color11: #FCE94F
+URxvt*color12: #729FCF
+URxvt*color13: #AD7FA8
+URxvt*color14: #9999FF
+URxvt*color15: #EEEEEC
