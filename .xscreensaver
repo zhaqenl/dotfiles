@@ -1,9 +1,9 @@
 # XScreenSaver Preferences File
-# Written by xscreensaver-demo 5.39 for zhaqenl on Sat May 19 20:19:47 2018.
+# Written by xscreensaver-demo 5.40 for zhaqenl on Fri Nov 23 21:36:22 2018.
 # https://www.jwz.org/xscreensaver/
 
-timeout:	0:10:00
-cycle:		0:10:00
+timeout:	0:19:00
+cycle:		0:20:00
 lock:		True
 lockTimeout:	0:00:00
 passwdTimeout:	0:00:30
@@ -273,6 +273,9 @@ programs:								      \
   GL: 				maze3d -root				    \n\
   GL: 				peepers -root				    \n\
   GL: 				razzledazzle -root			    \n\
+				filmleader -root			    \n\
+				glitchpeg -root				    \n\
+				vfeedback -root				    \n\
 
 
 pointerPollTime:    0:00:05
