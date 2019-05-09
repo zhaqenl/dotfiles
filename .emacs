@@ -14,6 +14,10 @@
 
 (package-initialize)
 
+;;; neotree
+(add-to-list 'load-path "/home/devdesk4/Downloads/emacs/neotree")
+(require 'neotree)
+
 ;;; elpy, pyenv, jedi
 (setq elpy-rpc-backend "jedi")
 (elpy-enable)
@@ -234,6 +238,7 @@
  ("M-g `" . insert-backticks)
  ("M-g =" . insert-equals)
  ("M-g -" . insert-hyphens)
+ ("M-g t" . neotree-toggle)
 
  ("C-c ^" . delete-to-bol)
  ("C-c $" . delete-to-eol)
