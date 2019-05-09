@@ -8,28 +8,28 @@
 
 (setq package-archives
       '(("gnu" . "http://elpa.gnu.org/packages/")
-        ("marmalade" . "http://marmalade-repo.org/packages/")
-        ("melpa" . "http://melpa.milkbox.net/packages/")))
+	("marmalade" . "http://marmalade-repo.org/packages/")
+	("melpa" . "http://melpa.milkbox.net/packages/")
+        ("melpa-stable" . "https://stable.melpa.org/packages/")))
 
 (package-initialize)
 
+;;; elpy, pyenv, jedi
+(setq elpy-rpc-backend "jedi")
+(elpy-enable)
+(pyenv-mode)
+
+;;; python guess indent offset
+(setq python-indent-guess-indent-offset t)  
+(setq python-indent-guess-indent-offset-verbose nil)
+
 ;;; use-package
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+    (package-install 'use-package))
+
 (require 'use-package)
 (require 'bind-key)
-
-;;; hyperspec
-(add-to-list 'load-path "~/.emacs.d/lisp/")
-
-(use-package hyperspec
-    :config
-  (progn
-    (let ((hyperspec-root (expand-file-name "~/.emacs.d/lisp/hyperspec/")))
-      (setq common-lisp-hyperspec-root hyperspec-root
-            common-lisp-hyperspec-symbol-table (concat hyperspec-root "Data/Map_Sym.txt")))))
-
-(defalias 'clhs 'hyperspec-lookup)
-
-(setq browse-url-browser-function 'browse-url-firefox)
 
 ;;; general
 (setq user-full-name "Martinez, Raymund M."
@@ -71,8 +71,8 @@
 
 ;;; default settings
 (setq-default default-major-mode 'text-mode
-              indent-tabs-mode nil
-              fill-column 100)
+	      indent-tabs-mode nil
+	      fill-column 100)
 
 ;;; constants
 (defconst initial-scratch-message nil "")
@@ -84,23 +84,23 @@
   "Loop over VAL and MODES to enable or disable a mode"
   `(progn
      ,@(loop
-          for mode in modes
-          collect `(when (fboundp ',mode) (,mode ,val)))))
+	for mode in modes
+	collect `(when (fboundp ',mode) (,mode ,val)))))
 
 (defun set-modes (modes)
   "Loop over modes to set specific values"
   (loop for (key . val) in modes do
-       (funcall key val)))
+	(funcall key val)))
 
 ;;; ui
 (set-modes '((menu-bar-mode . -1)
-             (tool-bar-mode . -1)
-             (blink-cursor-mode . -1)
-             (line-number-mode . 1)
-             (scroll-bar-mode . -1)
-             (column-number-mode . 1)
-             (transient-mark-mode . 1)
-             (size-indication-mode . 1)))
+	     (tool-bar-mode . -1)
+	     (blink-cursor-mode . -1)
+	     (line-number-mode . 1)
+	     (scroll-bar-mode . -1)
+	     (column-number-mode . 1)
+	     (transient-mark-mode . 1)
+	     (size-indication-mode . 1)))
 
 ;;; locale
 (set-language-environment "English")
@@ -124,10 +124,10 @@
 
 ;;; smartparens
 (use-package smartparens-config
-    :ensure smartparens
-    :config
-    (progn
-      (show-smartparens-global-mode t)))
+	     :ensure smartparens
+	     :config
+	     (progn
+	       (show-smartparens-global-mode t)))
 
 (add-hook 'prog-mode-hook 'turn-on-smartparens-strict-mode)
 (add-hook 'markdown-mode-hook 'turn-on-smartparens-strict-mode)
@@ -154,6 +154,7 @@
   (auto-fill-mode 1))
 
 (add-hook 'find-file-hook 'my-find-file-hook)
+(add-hook 'text-mode-hook 'turn-on-auto-fill)
 
 ;;; go-to-column
 (defun go-to-column (column)
@@ -165,9 +166,9 @@
 (defun insert-until-last (string)
   "Insert string until column"
   (let ((count (save-excursion
-                 (previous-line)
-                 (end-of-line)
-                 (current-column))))
+		 (previous-line)
+		 (end-of-line)
+		 (current-column))))
     (dotimes (c count)
       (insert string))))
 
@@ -221,134 +222,85 @@
 
 ;;; bind-key
 (bind-keys
-  :map global-map
-  ("M-g `" . insert-backticks)
-  ("M-g =" . insert-equals)
-  ("M-g -" . insert-hyphens)
+ :map global-map
+ ("M-g `" . insert-backticks)
+ ("M-g =" . insert-equals)
+ ("M-g -" . insert-hyphens)
 
-  ("C-c ^" . delete-to-bol)
-  ("C-c $" . delete-to-eol)
+ ("C-c ^" . delete-to-bol)
+ ("C-c $" . delete-to-eol)
 
-  ("C-c ," . mark-to-bol)
-  ("C-c ." . mark-to-eol)
+ ("C-c ," . mark-to-bol)
+ ("C-c ." . mark-to-eol)
 
-  ("C-x y" . yank-clipboard)
-  ("C-x C-y" . yank-primary)
-  ("M-g SPC" . go-to-column)
-)
+ ("C-x y" . yank-clipboard)
+ ("C-x C-y" . yank-primary)
+ ("M-g SPC" . go-to-column)
+ )
 
 (bind-keys
-  :map smartparens-mode-map
-  ("C-M-a" . sp-beginning-of-sexp)
-  ("C-M-e" . sp-end-of-sexp)
+ :map smartparens-mode-map
+ ("C-M-a" . sp-beginning-of-sexp)
+ ("C-M-e" . sp-end-of-sexp)
 
-  ("C-<down>" . sp-down-sexp)
-  ("C-<up>"   . sp-up-sexp)
-  ("M-<down>" . sp-backward-down-sexp)
-  ("M-<up>"   . sp-backward-up-sexp)
+ ("C-<down>" . sp-down-sexp)
+ ("C-<up>"   . sp-up-sexp)
+ ("M-<down>" . sp-backward-down-sexp)
+ ("M-<up>"   . sp-backward-up-sexp)
 
-  ("C-M-f" . sp-forward-sexp)
-  ("C-M-b" . sp-backward-sexp)
+ ("C-M-f" . sp-forward-sexp)
+ ("C-M-b" . sp-backward-sexp)
 
-  ("C-M-n" . sp-next-sexp)
-  ("C-M-p" . sp-previous-sexp)
+ ("C-M-n" . sp-next-sexp)
+ ("C-M-p" . sp-previous-sexp)
 
-  ("C-S-f" . sp-forward-symbol)
-  ("C-S-b" . sp-backward-symbol)
+ ("C-S-f" . sp-forward-symbol)
+ ("C-S-b" . sp-backward-symbol)
 
-  ("C-<right>" . sp-forward-slurp-sexp)
-  ("M-<right>" . sp-forward-barf-sexp)
-  ("C-<left>"  . sp-backward-slurp-sexp)
-  ("M-<left>"  . sp-backward-barf-sexp)
+ ("C-<right>" . sp-forward-slurp-sexp)
+ ("M-<right>" . sp-forward-barf-sexp)
+ ("C-<left>"  . sp-backward-slurp-sexp)
+ ("M-<left>"  . sp-backward-barf-sexp)
 
-  ("C-M-t" . sp-transpose-sexp)
-  ("C-M-k" . sp-kill-sexp)
-  ("C-k"   . sp-kill-hybrid-sexp)
-  ("M-k"   . sp-backward-kill-sexp)
-  ("C-M-w" . sp-copy-sexp)
-  ("C-M-d" . delete-sexp)
+ ("C-M-t" . sp-transpose-sexp)
+ ("C-M-k" . sp-kill-sexp)
+ ("C-k"   . sp-kill-hybrid-sexp)
+ ("M-k"   . sp-backward-kill-sexp)
+ ("C-M-w" . sp-copy-sexp)
+ ("C-M-d" . delete-sexp)
 
-  ("M-<backspace>" . backward-kill-word)
-  ("C-<backspace>" . sp-backward-kill-word)
-  ([remap sp-backward-kill-word] . backward-kill-word)
+ ("M-<backspace>" . backward-kill-word)
+ ("C-<backspace>" . sp-backward-kill-word)
+ ([remap sp-backward-kill-word] . backward-kill-word)
 
-  ("M-[" . sp-backward-unwrap-sexp)
-  ("M-]" . sp-unwrap-sexp)
+ ("M-[" . sp-backward-unwrap-sexp)
+ ("M-]" . sp-unwrap-sexp)
 
-  ("C-x C-t" . sp-transpose-hybrid-sexp)
+ ("C-x C-t" . sp-transpose-hybrid-sexp)
 
-  ("C-c ("  . wrap-with-parens)
-  ("C-c ["  . wrap-with-brackets)
-  ("C-c {"  . wrap-with-braces)
-  ("C-c '"  . wrap-with-single-quotes)
-  ("C-c \"" . wrap-with-double-quotes)
-  ("C-c _"  . wrap-with-underscores)
-  ("C-c `"  . wrap-with-back-quotes))
+ ("C-c ("  . wrap-with-parens)
+ ("C-c ["  . wrap-with-brackets)
+ ("C-c {"  . wrap-with-braces)
+ ("C-c '"  . wrap-with-single-quotes)
+ ("C-c \"" . wrap-with-double-quotes)
+ ("C-c _"  . wrap-with-underscores)
+ ("C-c `"  . wrap-with-back-quotes))
 
 ;;; markdown
 (use-package markdown-mode
-    :ensure t
-    :config
-  (progn
-    (add-hook 'markdown-mode-hook 'turn-on-smartparens-mode)
-    (push '("\\.text\\'" . markdown-mode) auto-mode-alist)
-    (push '("\\.markdown\\'" . markdown-mode) auto-mode-alist)
-    (push '("\\.md\\'" . markdown-mode) auto-mode-alist)))
-
-;;; slime
-(use-package slime
-    :ensure t
-    :config
-    (progn
-      (load (expand-file-name "~/quicklisp/slime-helper.el"))
-
-      (add-hook 'lisp-mode-hook 'turn-on-smartparens-mode)
-      (add-hook 'slime-repl-mode-hook 'turn-on-smartparens-mode)
-
-      (setq inferior-lisp-program "sbcl"
-            slime-contribs '(slime-fancy slime-repl slime-asdf slime-cl-indent)
-            slime-protocol-version 'ignore
-            slime-documentation-lookup-function 'hyperspec-lookup)))
-
-(defun my-lisp-mode-hook ()
-  (setq common-lisp-style 'modern))
-(add-hook 'lisp-mode-hook 'my-lisp-mode-hook)
-
-;;; clojure
-(use-package cider
-  :ensure t
-  :config
-  (progn
-    (push '("\\.clj\\'" . clojure-mode) auto-mode-alist)
-
-    (add-hook 'clojure-mode-hook 'turn-on-smartparens-strict-mode)
-    (add-hook 'cider-repl-mode-hook 'turn-on-smartparens-strict-mode)
-    (add-hook 'cider-repl-mode-hook 'subword-mode)
-
-    (setq nrepl-log-messages t
-          nrepl-hide-special-buffers t
-          cider-repl-result-prefix ";; => "
-          cider-interactive-eval-result-prefix ";; => "
-          cider-repl-use-clojure-font-lock t
-          cider-repl-wrap-history t
-          cider-repl-history-size 100000
-          cider-repl-history-file "~/.cider_history"
-          cider-repl-display-help-banner nil)))
+	     :ensure t
+	     :config
+	     (progn
+	       (add-hook 'markdown-mode-hook 'turn-on-smartparens-mode)
+	       (push '("\\.text\\'" . markdown-mode) auto-mode-alist)
+	       (push '("\\.markdown\\'" . markdown-mode) auto-mode-alist)
+	       (push '("\\.md\\'" . markdown-mode) auto-mode-alist)))
 
 ;;; char-after
 (defun ca ()
   (interactive)
   (call-interactively 'char-after))
 
-;;; geiser
-(add-to-list 'load-path "~/.emacs.d/elisp/geiser/elisp/")
-(require 'geiser)
-
-(setq geiser-active-implementations '(racket))
-
-(defun geiser-save ()
-  (interactive)
-  (geiser-repl--write-input-ring))
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -356,7 +308,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (php-mode clojure-mode-extra-font-locking cider elpy slime use-package smartparens markdown-mode geiser ample-theme))))
+    (pyenv-mode use-package smartparens markdown-mode ample-theme))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
