@@ -141,6 +141,14 @@
 
 (add-hook 'find-file-hook 'my-linum-mode-hook)
 
+;;; Fill with char up to column limit
+(defun fill-to-end (char)
+  (interactive "cFill Character:")
+  (save-excursion
+    (end-of-line)
+    (while (< (current-column) 80)
+      (insert-char char))))
+
 ;;; insert-backticks
 (defun insert-backticks (&optional arg)
   "Insert three backticks for code blocks"
