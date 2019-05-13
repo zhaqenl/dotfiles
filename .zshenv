@@ -110,12 +110,12 @@ function xc () {
 
 #. $HOME/.nix-profile/etc/profile.d/nix.sh
 
-export TERM=xterm-256color
+# export TERM=xterm-256color
 
 bindkey \e= copy-prev-shell-word
 
 function psg () {
-    pgrep --list-full --list-name --full --ignore-case $@
+    pgrep --list-full --list-name --full $@
 }
 
 function psk () {
