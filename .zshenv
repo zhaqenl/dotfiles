@@ -8,6 +8,10 @@ BINDIR=$HOME/bin
 
 export LOCALE_ARCHIVE=$(readlink ~/.nix-profile/lib/locale)/locale-archive
 
+## Pyenv
+
+eval "$(pyenv init -)"
+
 ## Functions
 
 function page () {
