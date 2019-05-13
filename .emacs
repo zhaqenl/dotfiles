@@ -14,8 +14,12 @@
 
 (package-initialize)
 
+;;; load-path
+(let ((default-directory  "~/.emacs.d/plugins/"))
+  (normal-top-level-add-subdirs-to-load-path))
+
 ;;; neotree
-(add-to-list 'load-path "/home/devdesk4/Downloads/emacs/neotree")
+; (add-to-list 'load-path "/home/devdesk4/Downloads/emacs/neotree")
 (require 'neotree)
 
 ;;; elpy, pyenv, jedi
