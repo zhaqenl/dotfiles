@@ -9,7 +9,7 @@ BINDIR=$HOME/bin
 export LOCALE_ARCHIVE=$(readlink ~/.nix-profile/lib/locale)/locale-archive
 
 ## Pyenv
-
+export PATH=$HOME/bin:$HOME/.pyenv/bin:$PATH
 eval "$(pyenv init -)"
 
 ## Functions
