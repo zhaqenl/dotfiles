@@ -18,9 +18,34 @@
 (let ((default-directory  "~/.emacs.d/plugins/"))
   (normal-top-level-add-subdirs-to-load-path))
 
-;;; yasnippets
+;;; yasnippets, popup
 (require 'yasnippet)
+(require 'popup)
 (yas-global-mode 1)
+
+;;; Add key combinations for popup menu
+(define-key popup-menu-keymap (kbd "M-n") 'popup-next)
+(define-key popup-menu-keymap (kbd "TAB") 'popup-next)
+(define-key popup-menu-keymap (kbd "<tab>") 'popup-next)
+(define-key popup-menu-keymap (kbd "<backtab>") 'popup-previous)
+(define-key popup-menu-keymap (kbd "M-p") 'popup-previous)
+
+(defun yas/popup-isearch-prompt (prompt choices &optional display-fn)
+  (when (featurep 'popup)
+    (popup-menu*
+     (mapcar
+      (lambda (choice)
+        (popup-make-item
+         (or (and display-fn (funcall display-fn choice))
+             choice)
+         :value choice))
+      choices)
+     :prompt prompt
+     ;; start isearch mode immediately
+     :isearch t
+     )))
+
+(setq yas/prompt-functions '(yas/popup-isearch-prompt yas/no-prompt))
 
 ;;; neotree
 ; (add-to-list 'load-path "/home/devdesk4/Downloads/emacs/neotree")
@@ -246,6 +271,7 @@
  ("M-g `" . insert-backticks)
  ("M-g =" . insert-equals)
  ("M-g -" . insert-hyphens)
+ ("M-g i" . yas-insert-snippet)
  ("M-g t" . neotree-toggle)
 
  ("C-c ^" . delete-to-bol)
