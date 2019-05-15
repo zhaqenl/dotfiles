@@ -1,0 +1,11 @@
+
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: Inherit/Extend Existing Odoo Object
+# key: odoo_object_inherit
+# --
+class ${10:NewModule}(models.Model):
+	_name = "${20:module.name}" # optional
+	_inherit = "${30:module.name}"
+
+	name = fields.Char()$40
+    

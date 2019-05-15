@@ -14,13 +14,13 @@
 
 (package-initialize)
 
-;;; yasnippets
-(require 'yasnippet)
-(yas-global-mode 1)
-
 ;;; load-path
 (let ((default-directory  "~/.emacs.d/plugins/"))
   (normal-top-level-add-subdirs-to-load-path))
+
+;;; yasnippets
+(require 'yasnippet)
+(yas-global-mode 1)
 
 ;;; neotree
 ; (add-to-list 'load-path "/home/devdesk4/Downloads/emacs/neotree")

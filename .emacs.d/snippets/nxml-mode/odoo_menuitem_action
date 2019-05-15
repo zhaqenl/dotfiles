@@ -1,0 +1,7 @@
+
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: Create menu item for actions
+# key: odoo_menuitem_action
+# --
+<menuitem id="menu_$1" name="$2" parent="$3" action="$4" sequence="$5"/>
+    

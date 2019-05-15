@@ -1,0 +1,17 @@
+
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: Inherit existing form view
+# key: odoo_form_inherit
+# --
+<!-- Inherit Form view -->
+<record id="$1" model="ir.ui.view">
+	<field name="name">$2.form</field>
+	<field name="model">$2</field>
+	<field name="inherit_id" ref="$3"/>
+	<field name="arch" type="xml">
+		<field name="$4" position="$5">
+			<!-- Add your fields or attributes here -->
+		</field>
+	</field>
+</record>
+    

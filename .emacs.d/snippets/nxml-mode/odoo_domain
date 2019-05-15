@@ -1,0 +1,7 @@
+
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: Add domain to a field
+# key: odoo_domain
+# --
+domain="[('$1', '=', $2), ]"
+    

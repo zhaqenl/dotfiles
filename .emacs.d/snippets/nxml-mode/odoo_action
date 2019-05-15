@@ -1,0 +1,19 @@
+
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: Create new action
+# key: odoo_action
+# --
+<record id="$1_action_form" model="ir.actions.act_window">
+	<field name="name">$2</field>
+	<field name="res_model">$3</field>
+	<field name="view_mode">tree,form</field>
+	<field name="help" type="html">
+		<p class="oe_view_nocontent_create">
+			<!-- Add Text Here -->
+		</p>
+		<p>
+			<!-- More details about what a user can do -->
+		</p>
+	</field>
+</record>
+    

@@ -1,0 +1,7 @@
+
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: Create menu item in the upper bar
+# key: odoo_menuitem_root
+# --
+<menuitem id="menu_$1" name="$2" sequence="$3"/>
+    
