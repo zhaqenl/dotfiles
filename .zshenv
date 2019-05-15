@@ -91,7 +91,7 @@ function y () {
   youtube-dl $@
 }
 
-function open () {
+function o () {
   xdg-open $@
 }
 
@@ -216,7 +216,7 @@ function man () {
 }
 
 function c-int () {
-  ifstat-legacy -S  
+  ifstat-legacy -S
 }
 
 function xs () {
