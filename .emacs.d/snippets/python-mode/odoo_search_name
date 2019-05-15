@@ -1,0 +1,7 @@
+
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: Name search
+# key: odoo_search_name
+# --
+self.name_search(name='$1', args=None, operator='ilike', limit=100)
+    

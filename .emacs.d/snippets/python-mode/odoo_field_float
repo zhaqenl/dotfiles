@@ -1,0 +1,7 @@
+
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: Float Field
+# key: odoo_field_float
+# --
+${5:new_field} = fields.Float(string="${10:Field name}", )
+    

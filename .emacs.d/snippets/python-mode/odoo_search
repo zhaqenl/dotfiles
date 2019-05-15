@@ -1,0 +1,7 @@
+
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: Search
+# key: odoo_search
+# --
+self.search([('$1', '=', $2), ...], offset=0, limit=None, order=None, count=False)
+    

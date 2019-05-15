@@ -1,0 +1,7 @@
+
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: Binary Field
+# key: odoo_field_binary
+# --
+${5:new_field} = fields.Binary(string="${10:Field name}", )
+    

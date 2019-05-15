@@ -1,0 +1,14 @@
+
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: Add activity to workflow
+# key: odoo_wkf_activity
+# --
+<record id="act_$1" model="workflow.activity">
+	<field name="wkf_id" ref="$2"/>
+	<field name="name">$3</field>
+	<!--<field name="flow_start">True</field>-->
+	<!--<field name="flow_stop">True</field>-->
+	<field name="kind">function</field>
+	<field name="action">$4</field>
+</record>
+    

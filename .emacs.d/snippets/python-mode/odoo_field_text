@@ -1,0 +1,7 @@
+
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: Text Field
+# key: odoo_field_text
+# --
+${5:new_field} = fields.Text(string="${10:Field name}", )
+    

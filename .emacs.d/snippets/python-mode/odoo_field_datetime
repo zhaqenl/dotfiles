@@ -1,0 +1,7 @@
+
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: DateTime Field
+# key: odoo_field_datetime
+# --
+${5:new_field} = fields.Datetime(string="${10:Field name}", )
+    

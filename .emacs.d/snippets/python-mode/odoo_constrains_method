@@ -1,0 +1,12 @@
+
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: Constrains method
+# key: odoo_constrains_method
+# --
+@api.multi
+@api.constrains("${10:field1}", "${20:field2}", )
+def _check_${30:field}(self):
+	for s in self:
+		if s.${40:field} == ${50:value}:
+			raise ValidationError(_("$60"))$70
+    
