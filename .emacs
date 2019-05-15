@@ -60,6 +60,9 @@
 (setq python-indent-guess-indent-offset t)  
 (setq python-indent-guess-indent-offset-verbose nil)
 
+;;; whitespace cleanup
+(add-hook 'before-save-hook 'whitespace-cleanup)
+
 ;;; use-package
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
