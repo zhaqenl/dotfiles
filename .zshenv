@@ -227,6 +227,14 @@ function skel_reset () {
   git fetch --all && git reset --hard origin/experimental && git clean -fd
 }
 
+function odeb () {
+    sudo tail -n50 /var/log/odoo8/odoo8-server.log
+}
+
+function ores () {
+    sudo service odoo8-server restart
+}
+
 function venv () {
   source `which virtualenvwrapper.sh`
 }
