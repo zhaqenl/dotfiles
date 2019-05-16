@@ -8,11 +8,18 @@
 
 (setq package-archives
       '(("gnu" . "http://elpa.gnu.org/packages/")
-	("marmalade" . "http://marmalade-repo.org/packages/")
-	("melpa" . "http://melpa.milkbox.net/packages/")
+        ("marmalade" . "http://marmalade-repo.org/packages/")
+        ("melpa" . "http://melpa.milkbox.net/packages/")
         ("melpa-stable" . "https://stable.melpa.org/packages/")))
 
 (package-initialize)
+
+;;; auto-compile
+(setq load-prefer-newer t)
+(package-initialize)
+(require 'auto-compile)
+(auto-compile-on-load-mode)
+(auto-compile-on-save-mode)
 
 ;;; load-path
 (let ((default-directory  "~/.emacs.d/plugins/"))
@@ -48,7 +55,6 @@
 (setq yas/prompt-functions '(yas/popup-isearch-prompt yas/no-prompt))
 
 ;;; neotree
-; (add-to-list 'load-path "/home/devdesk4/Downloads/emacs/neotree")
 (require 'neotree)
 
 ;;; elpy, pyenv, jedi
@@ -57,7 +63,7 @@
 (pyenv-mode)
 
 ;;; python guess indent offset
-(setq python-indent-guess-indent-offset t)  
+(setq python-indent-guess-indent-offset t)
 (setq python-indent-guess-indent-offset-verbose nil)
 
 ;;; whitespace cleanup
@@ -66,7 +72,7 @@
 ;;; use-package
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
-    (package-install 'use-package))
+  (package-install 'use-package))
 
 (require 'use-package)
 (require 'bind-key)
@@ -111,8 +117,8 @@
 
 ;;; default settings
 (setq-default default-major-mode 'text-mode
-	      indent-tabs-mode nil
-	      fill-column 100)
+              indent-tabs-mode nil
+              fill-column 100)
 
 ;;; constants
 (defconst initial-scratch-message nil "")
@@ -124,23 +130,23 @@
   "Loop over VAL and MODES to enable or disable a mode"
   `(progn
      ,@(loop
-	for mode in modes
-	collect `(when (fboundp ',mode) (,mode ,val)))))
+          for mode in modes
+          collect `(when (fboundp ',mode) (,mode ,val)))))
 
 (defun set-modes (modes)
   "Loop over modes to set specific values"
   (loop for (key . val) in modes do
-	(funcall key val)))
+       (funcall key val)))
 
 ;;; ui
 (set-modes '((menu-bar-mode . -1)
-	     (tool-bar-mode . -1)
-	     (blink-cursor-mode . -1)
-	     (line-number-mode . 1)
-	     (scroll-bar-mode . -1)
-	     (column-number-mode . 1)
-	     (transient-mark-mode . 1)
-	     (size-indication-mode . 1)))
+             (tool-bar-mode . -1)
+             (blink-cursor-mode . -1)
+             (line-number-mode . 1)
+             (scroll-bar-mode . -1)
+             (column-number-mode . 1)
+             (transient-mark-mode . 1)
+             (size-indication-mode . 1)))
 
 ;;; locale
 (set-language-environment "English")
@@ -155,22 +161,16 @@
 (put 'downcase-region 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
 
-;;; themes
-;;(use-package ample-theme
-;;    :ensure t
-;;    :init (progn (load-theme 'ample-flat t t)
-;;                 (enable-theme 'ample-flat))
-;;    :defer t)
-
 ;;; smartparens
 (use-package smartparens-config
-	     :ensure smartparens
-	     :config
-	     (progn
-	       (show-smartparens-global-mode t)))
+    :ensure smartparens
+    :config
+    (progn
+      (show-smartparens-global-mode t)))
 
 (add-hook 'prog-mode-hook 'turn-on-smartparens-strict-mode)
 (add-hook 'markdown-mode-hook 'turn-on-smartparens-strict-mode)
+(add-hook 'nxml-mode-hook 'turn-off-show-smartparens-mode)
 
 ;;; linum
 (setq linum-format "%4d │ ")
@@ -214,9 +214,9 @@
 (defun insert-until-last (string)
   "Insert string until column"
   (let ((count (save-excursion
-		 (previous-line)
-		 (end-of-line)
-		 (current-column))))
+                 (previous-line)
+                 (end-of-line)
+                 (current-column))))
     (dotimes (c count)
       (insert string))))
 
@@ -338,13 +338,13 @@
 
 ;;; markdown
 (use-package markdown-mode
-	     :ensure t
-	     :config
-	     (progn
-	       (add-hook 'markdown-mode-hook 'turn-on-smartparens-mode)
-	       (push '("\\.text\\'" . markdown-mode) auto-mode-alist)
-	       (push '("\\.markdown\\'" . markdown-mode) auto-mode-alist)
-	       (push '("\\.md\\'" . markdown-mode) auto-mode-alist)))
+    :ensure t
+    :config
+    (progn
+      (add-hook 'markdown-mode-hook 'turn-on-smartparens-mode)
+      (push '("\\.text\\'" . markdown-mode) auto-mode-alist)
+      (push '("\\.markdown\\'" . markdown-mode) auto-mode-alist)
+      (push '("\\.md\\'" . markdown-mode) auto-mode-alist)))
 
 ;;; char-after
 (defun ca ()
@@ -358,7 +358,20 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (pyenv-mode use-package smartparens markdown-mode ample-theme))))
+    (pyenv-mode use-package smartparens markdown-mode ample-theme)))
+ '(safe-local-variable-values
+   (quote
+    ((eval font-lock-add-keywords nil
+           (\`
+            (((\,
+               (concat "("
+                       (regexp-opt
+                        (quote
+                         ("sp-do-move-op" "sp-do-move-cl" "sp-do-put-op" "sp-do-put-cl" "sp-do-del-op" "sp-do-del-cl"))
+                        t)
+                       "\\_>"))
+              1
+              (quote font-lock-variable-name-face)))))))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
