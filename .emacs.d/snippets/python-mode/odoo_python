@@ -1,0 +1,13 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: Create New Odoo Python Boilerplate
+# key: odoo_python
+# --
+
+# -*- coding: utf-8 -*-
+"""Model file for ${__name__} module
+"""
+
+import logging
+from openerp import models, fields, api
+
+_LOGGER = logging.getLogger("name")
