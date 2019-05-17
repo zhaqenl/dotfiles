@@ -1,0 +1,10 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: Create odoo xml
+# key: odoo_xml
+# --
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+    $1
+  </data>
+</openerp>
