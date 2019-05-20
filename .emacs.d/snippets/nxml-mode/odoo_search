@@ -1,19 +1,19 @@
-
 # -*- mode: snippet; require-final-newline: nil -*-
 # name: Create search view
 # key: odoo_search
 # --
-<record id="$1_view_search" model="ir.ui.view">
-	<field name="name">$2.search</field>
-	<field name="model">$2</field>
-	<field name="arch" type="xml">
-		<search string="$3">
-			<field name="$4"/>
-			<filter name="$5" string="$6" domain="[('$7', '=', $8), ]"/>
-			<group string="Group By">
-				<filter name="$9" string="$10" domain="[]"  context="{'group_by':'$11'}"/>
-			</group>
-		</search>
-	</field>
+
+<!-- $1 Search Filter -->
+<record id="$2_view_search" model="ir.ui.view">
+        <field name="name">$3.search</field>
+        <field name="model">$3</field>
+        <field name="arch" type="xml">
+                <search string="$4">
+                        <field name="$5"/>
+                        <filter name="$6" string="$7" domain="[('$8', '=', $9), ]"/>
+                        <group string="Group By">
+                                <filter name="$10" string="$11" domain="[]"  context="{'group_by':'$12'}"/>
+                        </group>
+                </search>
+        </field>
 </record>
-    

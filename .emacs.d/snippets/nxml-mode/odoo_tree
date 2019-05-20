@@ -1,15 +1,15 @@
-
 # -*- mode: snippet; require-final-newline: nil -*-
 # name: Create tree view
 # key: odoo_tree
 # --
-<record id="$1_view_tree" model="ir.ui.view">
-	<field name="name">$2.tree</field>
-	<field name="model">$2</field>
-	<field name="arch" type="xml">
-		<tree string="$3">
-			<field name="$4"/>
-		</tree>
-	</field>
+
+<!-- $1 Tree View -->
+<record id="$2_view_tree" model="ir.ui.view">
+        <field name="name">$3.tree</field>
+        <field name="model">$3</field>
+        <field name="arch" type="xml">
+                <tree string="$4">
+                        <field name="$5"/>
+                </tree>
+        </field>
 </record>
-    
