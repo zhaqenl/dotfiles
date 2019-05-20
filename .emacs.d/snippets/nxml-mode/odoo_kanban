@@ -9,11 +9,19 @@
         <field name="model">$3</field>
         <field name="arch" type="xml">
                 <kanban>
-                <!-- Fields to use in expressions... -->
                      <field name="$4" />
                      <templates>
                         <t t-name="kanban-box">
-                               <!-- HTML Qweb template ... -->
+                           <div class="oe_kanban_vignette">
+                                <img class="oe_kanban_image" name="$5" />
+                                <div class="oe_kanban_details">
+                                     <h4>$6</h4>
+                                     $7 <br/>
+                                     <ul>
+                                        <li>$8</li>
+                                     </ul>
+                                </div>
+                           </div>
                         </t>
                      </templates>
                 </kanban>
