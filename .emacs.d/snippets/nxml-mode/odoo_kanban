@@ -5,12 +5,12 @@
 
 <!-- $1 Kanban View -->
 <record id="$2_view_kanban" model="ir.ui.view">
-        <field name="name">$3.form</field>
-        <field name="model">$4</field>
+        <field name="name">$3.kanban</field>
+        <field name="model">$3</field>
         <field name="arch" type="xml">
                 <kanban>
                 <!-- Fields to use in expressions... -->
-                     <field name="$5" />
+                     <field name="$4" />
                      <templates>
                         <t t-name="kanban-box">
                                <!-- HTML Qweb template ... -->
