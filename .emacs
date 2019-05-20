@@ -118,7 +118,7 @@
 ;;; default settings
 (setq-default default-major-mode 'text-mode
               indent-tabs-mode nil
-              fill-column 100)
+              fill-column 80)
 
 ;;; constants
 (defconst initial-scratch-message nil "")
