@@ -1,0 +1,21 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: Create kanban view
+# key: odoo_kanban
+# --
+
+<!-- $1 Kanban View -->
+<record id="$2_view_kanban" model="ir.ui.view">
+        <field name="name">$3.form</field>
+        <field name="model">$4</field>
+        <field name="arch" type="xml">
+                <kanban>
+                <!-- Fields to use in expressions... -->
+                     <field name="$5" />
+                     <templates>
+                        <t t-name="kanban-box">
+                               <!-- HTML Qweb template ... -->
+                        </t>
+                     </templates>
+                </kanban>
+        </field>
+</record>
