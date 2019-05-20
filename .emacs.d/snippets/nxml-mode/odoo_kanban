@@ -9,17 +9,21 @@
         <field name="model">$3</field>
         <field name="arch" type="xml">
                 <kanban>
-                     <field name="$4" />
                      <templates>
                         <t t-name="kanban-box">
                            <div class="oe_kanban_vignette">
-                                <img class="oe_kanban_image" name="$5" />
+                                <img src="$5" class="oe_kanban_image" />
                                 <div class="oe_kanban_details">
-                                     <h4>$6</h4>
-                                     $7 <br/>
+                                     <h4>
+                                        <a type="open">
+                                           <field name="$6" />
+                                        </a>
+                                     </h4>
                                      <ul>
-                                        <li>$8</li>
+                                        <li><field name="$7" /></li>
                                      </ul>
+                                     <field name="kanban_state"
+                                            widget="kanban_state_selection"/>
                                 </div>
                            </div>
                         </t>
