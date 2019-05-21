@@ -228,12 +228,16 @@ function skel_reset () {
   git fetch --all && git reset --hard origin/experimental && git clean -fd
 }
 
-function odeb () {
-    sudo tail -n50 /var/log/odoo8/odoo8-server.log
+function ostart () {
+    sudo service odoo8-server start
 }
 
 function ores () {
     sudo service odoo8-server restart
+}
+
+function odeb () {
+    sudo tail -f /var/log/odoo8/odoo8-server.log
 }
 
 function venv () {

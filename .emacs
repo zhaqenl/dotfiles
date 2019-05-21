@@ -361,7 +361,8 @@
     (pyenv-mode use-package smartparens markdown-mode ample-theme)))
  '(safe-local-variable-values
    (quote
-    ((eval font-lock-add-keywords nil
+    ((encoding . utf-8)
+     (eval font-lock-add-keywords nil
            (\`
             (((\,
                (concat "("
