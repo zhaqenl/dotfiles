@@ -232,6 +232,10 @@ function ostart () {
     sudo service odoo8-server start
 }
 
+function ostop () {
+    sudo service odoo8-server stop
+}
+
 function ores () {
     sudo service odoo8-server restart
 }
