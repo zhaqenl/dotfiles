@@ -228,10 +228,6 @@ function skel_reset () {
   git fetch --all && git reset --hard origin/experimental && git clean -fd
 }
 
-function scaff () {
-    odooscaffold $@
-}
-
 function ostart () {
     sudo service odoo8-server start
 }
