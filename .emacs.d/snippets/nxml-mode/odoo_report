@@ -1,0 +1,11 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: Create report
+# key: odoo_report
+# --
+
+<!-- $1 Report -->
+<report id="report_$1_action"
+        string="$2"
+        model="$3"
+        report_type="qweb-pdf"
+        name="$4.report_$4_template" />
