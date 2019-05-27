@@ -276,6 +276,7 @@
  ("M-g -" . insert-hyphens)
  ("M-g i" . yas-insert-snippet)
  ("M-g t" . neotree-toggle)
+ ("M-g f" . fill-to-end)
 
  ("C-c ^" . delete-to-bol)
  ("C-c $" . delete-to-eol)
