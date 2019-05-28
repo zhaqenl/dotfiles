@@ -7,7 +7,7 @@
 """Model file for ${__name__} module
 """
 
-import logging
 from openerp import models, fields, api
+from logging import getLogger
 
-_LOGGER = logging.getLogger("name")
+_log = getLogger("name")
