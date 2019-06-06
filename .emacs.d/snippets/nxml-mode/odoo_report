@@ -5,7 +5,7 @@
 
 <!-- $1 Report -->
 <report id="report_$1_action"
-        string="$2"
-        model="$3"
+        string="$1"
+        model="$2"
         report_type="qweb-pdf"
-        name="$4.report_$4_template" />
+        name="$3.report_$3_template" />
