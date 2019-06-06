@@ -8,4 +8,4 @@
         string="$1"
         model="$2"
         report_type="qweb-pdf"
-        name="$3.report_$3_template" />
+        name="$1.report_$3_template" />
