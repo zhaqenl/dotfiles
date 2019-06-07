@@ -237,7 +237,11 @@ function ostop () {
 }
 
 function ores () {
-    sudo service odoo8-server restart
+    watchmedo shell-command \
+              --patterns="*.py;*.xml" \
+              --ignore-directories \
+              --recursive \
+              --command="sudo service odoo8-server restart" .&
 }
 
 function odeb () {
