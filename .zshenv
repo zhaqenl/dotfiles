@@ -239,7 +239,6 @@ function ostop () {
 function ores () {
     watchmedo shell-command \
               --patterns="*.py;*.xml" \
-              --ignore-directories \
               --recursive \
               --command="sudo service odoo8-server restart" /opt/odoo8/custom/addons &
 }
