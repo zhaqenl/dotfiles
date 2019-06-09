@@ -241,7 +241,8 @@ function ores () {
               --patterns="*.py;*.xml" \
               --ignore-directories \
               --recursive \
-              --command="sudo service odoo8-server restart" /opt/odoo8/custom/addons &
+              --command="sudo service odoo8-server restart" \
+              /opt/odoo8/custom/addons&
 }
 
 function odeb () {
