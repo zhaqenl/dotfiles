@@ -235,14 +235,6 @@ function ostart () {
         --auto-reload
 }
 
-function ostop () {
-    sudo service odoo8-server stop
-}
-
-function ores () {
-    sudo service odoo8-server restart
-}
-
 function odeb () {
     tail -f /home/devdesk4/logs/odoo8-server.log
 }
