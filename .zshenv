@@ -229,7 +229,9 @@ function skel_reset () {
 }
 
 function ostart () {
-    sudo service odoo8-server start
+    /opt/odoo8/odoo8-server/odoo.py \
+        -c /etc/odoo8-server.conf \
+        --auto-reload
 }
 
 function ostop () {
