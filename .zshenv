@@ -231,6 +231,7 @@ function skel_reset () {
 function ostart () {
     /opt/odoo8/odoo8-server/odoo.py \
         -c /etc/odoo8-server.conf \
+        --logfile=/home/devdesk4/logs/odoo8-server.log \
         --auto-reload
 }
 
@@ -243,7 +244,7 @@ function ores () {
 }
 
 function odeb () {
-    sudo tail -f /var/log/odoo8/odoo8-server.log
+    tail -f /home/devdesk4/logs/odoo8-server.log
 }
 
 function venv () {
