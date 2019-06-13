@@ -17,6 +17,9 @@ development environment inside Ubuntu:
 7. Run `unity-tweak-tool` then hide desktop from `Alt-tab` key combination.
 8. Install `brave` browser then get data file/directory from Google Drive.
 9. Install `odoo`
+   - Check the following
+     [link](https://www.odoo.com/forum/help-1/question/v8-solved-why-does-the-connection-to-the-database-fail-with-ubuntu-14-04-75664)
+     to address peer authentication error.
    - Attempt to install `odoo-profiler`
      + To make `odoo` detect `pstats_print2list` installation, run `sudo -i`
        first.
