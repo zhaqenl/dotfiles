@@ -277,6 +277,7 @@
  ("M-g i" . yas-insert-snippet)
  ("M-g t" . neotree-toggle)
  ("M-g f" . fill-to-end)
+ ("M-g r" . query-replace)
 
  ("C-c ^" . delete-to-bol)
  ("C-c $" . delete-to-eol)
