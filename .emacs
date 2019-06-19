@@ -30,9 +30,6 @@
 (require 'popup)
 (yas-global-mode 1)
 
-;;; query-replace patch
-(setq frame-title-format nil)
-
 ;;; Add key combinations for popup menu
 (define-key popup-menu-keymap (kbd "M-n") 'popup-next)
 (define-key popup-menu-keymap (kbd "TAB") 'popup-next)
