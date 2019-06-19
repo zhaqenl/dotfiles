@@ -8,9 +8,9 @@
         string="$2"
         model="$3"
         report_type="qweb-pdf"
-        name="$1.report_$1_template" />
+        name="$1.report_$4_template" />
 
-<template id="report_$1_template">
+<template id="report_$4_template">
 <t t-call="report.html_container">
 <t t-call="report.external_layout">
 <div class="page">
