@@ -117,7 +117,7 @@ function xc () {
 
 # export TERM=xterm-256color
 
-bindkey \e= copy-prev-shell-word
+# bindkey \e= copy-prev-shell-word
 
 function psg () {
     pgrep --list-full --list-name --full $@
@@ -241,6 +241,10 @@ function odeb () {
 
 function venv () {
   source `which virtualenvwrapper.sh`
+}
+
+function zc () {
+    zcalc
 }
 
 autoload zcalc
