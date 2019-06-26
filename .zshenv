@@ -216,6 +216,10 @@ function man () {
       nman $@
 }
 
+function mrg() {
+    rg -g '!*.po' -g '!*.pot' $@
+}
+
 function c-int () {
   ifstat-legacy -S
 }
