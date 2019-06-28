@@ -217,7 +217,7 @@ function man () {
 }
 
 function mrg() {
-    rg -g '!*.po' -g '!*.pot' $@
+    rg -g '!*.po' -g '!*.pot' -g '!*.*~' -g '!*.*#' $@
 }
 
 function c-int () {
