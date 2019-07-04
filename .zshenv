@@ -232,10 +232,10 @@ function skel_reset () {
   git fetch --all && git reset --hard origin/experimental && git clean -fd
 }
 
+# original logs dir is: /home/devdesk4/logs/odoo8-server.log
 function ostart () {
     /opt/odoo8/odoo8-server/odoo.py \
         -c /etc/odoo8-server.conf \
-        --logfile=/home/devdesk4/logs/odoo8-server.log \
         --auto-reload
 }
 
