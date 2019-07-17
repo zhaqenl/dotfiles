@@ -1,0 +1,17 @@
+clear Lock
+
+keycode 135 = Mode_switch
+
+keycode 51 = backslash bar Greek_lambda
+keycode 49 = grave asciitilde leftsinglequotemark
+keycode 48 = apostrophe quotedbl rightsinglequotemark
+keycode 34 = bracketleft braceleft leftdoublequotemark
+keycode 35 = bracketright braceright rightdoublequotemark
+keycode 20 = minus underscore endash emdash
+
+keycode 54 = c C ccircumflex Ccircumflex
+keycode 42 = g G gcircumflex Gcircumflex
+keycode 43 = h H hcircumflex Hcircumflex
+keycode 44 = j J jcircumflex Jcircumflex
+keycode 39 = s S scircumflex Scircumflex
+keycode 30 = u U ubreve Ubreve
