@@ -216,6 +216,10 @@ function man () {
       nman $@
 }
 
+function a0() {
+    xmodmap ~/.Xmodmap
+}
+
 function mrg() {
     rg -g '!*.po' -g '!*.pot' -g '!*.*~' -g '!*.*#' $@
 }
