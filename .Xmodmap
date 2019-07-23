@@ -1,5 +1,6 @@
 clear Lock
 
+keycode 133 = Mode_switch
 keycode 135 = Mode_switch
 
 keycode 51 = backslash bar Greek_lambda
