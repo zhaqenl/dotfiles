@@ -240,6 +240,7 @@ function skel_reset () {
 function ostart () {
     /opt/odoo8/odoo8-server/odoo.py \
         -c /etc/odoo8-server.conf \
+        --workers=4 \
         --auto-reload
 }
 
