@@ -54,9 +54,6 @@
 
 (setq yas/prompt-functions '(yas/popup-isearch-prompt yas/no-prompt))
 
-;;; neotree
-(require 'neotree)
-
 ;;; elpy, pyenv, jedi
 (setq elpy-rpc-backend "jedi")
 (elpy-enable)
@@ -275,7 +272,6 @@
  ("M-g =" . insert-equals)
  ("M-g -" . insert-hyphens)
  ("M-g i" . yas-insert-snippet)
- ("M-g t" . neotree-toggle)
  ("M-g f" . fill-to-end)
  ("M-g r" . query-replace)
 
