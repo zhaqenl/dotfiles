@@ -221,7 +221,7 @@ function a0() {
 }
 
 function mrg() {
-    rg -g '!*.po' -g '!*.pot' -g '!*.*~' -g '!*.*#' $@
+    rg -i -g '!*.po' -g '!*.pot' -g '!*.*~' -g '!*.*#' $@
 }
 
 function c-int () {
@@ -234,6 +234,10 @@ function xs () {
 
 function skel_reset () {
   git fetch --all && git reset --hard origin/experimental && git clean -fd
+}
+
+function spotblock() {
+    LD_PRELOAD=/usr/local/lib/spotify-adblock.so spotify
 }
 
 # original logs dir is: /home/devdesk4/logs/odoo8-server.log
