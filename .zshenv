@@ -138,12 +138,12 @@ function ed () {
         return 1
     else
         [[ -f "$HOME/.emacs.d/desktop.lock" ]] && rm -f "$HOME/.emacs.d/desktop.lock"
-        emacs --daemon
+        sudo emacs --daemon
     fi
 }
 
 function e () {
-    emacsclient -nw $@
+    sudo emacsclient -nw $@
 }
 
 function make_emem () {
