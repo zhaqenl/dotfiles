@@ -226,7 +226,7 @@ function spotblock() {
 }
 
 function deez() {
-    ./home/devdesk4/Downloads/Deezloader_Remix_422-x86_64.AppImage
+    /home/devdesk4/Downloads/Deezloader_Remix_422-x86_64.AppImage
 }
 #
 
