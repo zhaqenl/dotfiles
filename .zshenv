@@ -60,14 +60,6 @@ function a () {
   fi
 }
 
-function b () {
-  if [[ -d "$1" ]]; then
-      x ahoviewer $1
-  else
-      imv $1
-  fi
-}
-
 function s () {
   command sudo $@
 }
@@ -86,10 +78,6 @@ function la () {
 
 function lk () {
   la -l $@
-}
-
-function y () {
-  youtube-dl $@
 }
 
 function o () {
@@ -232,12 +220,18 @@ function xs () {
   xscreensaver -no-splash&
 }
 
-function skel_reset () {
-  git fetch --all && git reset --hard origin/experimental && git clean -fd
-}
-
+# Music
 function spotblock() {
     LD_PRELOAD=/usr/local/lib/spotify-adblock.so spotify
+}
+
+function deez() {
+    ./home/devdesk4/Downloads/Deezloader_Remix_422-x86_64.AppImage
+}
+#
+
+function skel_reset () {
+  git fetch --all && git reset --hard origin/experimental && git clean -fd
 }
 
 # original logs dir is: /home/devdesk4/logs/odoo8-server.log
