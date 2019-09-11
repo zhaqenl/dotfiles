@@ -126,12 +126,12 @@ function ed () {
         return 1
     else
         [[ -f "$HOME/.emacs.d/desktop.lock" ]] && rm -f "$HOME/.emacs.d/desktop.lock"
-        sudo emacs --daemon
+        emacs --daemon
     fi
 }
 
 function e () {
-    sudo emacsclient -nw $@
+    emacsclient -nw $@
 }
 
 function make_emem () {
@@ -236,9 +236,17 @@ function skel_reset () {
 
 # original logs dir is: /home/devdesk4/logs/odoo8-server.log
 function ostart () {
-    /opt/odoo8/odoo8-server/odoo.py \
+    if [[ $1 ]]; then
+        /opt/odoo8/odoo8-server/odoo.py \
         -c /etc/odoo8-server.conf \
+        -u all \
+        -d $1 \
         --auto-reload
+    else
+        /opt/odoo8/odoo8-server/odoo.py \
+            -c /etc/odoo8-server.conf \
+            --auto-reload
+    fi
 }
 
 function odeb () {
