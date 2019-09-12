@@ -13,6 +13,9 @@ export PG_LOG_PATH="/etc/postgresql/9.5/main/postgresql.conf"
 export PATH=$HOME/bin:$HOME/.pyenv/bin:$PATH
 eval "$(pyenv init -)"
 
+## GIT_EDITOR
+export GIT_EDITOR="emacsclient -nw"
+
 ## Functions
 
 function page () {
