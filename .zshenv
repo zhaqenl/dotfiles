@@ -238,17 +238,19 @@ function skel_reset () {
 }
 
 # original logs dir is: /home/devdesk4/logs/odoo8-server.log
-function ostart () {
+function ostart8 () {
     if [[ $1 ]]; then
-        /opt/odoo8/odoo8-server/odoo.py \
-        -c /etc/odoo8-server.conf \
-        -u all \
-        -d $1 \
-        --auto-reload
+        sudo systemctl stop odoo8-server \
+            && /opt/odoo8/odoo8-server/odoo.py \
+                   -c /etc/odoo8-server.conf \
+                   -u all \
+                   -d $1 \
+                   --auto-reload
     else
-        /opt/odoo8/odoo8-server/odoo.py \
-            -c /etc/odoo8-server.conf \
-            --auto-reload
+        sudo systemctl stop odoo8-server \
+            && /opt/odoo8/odoo8-server/odoo.py \
+                   -c /etc/odoo8-server.conf \
+                   --auto-reload
     fi
 }
 
