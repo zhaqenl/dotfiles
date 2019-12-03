@@ -242,14 +242,14 @@ function skel_reset () {
 # Odoo functions
 function ostart8 () {
     if [[ $1 ]]; then
-        sudo systemctl stop odoo8-server \
+        sudo systemctl stop odoo8 \
             && /opt/odoo8/odoo8-server/odoo.py \
                    -c /etc/odoo8-server.conf \
                    -u all \
                    -d $1 \
                    --auto-reload
     else
-        sudo systemctl stop odoo8-server \
+        sudo systemctl stop odoo8 \
             && /opt/odoo8/odoo8-server/odoo.py \
                    -c /etc/odoo8-server.conf \
                    --auto-reload
