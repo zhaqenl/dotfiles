@@ -223,6 +223,7 @@ function xs () {
   xscreensaver -no-splash&
 }
 
+# ------------------------------------------------------------------------------
 # Music
 function spotblock() {
     LD_PRELOAD=/usr/local/lib/spotify-adblock.so spotify
@@ -231,13 +232,14 @@ function spotblock() {
 function deez() {
     /home/devdesk4/Downloads/Deezloader_Remix_422-x86_64.AppImage
 }
-#
+# ------------------------------------------------------------------------------
 
 function skel_reset () {
   git fetch --all && git reset --hard origin/experimental && git clean -fd
 }
 
-# original logs dir is: /home/devdesk4/logs/odoo8-server.log
+# ------------------------------------------------------------------------------
+# Odoo functions
 function ostart8 () {
     if [[ $1 ]]; then
         sudo systemctl stop odoo8-server \
@@ -254,9 +256,54 @@ function ostart8 () {
     fi
 }
 
-function odeb () {
-    tail -f /home/devdesk4/logs/odoo8-server.log
+function ostart11com () {
+    if [[ $1 ]]; then
+        sudo systemctl stop odoo11com \
+            && /opt/odoo11com/odoo11com-server/odoo-bin \
+                   -c /etc/odoo11com-server.conf \
+                   -u all \
+                   -d $1 \
+                   --dev=all
+    else
+        sudo systemctl stop odoo11com \
+            && /opt/odoo11com/odoo11com-server/odoo-bin \
+                   -c /etc/odoo11com-server.conf \
+                   --dev=all
+    fi
 }
+
+function ostart12com () {
+    if [[ $1 ]]; then
+        sudo systemctl stop odoo12 \
+            && /opt/odoo12/odoo12-server/odoo-bin \
+                   -c /etc/odoo12-server.conf \
+                   -u all \
+                   -d $1 \
+                   --dev=all
+    else
+        sudo systemctl stop odoo12 \
+            && /opt/odoo12/odoo12-server/odoo-bin \
+                   -c /etc/odoo12-server.conf \
+                   --dev=all
+    fi
+}
+
+function ostart12ent () {
+    if [[ $1 ]]; then
+        sudo systemctl stop odoo12Ent \
+            && /opt/odoo12Ent/odoo12Ent-server/odoo-bin \
+                   -c /etc/odoo12Ent-server.conf \
+                   -u all \
+                   -d $1 \
+                   --dev=all
+    else
+        sudo systemctl stop odoo12Ent \
+            && /opt/odoo12Ent/odoo12Ent-server/odoo-bin \
+                   -c /etc/odoo12Ent-server.conf \
+                   --dev=all
+    fi
+}
+# ------------------------------------------------------------------------------
 
 function venv () {
   source `which virtualenvwrapper.sh`
