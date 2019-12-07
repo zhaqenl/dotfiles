@@ -246,6 +246,7 @@ function ostart8 () {
             && /opt/odoo8/odoo8-server/odoo.py \
                    -c /etc/odoo8-server.conf \
                    -u all \
+                   --db-filter $1 \
                    -d $1 \
                    --auto-reload
     else
@@ -262,6 +263,7 @@ function ostart11com () {
             && /opt/odoo11com/odoo11com-server/odoo-bin \
                    -c /etc/odoo11com-server.conf \
                    -u all \
+                   --db-filter $1 \
                    -d $1 \
                    --dev=all
     else
@@ -278,6 +280,7 @@ function ostart12com () {
             && /opt/odoo12/odoo12-server/odoo-bin \
                    -c /etc/odoo12-server.conf \
                    -u all \
+                   --db-filter $1 \
                    -d $1 \
                    --dev=all
     else
@@ -294,6 +297,7 @@ function ostart12ent () {
             && /opt/odoo12Ent/odoo12Ent-server/odoo-bin \
                    -c /etc/odoo12Ent-server.conf \
                    -u all \
+                   --db-filter $1 \
                    -d $1 \
                    --dev=all
     else
