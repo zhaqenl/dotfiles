@@ -67,12 +67,12 @@ function s () {
   command sudo $@
 }
 
-function l () {
+function lss () {
   ls -FAtr --color $@
 }
 
-function ll () {
-  l -l $@
+function l () {
+  lss -l $@
 }
 
 function la () {
