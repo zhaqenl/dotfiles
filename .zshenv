@@ -72,7 +72,7 @@ function lss () {
 }
 
 function l () {
-  lss -l $@
+  lss -lh $@
 }
 
 function la () {
@@ -135,6 +135,10 @@ function ed () {
 
 function e () {
     emacsclient -nw $@
+}
+
+function se () {
+    s emacs -nw $@
 }
 
 function make_emem () {
