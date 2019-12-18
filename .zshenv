@@ -227,17 +227,6 @@ function xs () {
   xscreensaver -no-splash&
 }
 
-# ------------------------------------------------------------------------------
-# Music
-function spotblock() {
-    LD_PRELOAD=/usr/local/lib/spotify-adblock.so spotify
-}
-
-function deez() {
-    /home/devdesk4/Downloads/Deezloader_Remix_422-x86_64.AppImage
-}
-# ------------------------------------------------------------------------------
-
 function skel_reset () {
   git fetch --all && git reset --hard origin/experimental && git clean -fd
 }
@@ -290,6 +279,15 @@ function ostart12ent () {
     else
         echo "Choose a database!"
     fi
+}
+# ------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
+# ALSA Restart
+function alsa-restart () {
+    s /etc/init.d/alsa-utils stop \
+        && s alsa force-reload \
+             && s /etc/init.d/alsa-utils start
 }
 # ------------------------------------------------------------------------------
 
