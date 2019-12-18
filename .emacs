@@ -177,6 +177,7 @@
   (linum-mode t))
 
 (add-hook 'find-file-hook 'my-linum-mode-hook)
+(add-hook 'dired-after-readin-hook 'my-linum-mode-hook)
 
 ;;; Fill with char up to column limit
 (defun fill-to-end (char)
