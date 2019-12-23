@@ -232,6 +232,13 @@ function skel_reset () {
 }
 
 # ------------------------------------------------------------------------------
+# Start protonvpn then brave
+function brave-proton () {
+    s protonvpn c -f && brave-browser-stable --audio-buffer-size=2048
+}
+# ------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
 # Odoo functions
 function ostart8 () {
     if [[ $1 ]]; then
