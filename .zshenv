@@ -264,6 +264,18 @@ function ostart11com () {
     fi
 }
 
+function ostart11ent () {
+    if [[ $1 ]]; then
+        sudo systemctl stop odooEnt \
+            && /opt/odooEnt/odooEnt-server/odoo-bin \
+                   -c /etc/odooEnt-server.conf \
+                   --db-filter $1 \
+                   --dev=all
+    else
+        echo "Choose a database!"
+    fi
+}
+
 function ostart12com () {
     if [[ $1 ]]; then
         sudo systemctl stop odoo12 \
