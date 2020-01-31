@@ -231,12 +231,9 @@ function skel_reset () {
   git fetch --all && git reset --hard origin/experimental && git clean -fd
 }
 
-# ------------------------------------------------------------------------------
-# Start protonvpn then brave
-function brave-proton () {
-    s protonvpn c -f && brave-browser-stable --audio-buffer-size=2048
+function brave () {
+    brave-browser-stable --audio-buffer-size=2048
 }
-# ------------------------------------------------------------------------------
 
 # ------------------------------------------------------------------------------
 # Odoo functions
@@ -298,15 +295,6 @@ function ostart12ent () {
     else
         echo "Choose a database!"
     fi
-}
-# ------------------------------------------------------------------------------
-
-# ------------------------------------------------------------------------------
-# ALSA Restart
-function alsa-restart () {
-    s /etc/init.d/alsa-utils stop \
-        && s alsa force-reload \
-             && s /etc/init.d/alsa-utils start
 }
 # ------------------------------------------------------------------------------
 
