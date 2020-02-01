@@ -235,6 +235,10 @@ function brave () {
     brave-browser-stable --audio-buffer-size=2048
 }
 
+function spot () {
+    spotify --show-console
+}
+
 # ------------------------------------------------------------------------------
 # Odoo functions
 function ostart8 () {
