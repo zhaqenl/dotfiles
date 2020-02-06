@@ -216,7 +216,7 @@ function a0() {
 }
 
 function mrg() {
-    rg -i -g '!*.po' -g '!*.pot' -g '!*.*~' -g '!*.*#' $@
+    rg -i -g '!*.po' -g '!*.pot' -g '!*.js' -g '!*.css' -g '!*.*~' -g '!*.*#' $@
 }
 
 function c-int () {
