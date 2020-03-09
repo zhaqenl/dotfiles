@@ -56,6 +56,7 @@
 
 ;;; Hy
 (add-to-list 'auto-mode-alist '("\\.hy\\'" . hy-mode))
+(add-to-list 'auto-mode-alist '("\\.j2\\'" . jinja2-mode))
 
 ;;; elpy, pyenv, jedi
 (setq elpy-rpc-backend "jedi")
@@ -361,7 +362,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (hy-mode pyenv-mode use-package smartparens markdown-mode ample-theme)))
+    (jinja2-mode hy-mode pyenv-mode use-package smartparens markdown-mode ample-theme)))
  '(safe-local-variable-values
    (quote
     ((encoding . utf-8)
