@@ -54,6 +54,9 @@
 
 (setq yas/prompt-functions '(yas/popup-isearch-prompt yas/no-prompt))
 
+;;; Hy
+(add-to-list 'auto-mode-alist '("\\.hy\\'" . hy-mode))
+
 ;;; elpy, pyenv, jedi
 (setq elpy-rpc-backend "jedi")
 (elpy-enable)
@@ -177,6 +180,7 @@
   (linum-mode t))
 
 (add-hook 'find-file-hook 'my-linum-mode-hook)
+(add-hook 'prog-mode-hook 'my-linum-mode-hook)
 (add-hook 'dired-after-readin-hook 'my-linum-mode-hook)
 
 ;;; Fill with char up to column limit
@@ -357,7 +361,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (pyenv-mode use-package smartparens markdown-mode ample-theme)))
+    (hy-mode pyenv-mode use-package smartparens markdown-mode ample-theme)))
  '(safe-local-variable-values
    (quote
     ((encoding . utf-8)
