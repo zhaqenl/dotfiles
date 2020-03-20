@@ -145,8 +145,12 @@ function make_emem () {
     make -B BUILDER="java -jar $HOME/bin/emem.jar"
 }
 
-function plr () {
-    pulseaudio -k && pulseaudio --start
+function pak () {
+    pulseaudio --kill
+}
+
+function pas () {
+    pulseaudio --start
 }
 
 function mute () { "$@" >& /dev/null }
