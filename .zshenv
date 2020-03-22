@@ -243,6 +243,14 @@ function spot () {
     spotify --show-console
 }
 
+function sremove () {
+    if [[ $1 ]]; then
+        sudo apt remove $1 \
+            && sudo apt purge $1 \
+            && sudo apt autoremove
+    fi
+}
+
 # ------------------------------------------------------------------------------
 # Odoo functions
 function ostart8 () {
