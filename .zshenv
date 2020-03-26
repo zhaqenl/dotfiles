@@ -145,6 +145,10 @@ function make_emem () {
     make -B BUILDER="java -jar $HOME/bin/emem.jar"
 }
 
+function sar () {
+    sudo alsa reload
+}
+
 function pak () {
     pulseaudio --kill
 }
