@@ -157,6 +157,12 @@ function pas () {
     pulseaudio --start
 }
 
+function mpr () {
+    if [[ $1 ]]; then
+       mplayerstart --resume $1
+    fi
+}
+
 function ping-watch () {
     watch -n 0.2 "ping -n -c 1 -i 0.2 youtube.com | head -n 2 | tail -n 1"
 }
