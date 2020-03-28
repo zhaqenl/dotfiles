@@ -1,7 +1,6 @@
 # -*- mode: sh; coding: utf-8 -*-
 
 ## Variables
-
 PATH=$PATH:$HOME/bin
 PS1="%F{cyan}%B%n%b%f%B%F{magenta} %f%b%B%F{red}%m${CHROOT_PROMPT}%f%b %F{green}%B%0d%b%f${vcs_info_msg_0_} %D{%n}%F{green}★%f%F{white} "
 BINDIR=$HOME/bin
@@ -17,7 +16,7 @@ eval "$(pyenv init -)"
 export GIT_EDITOR="emacsclient -nw"
 
 ## Functions
-# Utilities
+# Utilities --------------------------------------------------------------------
 function tmux () {
     local res_dir=$HOME/.tmux/resurrect
 
@@ -87,7 +86,7 @@ function a0() {
 autoload zcalc
 # ------------------------------------------------------------------------------
 
-# Text Editor
+# Text Editor ------------------------------------------------------------------
 function ed () {
     if [[ -n "$(psg 'emacs --daemon')" || -n "$(psg 'emacs --smid')" ]]; then
         return 1
@@ -107,7 +106,7 @@ function se () {
 }
 # ------------------------------------------------------------------------------
 
-# Multimedia
+# Multimedia -------------------------------------------------------------------
 function sar () {
     sudo alsa reload
 }
@@ -127,7 +126,7 @@ function mpr () {
 }
 # ------------------------------------------------------------------------------
 
-# Manual startups (special flags and options)
+# Manual startups (special flags and options) ----------------------------------
 function brave () {
     brave-browser-stable --audio-buffer-size=2048
 }
@@ -137,7 +136,7 @@ function spot () {
 }
 # ------------------------------------------------------------------------------
 
-# Steroids
+# Steroids ---------------------------------------------------------------------
 function srem () {
     if [[ $1 ]]; then
         sudo apt remove $1 \
@@ -148,13 +147,13 @@ function srem () {
 
 function tarz() {
     if [[ $1 ]]; then
-        tar cvf - $1 \
-            | pigz -9 > $1.tar.gz
+        tar Ovc $1 \
+            | pxz -9 -c - > $1.tar.xz
     fi
 }
 # ------------------------------------------------------------------------------
 
-# Tinkering with `emem`
+# Tinkering with `emem` --------------------------------------------------------
 function skel_reset () {
     git fetch --all && git reset --hard origin/experimental && git clean -fd
 }
@@ -164,7 +163,7 @@ function make_emem () {
 }
 # ------------------------------------------------------------------------------
 
-# Odoo functions
+# Odoo functions ---------------------------------------------------------------
 # Ripgrep for Odoo
 function mrg() {
     rg -i -g '!*.po' -g '!*.pot' -g '!*.js' -g '!*.css' -g '!*.*~' -g '!*.*#' $@
