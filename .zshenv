@@ -67,6 +67,13 @@ function xc () {
     fi
 }
 
+function nman () {
+    local item=$1
+    local section=${2:-1}
+
+    man $(nix out-path $item)/share/man/man${section}/${item}.${section}.gz
+}
+
 function man () {
     env LESS_TERMCAP_mb=$(printf "\e[1;31m") \
         LESS_TERMCAP_md=$(printf "\e[1;31m") \
