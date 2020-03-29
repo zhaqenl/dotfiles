@@ -86,6 +86,10 @@ function man () {
         nman $@
 }
 
+function psg () {
+    pgrep --list-full --list-name --full $@
+}
+
 function a0() {
     xmodmap ~/.Xmodmap
 }
