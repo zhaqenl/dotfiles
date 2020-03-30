@@ -127,7 +127,7 @@ function sar () {
 }
 
 function pak () {
-    pulseaudio --kill
+    pulseaudio --kill && sleep 0.5 && pulseaudio --kill
 }
 
 function pas () {
