@@ -14,6 +14,7 @@ development environment inside Ubuntu:
 5. Create respective symbolic links of files inside `dotfiles` directory.
 6. Run `gnome-tweak-tools` then swap behavior of `caps` and `esc` keys.
 7. Run `unity-tweak-tool` then hide desktop from `Alt-tab` key combination.
-8. Install `brave` browser then get data file/directory from Google Drive.
+8. Install `brave` browser then restore brave settings via config file from
+   Google Drive/Local Storage.
 9. Install `odoo` through
    [this link](https://www.rosehosting.com/blog/install-multiple-odoo-instances-on-a-single-machine/)
