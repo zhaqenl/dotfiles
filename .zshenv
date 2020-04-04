@@ -98,15 +98,16 @@ autoload zcalc
 # ------------------------------------------------------------------------------
 
 # Text Editor ------------------------------------------------------------------
-function ed () {
-    if [[ -n "$(psg 'emacs --daemon')" || -n "$(psg 'emacs --smid')" ]]; then
-        return 1
-    else
-        [[ -f "$HOME/.emacs.d/desktop.lock" ]] \
-            && rm -f "$HOME/.emacs.d/desktop.lock"
-        emacs --daemon
-    fi
-}
+# `ed` is now a systemd service
+# function ed () {
+#     if [[ -n "$(psg 'emacs --daemon')" || -n "$(psg 'emacs --smid')" ]]; then
+#         return 1
+#     else
+#         [[ -f "$HOME/.emacs.d/desktop.lock" ]] \
+    #             && rm -f "$HOME/.emacs.d/desktop.lock"
+#         emacs --daemon
+#     fi
+# }
 
 function e () {
     emacsclient -nw $@
@@ -242,5 +243,14 @@ function ostart12ent () {
     else
         echo "Choose a database!"
     fi
+}
+# ------------------------------------------------------------------------------
+
+# Workarounds ------------------------------------------------------------------
+# Add `precmd` hook function (executed before each prompt).
+precmd() {
+    # Re-set `automatic-rename` value (without this, the window status of
+    # restored tmux windows will not automatically rename).
+    tmux set automatic-rename on
 }
 # ------------------------------------------------------------------------------
