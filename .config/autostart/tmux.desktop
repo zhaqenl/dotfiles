@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-Exec=gnome-terminal --command "tmux"
+Exec=gnome-terminal --maximize --command "tmux"
 Hidden=false
 NoDisplay=false
 X-GNOME-Autostart-enabled=true
