@@ -118,7 +118,7 @@ function e () {
 }
 
 function se () {
-    s emacs -nw $@
+    SUDO_EDITOR="emacsclient -nw" sudoedit $@
 }
 # ------------------------------------------------------------------------------
 
@@ -244,6 +244,18 @@ function o12ent () {
                    -c /etc/odoo12Ent-server.conf \
                    --db-filter $1 \
                    --dev=all
+    else
+        echo "Choose a database!"
+    fi
+}
+
+function o13ent () {
+    if [[ $1 ]]; then
+        /opt/odoo13Ent/venv/bin/python \
+            /opt/odoo13Ent/odoo-bin \
+            -c /etc/odoo13Ent.conf \
+            --db-filter $1 \
+            --dev=all
     else
         echo "Choose a database!"
     fi
