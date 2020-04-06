@@ -90,8 +90,12 @@ function psg () {
     pgrep --list-full --list-name --full $@
 }
 
-function a0() {
-    xmodmap ~/.Xmodmap
+# function a0() {
+#     xmodmap ~/.Xmodmap
+# }
+
+function mhost(){
+    make && python -m SimpleHTTPServer
 }
 
 autoload zcalc
@@ -152,7 +156,7 @@ function spot () {
 }
 # ------------------------------------------------------------------------------
 
-# Steroids ---------------------------------------------------------------------
+# Utilities on PEDs ------------------------------------------------------------
 function srem () {
     if [[ $1 ]]; then
         sudo apt remove $1 \
