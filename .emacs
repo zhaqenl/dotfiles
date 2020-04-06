@@ -49,8 +49,7 @@
       choices)
      :prompt prompt
      ;; start isearch mode immediately
-     :isearch t
-     )))
+     :isearch t)))
 
 (setq yas/prompt-functions '(yas/popup-isearch-prompt yas/no-prompt))
 
@@ -289,8 +288,7 @@
 
  ("C-x y" . yank-clipboard)
  ("C-x C-y" . yank-primary)
- ("M-g SPC" . go-to-column)
- )
+ ("M-g SPC" . go-to-column))
 
 (bind-keys
  :map smartparens-mode-map
