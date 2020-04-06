@@ -189,7 +189,7 @@ function mrg() {
     rg -i -g '!*.po' -g '!*.pot' -g '!*.js' -g '!*.css' -g '!*.*~' -g '!*.*#' $@
 }
 
-function ostart8 () {
+function o8 () {
     if [[ $1 ]]; then
         sudo systemctl stop odoo8 \
             && /opt/odoo8/odoo8-server/odoo.py \
@@ -201,7 +201,7 @@ function ostart8 () {
     fi
 }
 
-function ostart11com () {
+function o11com () {
     if [[ $1 ]]; then
         sudo systemctl stop odoo11com \
             && /opt/odoo11com/odoo11com-server/odoo-bin \
@@ -213,7 +213,7 @@ function ostart11com () {
     fi
 }
 
-function ostart11ent () {
+function o11ent () {
     if [[ $1 ]]; then
         sudo systemctl stop odooEnt \
             && /opt/odooEnt/odooEnt-server/odoo-bin \
@@ -225,7 +225,7 @@ function ostart11ent () {
     fi
 }
 
-function ostart12com () {
+function o12com () {
     if [[ $1 ]]; then
         sudo systemctl stop odoo12 \
             && /opt/odoo12/odoo12-server/odoo-bin \
@@ -237,7 +237,7 @@ function ostart12com () {
     fi
 }
 
-function ostart12ent () {
+function o12ent () {
     if [[ $1 ]]; then
         sudo systemctl stop odoo12Ent \
             && /opt/odoo12Ent/odoo12Ent-server/odoo-bin \
