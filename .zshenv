@@ -128,7 +128,7 @@ function laud () {
 }
 
 function sar () {
-    sudo alsa reload
+    sudo alsa force-reload
 }
 
 function pak () {
