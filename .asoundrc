@@ -3,11 +3,6 @@ pcm.!default {
         slave.pcm "bs2b"
 }
 
-ctl.!default {
-        type hw
-        card DSD
-}
-
 pcm.bs2b {
          type ladspa
          slave.pcm "plughw:DSD"
