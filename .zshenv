@@ -165,6 +165,10 @@ function srem () {
     fi
 }
 
+function crem () {
+    sudo rm /var/crash/*
+}
+
 function tarz() {
     if [[ $1 ]]; then
         tar Ovc $1 \
@@ -251,7 +255,7 @@ function o12ent () {
 
 function o13ent () {
     if [[ $1 ]]; then
-        /opt/odoo13Ent/venv/bin/python \
+        /usr/bin/python3.6 \
             /opt/odoo13Ent/odoo-bin \
             -c /etc/odoo13Ent.conf \
             --db-filter $1 \
