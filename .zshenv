@@ -190,7 +190,12 @@ function make_emem () {
 # Odoo functions ---------------------------------------------------------------
 # Ripgrep for Odoo
 function mrg() {
-    rg -i -g '!*.po' -g '!*.pot' -g '!*.js' -g '!*.css' -g '!*.*~' -g '!*.*#' $@
+    rg -F -i -g '!*.po' \
+       -g '!*.pot' \
+       -g '!*.js' \
+       -g '!*.css' \
+       -g '!*.*~' \
+       -g '!*.*#' $@
 }
 
 function o8 () {
