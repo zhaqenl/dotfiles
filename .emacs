@@ -57,6 +57,12 @@
 (add-to-list 'auto-mode-alist '("\\.hy\\'" . hy-mode))
 (add-to-list 'auto-mode-alist '("\\.j2\\'" . jinja2-mode))
 
+;;; Flycheck
+(use-package flycheck
+  :ensure t
+  :init
+  (global-flycheck-mode t))
+
 ;;; elpy, pyenv, jedi
 (setq elpy-rpc-backend "jedi")
 (elpy-enable)
