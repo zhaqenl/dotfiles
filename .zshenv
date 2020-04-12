@@ -198,6 +198,15 @@ function mrg() {
        -g '!*.*#' $@
 }
 
+function Mrg() {
+    rg -F -g '!*.po' \
+       -g '!*.pot' \
+       -g '!*.js' \
+       -g '!*.css' \
+       -g '!*.*~' \
+       -g '!*.*#' $@
+}
+
 function o8 () {
     if [[ $1 ]]; then
         sudo systemctl stop odoo8 \
