@@ -156,7 +156,7 @@ function spot () {
 }
 # ------------------------------------------------------------------------------
 
-# Utilities on PEDs ------------------------------------------------------------
+# Convenience utilities --------------------------------------------------------
 function srem () {
     if [[ $1 ]]; then
         sudo apt remove $1 \
@@ -169,11 +169,21 @@ function crem () {
     sudo rm /var/crash/*
 }
 
-function tarz() {
+function tarz () {
     if [[ $1 ]]; then
         tar Ovc $1 \
             | pxz -9 -c - > $1.tar.xz
     fi
+}
+
+# Remove extracted files from archive
+function 7zrem () {
+    7z l archive.zip | awk ' {print $6} ' | awk '
+      function basename(file) {
+        sub(".*/", "", file)
+        return file
+      }
+      {print basename($1)} ' | xargs rm -rf
 }
 # ------------------------------------------------------------------------------
 
