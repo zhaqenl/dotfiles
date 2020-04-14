@@ -51,7 +51,7 @@
      ;; start isearch mode immediately
      :isearch t)))
 
-(setq yas/prompt-functions '(yas/popup-isearch-prompt yas/no-prompt))
+(setq yas-prompt-functions '(yas/popup-isearch-prompt yas/no-prompt))
 
 ;;; Hy
 (add-to-list 'auto-mode-alist '("\\.hy\\'" . hy-mode))
@@ -84,8 +84,8 @@
 (require 'bind-key)
 
 ;;; general
-(setq user-full-name "Martinez, Raymund M."
-      user-mail-address "zhaqenl@gmail.com"
+(setq user-full-name "Raymund MARTINEZ"
+      user-mail-address "zhaqenl@protonmail.com"
       user-login-name (getenv "USER")
 
       inhibit-startup-message t
