@@ -209,11 +209,10 @@ function Mrg() {
 
 function o8 () {
     if [[ $1 ]]; then
-        sudo systemctl stop odoo8 \
-            && /opt/odoo8/odoo8-server/odoo.py \
-                   -c /etc/odoo8-server.conf \
-                   --db-filter $1 \
-                   --auto-reload
+        /opt/odoo8/odoo8-server/odoo.py \
+            -c /etc/odoo8-server.conf \
+            --db-filter $1 \
+            --auto-reload
     else
         echo "Choose a database!"
     fi
@@ -221,11 +220,10 @@ function o8 () {
 
 function o11com () {
     if [[ $1 ]]; then
-        sudo systemctl stop odoo11com \
-            && /opt/odoo11com/odoo11com-server/odoo-bin \
-                   -c /etc/odoo11com-server.conf \
-                   --db-filter $1 \
-                   --dev=all
+        /opt/odoo11com/odoo11com-server/odoo-bin \
+            -c /etc/odoo11com-server.conf \
+            --db-filter $1 \
+            --dev=all
     else
         echo "Choose a database!"
     fi
@@ -233,11 +231,10 @@ function o11com () {
 
 function o11ent () {
     if [[ $1 ]]; then
-        sudo systemctl stop odooEnt \
-            && /opt/odooEnt/odooEnt-server/odoo-bin \
-                   -c /etc/odooEnt-server.conf \
-                   --db-filter $1 \
-                   --dev=all
+        /opt/odooEnt/odooEnt-server/odoo-bin \
+            -c /etc/odooEnt-server.conf \
+            --db-filter $1 \
+            --dev=all
     else
         echo "Choose a database!"
     fi
@@ -245,11 +242,10 @@ function o11ent () {
 
 function o12com () {
     if [[ $1 ]]; then
-        sudo systemctl stop odoo12 \
-            && /opt/odoo12/odoo12-server/odoo-bin \
-                   -c /etc/odoo12-server.conf \
-                   --db-filter $1 \
-                   --dev=all
+        /opt/odoo12/odoo12-server/odoo-bin \
+            -c /etc/odoo12-server.conf \
+            --db-filter $1 \
+            --dev=all
     else
         echo "Choose a database!"
     fi
@@ -257,11 +253,10 @@ function o12com () {
 
 function o12ent () {
     if [[ $1 ]]; then
-        sudo systemctl stop odoo12Ent \
-            && /opt/odoo12Ent/odoo12Ent-server/odoo-bin \
-                   -c /etc/odoo12Ent-server.conf \
-                   --db-filter $1 \
-                   --dev=all
+        /opt/odoo12Ent/odoo12Ent-server/odoo-bin \
+            -c /etc/odoo12Ent-server.conf \
+            --db-filter $1 \
+            --dev=all
     else
         echo "Choose a database!"
     fi
@@ -269,8 +264,7 @@ function o12ent () {
 
 function o13ent () {
     if [[ $1 ]]; then
-        /usr/bin/python3.6 \
-            /opt/odoo13Ent/odoo-bin \
+        /opt/odoo13Ent/odoo-bin \
             -c /etc/odoo13Ent.conf \
             --db-filter $1 \
             --dev=all
