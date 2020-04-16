@@ -144,6 +144,12 @@ function mpr () {
         mplayerstart --resume $1
     fi
 }
+
+function smp () {
+    if [[ $1 ]]; then
+        smplayer $1
+    fi
+}
 # ------------------------------------------------------------------------------
 
 # Manual startups (special flags and options) ----------------------------------
