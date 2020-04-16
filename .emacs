@@ -59,9 +59,9 @@
 
 ;;; Flycheck
 (use-package flycheck
-  :ensure t
-  :init
-  (global-flycheck-mode t))
+    :ensure t
+    :init
+    (global-flycheck-mode t))
 
 ;;; elpy, pyenv, jedi
 (setq elpy-rpc-backend "jedi")
