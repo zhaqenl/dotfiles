@@ -29,6 +29,9 @@
 ## Remove the leading # first to enable this; lines starting with # are ignored.
 
 server_names = [
+             'adguard-dns-doh',
+             'cloudflare-security',
+             'dnscrypt-de-blahdns-ipv4',
              'quad9-dnscrypt-ip4-filter-pri',
              'quad9-dnscrypt-ip4-filter-alt'
 ]
