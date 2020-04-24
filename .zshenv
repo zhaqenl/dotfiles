@@ -123,6 +123,14 @@ function se () {
 # ------------------------------------------------------------------------------
 
 # Git --------------------------------------------------------------------------
+function gb () {
+    if [[ $1 ]]; then
+        git fetch origin \
+            && git checkout -b $1 origin/$1
+    fi
+}
+
+# Run inside git branch to merge to
 function gm () {
     if [[ $1 && $2 ]]; then
         git checkout $1 \
