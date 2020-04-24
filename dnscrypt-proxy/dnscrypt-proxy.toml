@@ -28,13 +28,7 @@
 ##
 ## Remove the leading # first to enable this; lines starting with # are ignored.
 
-server_names = [
-             'adguard-dns-doh',
-             'cloudflare-security',
-             'dnscrypt-de-blahdns-ipv4',
-             'quad9-dnscrypt-ip4-filter-pri',
-             'quad9-dnscrypt-ip4-filter-alt'
-]
+# server_names = ['quad9-dnscrypt-ip4-nofilter-pri']
 
 
 ## List of local addresses and ports to listen to. Can be IPv4 and/or IPv6.
@@ -69,22 +63,25 @@ ipv6_servers = false
 dnscrypt_servers = true
 
 # Use servers implementing the DNS-over-HTTPS protocol
-doh_servers = true
+doh_servers = false
 
 
 ## Require servers defined by remote sources to satisfy specific properties
 
 # Server must support DNS security extensions (DNSSEC)
-require_dnssec = false
+require_dnssec = true
 
 # Server must not log user queries (declarative)
 require_nolog = true
 
 # Server must not enforce its own blacklist (for parental control, ads blocking...)
-require_nofilter = false
+require_nofilter = true
 
 # Server names to avoid even if they match all criteria
-disabled_server_names = []
+disabled_server_names = [
+                      'dnscrypt.uk-ipv4',
+                      'v.dnscrypt.uk-ipv4'
+]
 
 
 ## Always use TCP to connect to upstream servers.
@@ -279,7 +276,7 @@ log_files_max_backups = 1
 ## This makes things faster when there is no IPv6 connectivity, but can
 ## also cause reliability issues with some stub resolvers.
 
-block_ipv6 = false
+block_ipv6 = true
 
 
 ## Immediately respond to A and AAAA queries for host names without a domain name
@@ -685,17 +682,14 @@ fragments_blocked = ['cisco', 'cisco-ipv6', 'cisco-familyshield', 'cisco-familys
 ## "server_name" can also be set to "*" to define a default route, but this is not
 ## recommended. If you do so, keep "server_names" short and distinct from relays.
 
-# routes = [
-#    { server_name='example-server-1', via=['anon-example-1', 'anon-example-2'] },
-#    { server_name='example-server-2', via=['sdns://gRIxMzcuNzQuMjIzLjIzNDo0NDM'] }
-# ]
+routes = [
+       { server_name='*', via=['anon-dnscrypt.uk-ipv4', 'anon-v.dnscrypt.uk-ipv4'] }
+]
 
 
 # skip resolvers incompatible with anonymization instead of using them directly
 
-skip_incompatible = false
-
-
+skip_incompatible = true
 
 
 ## Optional, local, static list of additional servers
