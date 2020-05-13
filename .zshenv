@@ -245,37 +245,37 @@ function Mrg() {
 function o8 () {
     /opt/odoo8/odoo8-server/odoo.py \
         -c /etc/odoo8-server.conf \
-        --auto-reload
+        --auto-reload $@
 }
 
 function o11com () {
     /opt/odoo11com/odoo11com-server/odoo-bin \
         -c /etc/odoo11com-server.conf \
-        --dev=all
+        --dev=all $@
 }
 
 function o11ent () {
     /opt/odooEnt/odooEnt-server/odoo-bin \
         -c /etc/odooEnt-server.conf \
-        --dev=all
+        --dev=all $@
 }
 
 function o12com () {
     /opt/odoo12/odoo12-server/odoo-bin \
         -c /etc/odoo12-server.conf \
-        --dev=all
+        --dev=all $@
 }
 
 function o12ent () {
     /opt/odoo12Ent/odoo12Ent-server/odoo-bin \
         -c /etc/odoo12Ent-server.conf \
-        --dev=all
+        --dev=all $@
 }
 
 function o13ent () {
     /opt/odoo13Ent/odoo-bin \
         -c /etc/odoo13Ent.conf \
-        --dev=all
+        --dev=all $@
 }
 # ------------------------------------------------------------------------------
 
