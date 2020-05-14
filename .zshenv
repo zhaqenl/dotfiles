@@ -123,6 +123,11 @@ function se () {
 # ------------------------------------------------------------------------------
 
 # Git --------------------------------------------------------------------------
+function gl () {
+    # Open current git directory’s remote link in browser
+    brave `git remote -v | grep fetch | head -1 | cut -f2 | cut -d' ' -f1 | sed -e 's/\.git//g'`
+}
+
 function gb () {
     if [[ $1 ]]; then
         git fetch origin \
@@ -173,7 +178,7 @@ function smp () {
 
 # Manual startups (special flags and options) ----------------------------------
 function brave () {
-    brave-browser-stable --audio-buffer-size=2048
+    brave-browser-stable --audio-buffer-size=2048 $@
 }
 
 function spot () {
