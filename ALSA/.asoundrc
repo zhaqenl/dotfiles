@@ -1,0 +1,40 @@
+pcm.!default {
+        type plug
+        slave.pcm "dsp"
+}
+
+pcm.dsp {
+        type ladspa
+        slave.pcm "plughw:DSD"
+        path "/usr/lib/ladspa/"
+        plugins [{
+                label ladspa_dsp
+        }]
+}
+
+pcm.bs2b {
+        type ladspa
+        slave.pcm "plughw:DSD"
+        path "/usr/lib/ladspa/"
+        plugins [{
+                label bs2b
+                input {
+                      controls [ 725 4.5 ]
+                }
+        }]
+}
+
+pcm.dsp_bs2b {
+        type ladspa
+        slave.pcm "plughw:DSD"
+        path "/usr/lib/ladspa/"
+        plugins [{
+                label bs2b
+                input {
+                      controls [ 725 4.5 ]
+                }
+        }
+                {
+                label ladspa_dsp
+        }]
+}
