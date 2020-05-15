@@ -1,20 +1,53 @@
+defaults.pcm.rate_converter "samplerate_best"
+
+# Default `slave.pcm` ==========================================================
 pcm.!default {
         type plug
-        slave.pcm "dsp"
+        slave.pcm "duplex"
 }
 
+# Change `dsp` to either `bs2b` for the crossfeed effect or `dsp_bs2b`
+# for the crossfeed + AutoEQ
+pcm.duplex {
+        type asym
+        playback.pcm "dsp"
+        capture.pcm "hw:U0x46d0x8c9"
+}
+
+# AutoEQ Plugin
 pcm.dsp {
         type ladspa
-        slave.pcm "plughw:DSD"
+        slave.pcm "dmixplug"
         path "/usr/lib/ladspa/"
         plugins [{
                 label ladspa_dsp
         }]
 }
 
+# Add `dmix` to enable multi-application output, and avoid non-dmix enabled
+# setup’s ‘Audio Resource is Busy’
+pcm.dmixplug {
+        type plug
+        slave.pcm "dmixer"
+}
+
+# Replace `DSD` with your card’s name
+pcm.dmixer {
+        type dmix
+        ipc_key 6969
+        slave {
+                pcm "hw:DSD"
+                rate 44100
+                format S32_LE
+        }
+}
+# ==============================================================================
+
+# These are `slave.pcm` alternatives ===========================================
+# Crossfeed Plugin
 pcm.bs2b {
         type ladspa
-        slave.pcm "plughw:DSD"
+        slave.pcm "dmixplug"
         path "/usr/lib/ladspa/"
         plugins [{
                 label bs2b
@@ -24,9 +57,10 @@ pcm.bs2b {
         }]
 }
 
+# Combined Crossfeed and AutoEQ Plugins
 pcm.dsp_bs2b {
         type ladspa
-        slave.pcm "plughw:DSD"
+        slave.pcm "dmixplug"
         path "/usr/lib/ladspa/"
         plugins [{
                 label bs2b
@@ -38,3 +72,4 @@ pcm.dsp_bs2b {
                 label ladspa_dsp
         }]
 }
+# ==============================================================================
