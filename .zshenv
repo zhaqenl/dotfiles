@@ -148,7 +148,19 @@ function gm () {
 
 # Multimedia -------------------------------------------------------------------
 function laud () {
-    lsof /dev/snd/*
+    echo "Active applications using ALSA:"
+
+    # https://askubuntu.com/questions/748498/why-does-lsof-complain-about-tracefs
+    if [[ $(mount | grep debugfs) ]]; then
+        sudo umount $(mount | grep debugfs | awk '{print $3}')
+    fi
+
+    lsof /dev/snd/* | tail -n +2
+    echo ""
+    echo "hw_params:"
+    cat /proc/asound/DSD/pcm0p/sub0/hw_params
+    echo ""
+    cat /proc/asound/DSD/stream0 | grep -e Playback -e Status -e freq
 }
 
 function sar () {
