@@ -37,7 +37,6 @@ pcm.dmixer {
         ipc_key 6969
         slave {
                 pcm "hw:DSD"
-                rate 44100
                 format S32_LE
         }
 }
