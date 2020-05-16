@@ -41,15 +41,20 @@ pcm.dmixer {
                 format S32_LE
 
                 # The following four settings (plus the usage of a
-                # libspeex-derived resampler) seems to alleviate issues
+                # libspeex-derived resampler) seems to alleviate most issues
                 # (including a sharp click upon playback resume after being
-                # paused for some time e.g. Youtube playback) withchrome-based
+                # paused for some time e.g. Youtube playback) with chrome-based
                 # browsers having audio glitches when resampling from 48000 to
                 # 44100
                 period_time 0
                 buffer_time 0
                 period_size 1024
                 buffer_size 4096
+
+                # If you’re using a chrome-based browser (e.g. Chrome and Brave)
+                # and you still experience some occassional clicks during
+                # playback, try adding the command line option
+                # `--audio-buffer-size=2048`
         }
 }
 # ==============================================================================
