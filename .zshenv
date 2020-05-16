@@ -160,7 +160,8 @@ function laud () {
     echo "hw_params:"
     cat /proc/asound/DSD/pcm0p/sub0/hw_params
     echo ""
-    cat /proc/asound/DSD/stream0 | grep -e Playback -e Status -e freq
+    cat /proc/asound/DSD/stream0 \
+        | grep -e Playback -e Status -e freq -e Format
 }
 
 function sar () {
