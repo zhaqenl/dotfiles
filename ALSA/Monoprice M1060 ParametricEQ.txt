@@ -1,3 +1,4 @@
+# Taken from https://github.com/jaakkopasanen/AutoEq
 Preamp: -4.3 dB
 
 Filter 1: ON PK Fc 26 Hz Gain 3.7 dB Q 0.95
