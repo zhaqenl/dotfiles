@@ -5,7 +5,7 @@ This repository contains my `$HOME` configuration files. For these top-level
 “dot”-files, simply create a symbolic link from this directory to your `$HOME`:
 
 ```
-ln -s \`find $(pwd) -maxdepth 1 -not -type d -name "\.*" -not -name "\.gitignore"\`
+ln -s `find $(pwd) -maxdepth 1 -not -type d -name "\.*" -not -name "\.gitignore"`
 ```
 
 
