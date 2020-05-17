@@ -44,7 +44,9 @@ pcm.dmixer {
                 # libspeex-derived resampler) seems to alleviate most issues
                 # (including a sharp click upon playback resume after being
                 # paused for some time e.g. Youtube playback) with chrome-based
-                # browsers having audio glitches when resampling from 48000 to
+                # browsers having audio glitches when resampling from 48000
+                # (since it seems to be the default sample rate of both dmix and
+                # chrome-based browsers (at least on Youtube playback)) to
                 # 44100
                 period_time 0
                 buffer_time 0

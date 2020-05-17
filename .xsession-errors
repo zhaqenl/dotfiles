@@ -1,4 +1,0 @@
-E: [pulseaudio] main.c: Daemon startup failed.
-27
-/nix/store/wbbd8g2xxf728iv2gkczq23r03xsvaxw-xsession: Window manager 'gnome3' not found.
-dbus-update-activation-environment: warning: error sending to systemd: org.freedesktop.DBus.Error.Spawn.ChildExited: Process org.freedesktop.systemd1 exited with status 1
