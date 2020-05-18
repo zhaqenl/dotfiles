@@ -125,7 +125,7 @@ function se () {
 # Git --------------------------------------------------------------------------
 function gl () {
     # Open current git directory’s remote link in browser
-    brave `git remote -v | grep fetch | head -1 | cut -f2 | cut -d' ' -f1 | sed -e 's/\.git//g'`
+    brave `git remote -v | grep fetch | head -1 | cut -f2 | cut -d' ' -f1 | sed -e 's/....$//g'`
 }
 
 function gb () {
