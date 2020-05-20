@@ -45,14 +45,12 @@ pcm.dmixer {
                 # probably due to the on-the-fly resampling
                 rate 48000
 
-                # The following settings (plus the usage of a libspeex-derived
-                # resampler) seems to alleviate most issues with chrome-based
-                # browsers having audio glitches when resampling from 48000 to
-                # 44100. (Setting `playback.pcm` to `hw` confirms that the
-                # browser indeed plays back at 48000, hence when manually
-                # setting rate to 44100, resampling occurs and is one of the
-                # causes of the audio stutters)
-                # rate 44100
+                # If you’re using a chrome-based browser, and you plan to use
+                # 44100 as your sample rate, tweak the following settings for
+                # glitch-free playback (these placeholder values are actually
+                # brave browser’s default and audio glitch-free values as seen
+                # through my card’s `hw_params` while playing back on an `hw`
+                # pcm.)
                 # period_size 1024
                 # buffer_size 4096
 
