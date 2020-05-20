@@ -37,18 +37,24 @@ pcm.dmixer {
         ipc_key 6969
         slave {
                 pcm "hw:DSD"
-                rate 44100
                 format S32_LE
 
-                # The following two settings (plus the usage of a
-                # libspeex-derived resampler) seems to alleviate most issues
-                # (including a sharp click upon playback resume after being
-                # paused for some time e.g. Youtube playback) with chrome-based
-                # browsers having audio glitches when resampling from 48000
-                # (since it seems to be the default sample rate of both dmix and
-                # chrome-based browsers (at least on Youtube playback)) to 44100
-                period_size 1024
-                buffer_size 4096
+                # Default back to 48000 since everything works fine
+                # (click/stutter/glitch-free audio) except for Viber having
+                # these semi-regular audio stutters when rate is set to 44100,
+                # probably due to the on-the-fly resampling
+                rate 48000
+
+                # The following settings (plus the usage of a libspeex-derived
+                # resampler) seems to alleviate most issues with chrome-based
+                # browsers having audio glitches when resampling from 48000 to
+                # 44100. (Setting `playback.pcm` to `hw` confirms that the
+                # browser indeed plays back at 48000, hence when manually
+                # setting rate to 44100, resampling occurs and is one of the
+                # causes of the audio stutters)
+                # rate 44100
+                # period_size 1024
+                # buffer_size 4096
 
                 # If you’re using a chrome-based browser (e.g. Chrome and Brave)
                 # and you still experience some occassional clicks during
