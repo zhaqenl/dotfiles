@@ -123,9 +123,14 @@ function se () {
 # ------------------------------------------------------------------------------
 
 # Git --------------------------------------------------------------------------
+# Open current git directory’s remote link in browser
 function gl () {
-    # Open current git directory’s remote link in browser
     brave `git remote -v | grep fetch | head -1 | cut -f2 | cut -d' ' -f1 | sed -e 's/....$//g'`
+}
+
+# Display last commit’s message
+function gd () {
+    git log | head -n 5 | tail -n 1 | xargs
 }
 
 function gb () {
@@ -191,11 +196,11 @@ function smp () {
 
 # Manual startups (special flags and options) ----------------------------------
 function brave () {
-    brave-browser-stable --audio-buffer-size=2048 $@
+    brave-browser-stable $@
 }
 
 function spot () {
-    spotify --show-console
+    spotify --show-console $@
 }
 # ------------------------------------------------------------------------------
 
