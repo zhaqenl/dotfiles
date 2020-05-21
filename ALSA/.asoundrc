@@ -40,9 +40,10 @@ pcm.dmixer {
                 format S32_LE
 
                 # Default back to 48000 since everything works fine
-                # (click/stutter/glitch-free audio) except for Viber having
-                # these semi-regular audio stutters when rate is set to 44100,
-                # probably due to the on-the-fly resampling
+                # (click/stutter/glitch-free audio) except for Viber (and other
+                # VoIP apps including web-based ones) having these semi-regular
+                # audio stutters when rate is set to 44100, probably due to the
+                # on-the-fly resampling
                 rate 48000
 
                 # If you’re using a chrome-based browser, and you plan to use
