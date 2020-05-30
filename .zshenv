@@ -196,7 +196,7 @@ function smp () {
 
 # Manual startups (special flags and options) ----------------------------------
 function brave () {
-    brave-browser-stable $@
+    brave-browser-stable --audio-buffer-size=2048 $@
 }
 
 function spot () {
