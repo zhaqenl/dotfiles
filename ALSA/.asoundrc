@@ -6,12 +6,11 @@ pcm.!default {
         slave.pcm "duplex"
 }
 
-# Change `dsp` to either `bs2b` for the crossfeed effect or `dsp_bs2b`
-# for the crossfeed + AutoEQ
+# `playback.pcm` is the output device, while `capture.pcm` is the input device
 pcm.duplex {
         type asym
         playback.pcm "dsp"
-        capture.pcm "hw:U0x46d0x8c9"
+        capture.pcm "hw:U0x46d0x81b"
 }
 
 # AutoEQ Plugin
@@ -60,36 +59,5 @@ pcm.dmixer {
                 # playback, try adding the command line option
                 # `--audio-buffer-size=2048`
         }
-}
-# ==============================================================================
-
-# These are `slave.pcm` alternatives ===========================================
-# Crossfeed Plugin
-pcm.bs2b {
-        type ladspa
-        slave.pcm "dmixplug"
-        path "/usr/lib/ladspa/"
-        plugins [{
-                label bs2b
-                input {
-                      controls [ 725 4.5 ]
-                }
-        }]
-}
-
-# Combined Crossfeed and AutoEQ Plugins
-pcm.dsp_bs2b {
-        type ladspa
-        slave.pcm "dmixplug"
-        path "/usr/lib/ladspa/"
-        plugins [{
-                label bs2b
-                input {
-                      controls [ 725 4.5 ]
-                }
-        }
-                {
-                label ladspa_dsp
-        }]
 }
 # ==============================================================================
