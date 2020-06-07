@@ -15,6 +15,9 @@ eval "$(pyenv init -)"
 ## GIT_EDITOR
 export GIT_EDITOR="emacsclient -nw"
 
+## sudoedit
+export SUDO_EDITOR="emacsclient -nw"
+
 ## Functions
 # Utilities --------------------------------------------------------------------
 function tmux () {
@@ -118,7 +121,7 @@ function e () {
 }
 
 function se () {
-    SUDO_EDITOR="emacsclient -nw" sudoedit $@
+    sudoedit $@
 }
 # ------------------------------------------------------------------------------
 
@@ -167,6 +170,11 @@ function laud () {
     echo ""
     cat /proc/asound/DSD/stream0 \
         | grep -e Playback -e Status -e freq -e Format
+}
+
+# Test capture and playback devices
+function af () {
+    arecord -f dat | aplay -
 }
 
 function sar () {
