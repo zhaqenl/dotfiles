@@ -46,7 +46,7 @@ pcm.dmixer {
 }
 
 # Allow multiple applications to use input device simultaneously
-# Replace `DSD` with your output device’s name
+# Replace `hw:U0x46d0x81bDSD` with your input device’s name
 pcm.dsnooper {
         type dsnoop
         ipc_key 9696
