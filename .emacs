@@ -285,6 +285,7 @@
  ("M-g i" . yas-insert-snippet)
  ("M-g f" . fill-to-end)
  ("M-g r" . query-replace)
+ ("M-g R" . query-replace-regexp)
 
  ("C-c ^" . delete-to-bol)
  ("C-c $" . delete-to-eol)
