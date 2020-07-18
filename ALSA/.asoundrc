@@ -14,11 +14,12 @@ pcm.duplex {
 }
 
 # Allow simultaneous playback from multiple sources
-# Replace `AUDIO` with your output device’s name
 pcm.dmixer {
         type dmix
         ipc_key 6969
         slave {
+                # Replace `AUDIO` with your output device’s name from output of
+                # `cat /proc/asound/cards`
                 pcm "hw:AUDIO"
                 format S32_LE
 
