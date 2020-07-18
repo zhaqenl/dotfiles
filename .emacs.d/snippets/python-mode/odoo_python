@@ -3,11 +3,9 @@
 # key: odoo_python
 # --
 
-# -*- coding: utf-8 -*-
-"""Model file for ${__name__} module
-"""
-
-from openerp import models, fields, api
+# coding: utf-8
 from logging import getLogger
+from openerp import models, fields, api
 
-_log = getLogger("name")
+def log(*to_output):
+    getLogger().info('\n\n\n%s\n\n', to_output)
