@@ -274,8 +274,8 @@ function Mrg() {
 }
 
 function o8 () {
-    /opt/odoo8/odoo8-server/odoo.py \
-        -c /etc/odoo8-server.conf \
+    /opt/odoo8_2/odoo.py \
+        -c /etc/odoo8_2.conf \
         --auto-reload $@
 }
 
