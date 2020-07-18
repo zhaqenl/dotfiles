@@ -166,9 +166,9 @@ function laud () {
     lsof /dev/snd/* | tail -n +2
     echo ""
     echo "hw_params:"
-    cat /proc/asound/DSD/pcm0p/sub0/hw_params
+    cat /proc/asound/AUDIO/pcm0p/sub0/hw_params
     echo ""
-    cat /proc/asound/DSD/stream0 \
+    cat /proc/asound/AUDIO/stream0 \
         | grep -e Playback -e Status -e freq -e Format
 }
 

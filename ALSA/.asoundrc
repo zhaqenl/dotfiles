@@ -14,12 +14,12 @@ pcm.duplex {
 }
 
 # Allow simultaneous playback from multiple sources
-# Replace `DSD` with your output device’s name
+# Replace `AUDIO` with your output device’s name
 pcm.dmixer {
         type dmix
         ipc_key 6969
         slave {
-                pcm "hw:DSD"
+                pcm "hw:AUDIO"
                 format S32_LE
 
                 # Default back to 48000 since everything works fine
@@ -46,7 +46,7 @@ pcm.dmixer {
 }
 
 # Allow multiple applications to use input device simultaneously
-# Replace `hw:U0x46d0x81bDSD` with your input device’s name
+# Replace `hw:U0x46d0x81b` with your input device’s name
 pcm.dsnooper {
         type dsnoop
         ipc_key 9696
