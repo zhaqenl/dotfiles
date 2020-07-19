@@ -13,6 +13,22 @@ pcm.duplex {
         capture.pcm "dsnooper"
 }
 
+# Parametric EQ Plugin
+pcm.dsp {
+        type ladspa
+        slave.pcm "dmixplug"
+        path "/usr/lib/ladspa/"
+        plugins [{
+                label ladspa_dsp
+        }]
+}
+
+# Compatibility layer between ladspa and dmix (https://bit.ly/3dfKqtT)
+pcm.dmixplug {
+        type plug
+        slave.pcm "dmixer"
+}
+
 # Allow simultaneous playback from multiple sources
 pcm.dmixer {
         type dmix
@@ -52,20 +68,4 @@ pcm.dsnooper {
         type dsnoop
         ipc_key 9696
         slave.pcm "hw:U0x46d0x81b"
-}
-
-# Parametric EQ Plugin
-pcm.dsp {
-        type ladspa
-        slave.pcm "dmixplug"
-        path "/usr/lib/ladspa/"
-        plugins [{
-                label ladspa_dsp
-        }]
-}
-
-# Compatibility layer between ladspa and dmix (https://bit.ly/3dfKqtT)
-pcm.dmixplug {
-        type plug
-        slave.pcm "dmixer"
 }
