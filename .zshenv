@@ -178,7 +178,11 @@ function af () {
 }
 
 function sar () {
-    sudo alsa force-reload
+    sudo /etc/init.d/alsa-utils stop && \
+        sleep 1 && \
+        sudo alsa force-reload && \
+        sleep 1 && \
+        sudo /etc/init.d/alsa-utils start
 }
 
 function pak () {
