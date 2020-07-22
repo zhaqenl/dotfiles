@@ -1,69 +1,36 @@
 defaults.pcm.rate_converter "speexrate_best"
 
-# Default device
 pcm.!default {
         type plug
         slave.pcm "duplex"
 }
 
-# `playback.pcm` is the output device, while `capture.pcm` is the input device
 pcm.duplex {
         type asym
         playback.pcm "dsp"
         capture.pcm "dsnooper"
 }
 
-# Parametric EQ Plugin
 pcm.dsp {
         type ladspa
-        slave.pcm "dmixplug"
         path "/usr/lib/ladspa/"
         plugins [{
                 label ladspa_dsp
         }]
-}
-
-# Compatibility layer between ladspa and dmix (https://bit.ly/3dfKqtT)
-pcm.dmixplug {
-        type plug
-        slave.pcm "dmixer"
-}
-
-# Allow simultaneous playback from multiple sources
-pcm.dmixer {
-        type dmix
-        ipc_key 6969
-        slave {
-                # Replace `AUDIO` with your output device’s name from output of
-                # `cat /proc/asound/cards`
-                pcm "hw:AUDIO"
-                format S32_LE
-
-                # Default back to 48000 since everything works fine
-                # (click/stutter/glitch-free audio) except for Viber (and other
-                # VoIP apps including web-based ones) having these semi-regular
-                # audio stutters when rate is set to 44100, probably due to the
-                # on-the-fly resampling
-                rate 48000
-
-                # If you’re using a chrome-based browser, and you plan to use
-                # 44100 as your sample rate, tweak the following settings for
-                # glitch-free playback (these placeholder values are actually
-                # brave browser’s default and audio glitch-free values as seen
-                # through my card’s `hw_params` while playing back on an `hw`
-                # pcm.)
-                # period_size 1024
-                # buffer_size 4096
-
-                # If you’re using a chrome-based browser (e.g. Chrome and Brave)
-                # and you still experience some occassional clicks during
-                # playback, try adding the command line option
-                # `--audio-buffer-size=2048`
+        slave.pcm {
+                  type plug
+                  slave.pcm {
+                            type dmix
+                            ipc_key 6969
+                            slave {
+                                  pcm "hw:AUDIO"
+                                  format S32_LE
+                                  rate 48000
+                            }
+                  }
         }
 }
 
-# Allow multiple applications to use input device simultaneously
-# Replace `hw:U0x46d0x81b` with your input device’s name
 pcm.dsnooper {
         type dsnoop
         ipc_key 9696
