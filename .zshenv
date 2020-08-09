@@ -177,6 +177,10 @@ function af () {
     arecord -f dat | aplay -
 }
 
+function am () {
+    alsamixer -V all -D hw:AUDIO
+}
+
 function sar () {
     sudo /etc/init.d/alsa-utils stop && \
         sleep 1 && \
