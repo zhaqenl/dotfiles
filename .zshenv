@@ -128,7 +128,7 @@ function se () {
 # Git --------------------------------------------------------------------------
 # Open current git directory’s remote link in browser
 function gl () {
-    brave `git remote -v | grep fetch | head -1 | cut -f2 | cut -d' ' -f1 | sed -e 's/....$//g'`
+    brave `echo "$(git remote -v | grep fetch | head -1 | cut -f2 | cut -d' ' -f1 | sed 's/....$//g' | sed 's/$/\/tree\//')$(git branch | grep \* | cut -c 3-)"`
 }
 
 # Display last commit’s message
@@ -306,14 +306,16 @@ function o12com () {
 }
 
 function o12ent () {
-    /opt/odoo12Ent/odoo12Ent-server/odoo-bin \
+    /usr/bin/python3.6 \
+        /opt/odoo12Ent/odoo12Ent-server/odoo-bin \
         -c /etc/odoo12Ent-server.conf \
         --dev=all $@
 }
 
 function o13ent () {
-    /opt/odoo13Ent/odoo-bin \
-        -c /etc/odoo13Ent.conf \
+    /opt/odoo13Ent/venv/bin/python \
+        /opt/odoo13Ent/odoo-bin \
+        -c /etc/odoo13Enterprise.conf \
         --dev=all $@
 }
 # ------------------------------------------------------------------------------
