@@ -7,8 +7,18 @@ pcm.!default {
 
 pcm.duplex {
         type asym
-        playback.pcm "dsp"
+        playback.pcm "dmixed"
         capture.pcm "dsnooper"
+}
+
+pcm.dmixed {
+        type dmix
+        ipc_key 6969
+        slave {
+              pcm "hw:AUDIO"
+              format S32_LE
+              rate 48000
+        }
 }
 
 pcm.dsp {
