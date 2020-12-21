@@ -9,7 +9,7 @@ export LOCALE_ARCHIVE=$(readlink ~/.nix-profile/lib/locale)/locale-archive
 export PG_LOG_PATH="/etc/postgresql/9.5/main/postgresql.conf"
 
 ## Pyenv
-export PATH=$HOME/bin:$HOME/.pyenv/bin:$PATH
+export PATH=$HOME/bin:$HOME/.pyenv/bin:$HOME/anaconda3/bin:$PATH
 eval "$(pyenv init -)"
 
 ## GIT_EDITOR
@@ -268,6 +268,7 @@ function mrg() {
        -g '!*.pot' \
        -g '!*.js' \
        -g '!*.css' \
+       -g '!*.svg' \
        -g '!*.*~' \
        -g '!*.*#' $@
 }
@@ -313,9 +314,9 @@ function o12ent () {
 }
 
 function o13ent () {
-    /opt/odoo13Ent/venv/bin/python \
-        /opt/odoo13Ent/odoo-bin \
-        -c /etc/odoo13Enterprise.conf \
+    /usr/bin/python3.6 \
+        /opt/odoo13/odoo/odoo-bin \
+        -c /etc/odoo13.conf \
         --dev=all $@
 }
 # ------------------------------------------------------------------------------
