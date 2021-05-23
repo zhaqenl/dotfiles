@@ -15,9 +15,6 @@ eval "$(pyenv init -)"
 ## GIT_EDITOR
 export GIT_EDITOR="emacsclient -nw"
 
-## sudoedit
-export SUDO_EDITOR="emacsclient -nw"
-
 ## Functions
 # Utilities --------------------------------------------------------------------
 function tmux () {
@@ -98,7 +95,7 @@ function psg () {
 # }
 
 function mhost(){
-    make && python -m SimpleHTTPServer
+    make && python2.7 -m SimpleHTTPServer
 }
 
 autoload zcalc
@@ -121,7 +118,7 @@ function e () {
 }
 
 function se () {
-    sudoedit $@
+    sudo emacs -nw $@
 }
 # ------------------------------------------------------------------------------
 
@@ -301,6 +298,7 @@ function o11ent () {
 }
 
 function o12com () {
+    /usr/bin/python3.6 \
     /opt/odoo12/odoo12-server/odoo-bin \
         -c /etc/odoo12-server.conf \
         --dev=all $@
@@ -317,6 +315,13 @@ function o13ent () {
     /usr/bin/python3.6 \
         /opt/odoo13/odoo/odoo-bin \
         -c /etc/odoo13.conf \
+        --dev=all $@
+}
+
+function o14ent () {
+    /usr/bin/python3.6 \
+        /opt/odoo14ent/odoo/odoo-bin \
+        -c /etc/odoo14ent.conf \
         --dev=all $@
 }
 # ------------------------------------------------------------------------------
