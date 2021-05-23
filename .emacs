@@ -368,6 +368,7 @@
  '(elpy-modules
    (quote
     (elpy-module-company elpy-module-eldoc elpy-module-pyvenv elpy-module-highlight-indentation elpy-module-yasnippet elpy-module-django elpy-module-sane-defaults)))
+ '(flycheck-checker-error-threshold 5000)
  '(package-selected-packages
    (quote
     (jinja2-mode hy-mode pyenv-mode use-package smartparens markdown-mode ample-theme)))
