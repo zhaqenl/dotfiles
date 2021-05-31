@@ -86,6 +86,10 @@ function man () {
         nman $@
 }
 
+function ssh () {
+    ssh -o ServerAliveInterval=15 $@
+}
+
 function psg () {
     pgrep --list-full --list-name --full $@
 }
