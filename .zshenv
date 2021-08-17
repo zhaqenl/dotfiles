@@ -15,6 +15,9 @@ eval "$(pyenv init -)"
 ## GIT_EDITOR
 export GIT_EDITOR="emacsclient -nw"
 
+## SSH
+alias ssh="ssh -o ServerAliveInterval=15"
+
 ## Functions
 # Utilities --------------------------------------------------------------------
 function tmux () {
@@ -86,10 +89,6 @@ function man () {
         nman $@
 }
 
-function ssh () {
-    ssh -o ServerAliveInterval=15 $@
-}
-
 function psg () {
     pgrep --list-full --list-name --full $@
 }
@@ -130,6 +129,10 @@ function se () {
 # Open current git directory’s remote link in browser
 function gl () {
     brave `echo "$(git remote -v | grep fetch | head -1 | cut -f2 | cut -d' ' -f1 | sed 's/....$//g' | sed 's/$/\/tree\//')$(git branch | grep \* | cut -c 3-)"`
+}
+
+function gls () {
+    brave `echo "$(git remote -v | grep fetch | head -1 | cut -f2 | cut -d' ' -f1 | sed 's/git@//g' | sed 's/:/\//g' | sed 's/....$//g' | sed 's/$/\/tree\//')$(git branch | grep \* | cut -c 3-)"`
 }
 
 # Display last commit’s message
