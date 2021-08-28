@@ -212,6 +212,10 @@ function smp () {
         smplayer $1
     fi
 }
+
+function rew () {
+    roomeqwizard
+}
 # ------------------------------------------------------------------------------
 
 # Manual startups (special flags and options) ----------------------------------
