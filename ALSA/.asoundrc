@@ -1,8 +1,6 @@
-defaults.pcm.rate_converter "speexrate_best"
-
 pcm.!default {
         type plug
-        slave.pcm "duplex"
+        slave.pcm hw
 }
 
 pcm.duplex {
