@@ -1,11 +1,13 @@
+defaults.pcm.rate_converter "speexrate_best"
+
 pcm.!default {
         type plug
-        slave.pcm hw
+        slave.pcm "duplex"
 }
 
 pcm.duplex {
         type asym
-        playback.pcm "dmixed"
+        playback.pcm "dsp"
         capture.pcm "dsnooper"
 }
 
@@ -32,8 +34,6 @@ pcm.dsp {
                             ipc_key 6969
                             slave {
                                   pcm "hw:AUDIO"
-                                  format S32_LE
-                                  rate 48000
                             }
                   }
         }
