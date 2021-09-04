@@ -1,7 +1,6 @@
 # -*- mode: sh; coding: utf-8 -*-
 
 ## Variables
-PATH=$PATH:$HOME/bin
 PS1="%F{cyan}%B%n%b%f%B%F{magenta} %f%b%B%F{red}%m${CHROOT_PROMPT}%f%b %F{green}%B%0d%b%f${vcs_info_msg_0_} %D{%n}%F{green}★%f%F{white} "
 BINDIR=$HOME/bin
 
@@ -9,7 +8,7 @@ export LOCALE_ARCHIVE=$(readlink ~/.nix-profile/lib/locale)/locale-archive
 export PG_LOG_PATH="/etc/postgresql/9.5/main/postgresql.conf"
 
 ## Pyenv
-export PATH=$HOME/bin:$HOME/.pyenv/bin:$HOME/anaconda3/bin:$PATH
+export PATH=$HOME/bin:$HOME/.local/bin:$HOME/.pyenv/bin:$HOME/anaconda3/bin:$PATH
 eval "$(pyenv init -)"
 
 ## GIT_EDITOR
@@ -17,6 +16,8 @@ export GIT_EDITOR="emacsclient -nw"
 
 ## SSH
 alias ssh="ssh -o ServerAliveInterval=15"
+
+typeset -aU path
 
 ## Functions
 # Utilities --------------------------------------------------------------------
