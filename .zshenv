@@ -273,20 +273,11 @@ function make_emem () {
 # Odoo functions ---------------------------------------------------------------
 # Ripgrep for Odoo
 function mrg() {
-    rg -F -i -g '!*.po' \
+    rg -F -S -g '!*.po' \
        -g '!*.pot' \
        -g '!*.js' \
        -g '!*.css' \
        -g '!*.svg' \
-       -g '!*.*~' \
-       -g '!*.*#' $@
-}
-
-function Mrg() {
-    rg -F -g '!*.po' \
-       -g '!*.pot' \
-       -g '!*.js' \
-       -g '!*.css' \
        -g '!*.*~' \
        -g '!*.*#' $@
 }
