@@ -376,6 +376,16 @@ apps are not started from a shell."
   (interactive)
   (call-interactively 'char-after))
 
+(defun ssbb-pyenv-hook ()
+"Automatically activates pyenv version if .python-version file exists."
+(f-traverse-upwards
+(lambda (path)
+  (let ((pyenv-version-path (f-expand ".python-version" path)))
+                (if (f-exists? pyenv-version-path)
+                                (pyenv-mode-set (s-trim (f-read-text pyenv-version-path 'utf-8))))))))
+
+(add-hook 'find-file-hook 'ssbb-pyenv-hook)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
