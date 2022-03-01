@@ -298,6 +298,7 @@ function o8 () {
 }
 
 function o11com () {
+    /usr/bin/python3.5 \
     /opt/odoo11com/odoo11com-server/odoo-bin \
         -c /etc/odoo11com-server.conf \
         --dev=all $@
