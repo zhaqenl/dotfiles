@@ -7,6 +7,10 @@ BINDIR=$HOME/bin
 export LOCALE_ARCHIVE=$(readlink ~/.nix-profile/lib/locale)/locale-archive
 export PG_LOG_PATH="/etc/postgresql/9.5/main/postgresql.conf"
 
+## Go
+export GOPATH=$HOME/go
+export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
+
 ## Pyenv
 export PATH=$HOME/bin:$HOME/.local/bin:$HOME/.pyenv/bin:$HOME/anaconda3/bin:$PATH
 eval "$(pyenv init -)"
@@ -42,6 +46,10 @@ function tmux () {
 
 function s () {
     command sudo $@
+}
+
+function ssh-personal () {
+    eval "$(ssh-agent -s)" && ssh-add ~/.ssh/id_rsa_personal
 }
 
 function lss () {
@@ -148,6 +156,12 @@ function gb () {
     fi
 }
 
+function gtfo () {
+    if [[ $1 ]]; then
+       git fetch origin $1
+    fi
+}
+
 # Run inside git branch to merge to
 function gm () {
     if [[ $1 && $2 ]]; then
@@ -230,6 +244,16 @@ function spot () {
 # ------------------------------------------------------------------------------
 
 # Convenience utilities --------------------------------------------------------
+function getip() {
+    if [[ $1 ]]; then
+        nslookup $1 \
+            | grep 'Address:' \
+            | grep -v '127.0.0.1#53' \
+            | awk '{print $2}' \
+            | tee >(xclip -selection clipboard)
+    fi
+}
+
 function srem () {
     if [[ $1 ]]; then
         sudo apt remove $1 \
@@ -282,6 +306,13 @@ function mrg() {
        -g '!*.*#' $@
 }
 
+function o7 () {
+    /usr/bin/python2.7 \
+        /opt/odoo7/openerp-server \
+        -c /etc/odoo7.conf \
+        $@
+}
+
 function o8 () {
     /opt/odoo8_2/odoo.py \
         -c /etc/odoo8_2.conf \
@@ -326,6 +357,13 @@ function o14ent () {
     /usr/bin/python3.6 \
         /opt/odoo14ent/odoo/odoo-bin \
         -c /etc/odoo14ent.conf \
+        --dev=all $@
+}
+
+function o15ent () {
+    /home/devdesk4/anaconda3/bin/python3.7 \
+        /opt/odoo15ent/odoo-bin \
+        -c /etc/odoo15ent.conf \
         --dev=all $@
 }
 # ------------------------------------------------------------------------------
