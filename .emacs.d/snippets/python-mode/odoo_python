@@ -5,7 +5,11 @@
 
 # coding: utf-8
 from logging import getLogger
-from openerp import models, fields, api
+from odoo import models, fields, api
+
 
 def log(*to_output):
     getLogger().info('\n\n\n%s\n\n', to_output)
+
+
+$1
