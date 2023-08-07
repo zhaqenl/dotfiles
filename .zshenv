@@ -144,6 +144,10 @@ function gls () {
     brave `echo "$(git remote -v | grep fetch | head -1 | cut -f2 | cut -d' ' -f1 | sed 's/git@//g' | sed 's/:/\//g' | sed 's/....$//g' | sed 's/$/\/tree\//')$(git branch | grep \* | cut -c 3-)"`
 }
 
+function gs () {
+    git status
+}
+
 # Display last commit’s message
 function gd () {
     git log | head -n 5 | tail -n 1 | xargs
@@ -156,10 +160,20 @@ function gb () {
     fi
 }
 
+function gpo () {
+    if [[ $1 ]]; then
+        git push origin $1
+    fi
+}
+
 function gtfo () {
     if [[ $1 ]]; then
        git fetch origin $1
     fi
+}
+
+function grba () {
+    git rebase --autostash
 }
 
 # Run inside git branch to merge to
@@ -169,6 +183,12 @@ function gm () {
             && git merge -s ours $2 \
             && git checkout $2 \
             && git merge $1
+    fi
+}
+
+function ncust () {
+    if [[ $1 ]]; then
+        ngrok http --domain=bull-prepared-informally.ngrok-free.app $1
     fi
 }
 # ------------------------------------------------------------------------------
@@ -241,6 +261,10 @@ function brave () {
 function spot () {
     spotify --show-console $@
 }
+
+function ff () {
+    firefox $@
+}
 # ------------------------------------------------------------------------------
 
 # Convenience utilities --------------------------------------------------------
@@ -249,6 +273,7 @@ function getip() {
         nslookup $1 \
             | grep 'Address:' \
             | grep -v '127.0.0.1#53' \
+            | grep -v '1.1.1.1#53' \
             | awk '{print $2}' \
             | tee >(xclip -selection clipboard)
     fi
