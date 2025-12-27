@@ -1,0 +1,7 @@
+pane	0	1	1	:*	1	lenovo-ThinkPad-X13-Gen-2i	:/home/lenovo	1	emacsclient	:emacsclient -t /home/lenovo/.tmux.conf
+emacsclient -t /home/lenovo/.tmux.conf
+pane	0	1	1	:*	2	lenovo-ThinkPad-X13-Gen-2i	:/home/lenovo/dotfiles	0	emacsclient	:emacsclient -t .zshenv
+pane	1	1	1	:*	1	lenovo-ThinkPad-X13-Gen-2i	:/home/lenovo	1	bash	:
+window	0	1	:emacsclient	1	:*	b571,191x34,0,0{95x34,0,0,0,95x34,96,0,7}	:
+window	1	1	:bash	1	:*	b261,80x24,0,0,4	:
+state	0	

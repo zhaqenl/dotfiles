@@ -1,0 +1,6 @@
+ pane	0	1	1	:*	1	✳ tmux emacsclient restore	:/home/lenovo	0	emacsclient	:emacsclient -nw /home/lenovo/.tmux.conf
+pane	0	1	1	:*	2	lenovo-ThinkPad-X13-Gen-2i	:/opt/odoo18ent/custom_addons/photonergyinc	1	emacsclient	:emacsclient -nw agilis_18_helpdesk_management/models/stock_lot.py
+pane	0	2	0	:	1	lenovo-ThinkPad-X13-Gen-2i	:/home/lenovo	1	bash	:
+window	0	1	:emacsclient	1	:*	3573,191x34,0,0{95x34,0,0,1,95x34,96,0,2}	:
+window	0	2	:bash	0	:	bb40,191x34,0,0,3	:
+state	0	

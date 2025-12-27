@@ -1,0 +1,4 @@
+pane	0	1	1	:*	1	lenovo-ThinkPad-X13-Gen-2i	:/home/lenovo	0	emacsclient	:emacsclient -t /home/lenovo/.tmux.conf
+pane	0	1	1	:*	2	✳ ExecStop Systemd	:/home/lenovo/.tmux/plugins/tmux-continuum	1	emacsclient	:emacsclient -t /home/lenovo/.config/systemd/user/tmux.service
+window	0	1	:emacsclient	1	:*	c677,191x35,0,0{95x35,0,0,1,95x35,96,0,3}	:
+state	0	

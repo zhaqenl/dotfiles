@@ -1,0 +1,4 @@
+pane	0	1	1	:*	1	✳ Bash alias editor	:/home/lenovo	1	emacsclient	:emacsclient -t -a  .tmux.conf
+pane	0	1	1	:*	2	lenovo-ThinkPad-X13-Gen-2i	:/home/lenovo	0	claude	:claude
+window	0	1	:emacsclient	1	:*	4677,191x35,0,0{95x35,0,0,1,95x35,96,0,2}	:
+state	0	
