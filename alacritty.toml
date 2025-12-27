@@ -1,0 +1,46 @@
+[env]
+TERM = "xterm-256color"
+
+[window]
+startup_mode = "Maximized"
+
+[font]
+normal = { family = "JetBrainsMono Nerd Font", style = "Regular"}
+size = 22
+
+[keyboard]
+
+# Shift+Return sends ESC+Enter (same as Option+Enter) to work in tmux
+
+bindings = [{ key = "Return", mods = "Shift", chars = "\u001b\r" }] 
+
+# colors (miasma) https://github.com/xero/miasma.nvim
+[colors]
+indexed_colors = [{ index = 16, color = "0x222222"}]
+
+# Primary colors
+[colors.primary]
+background = "#222222"
+foreground = "#c2c2b0"
+
+# Normal colors
+[colors.normal]
+black = "#222222"
+red = "#685742"
+green = "#5f875f"
+yellow = "#b36d43"
+blue = "#78824b"
+magenta = "#bb7744"
+cyan = "#c9a554"
+white = "#d7c483"
+
+# Bright colors
+[colors.bright]
+black = "#666666"
+red = "#685742"
+green = "#5f875f"
+yellow = "#b36d43"
+blue = "#78824b"
+magenta = "#bb7744"
+cyan = "#c9a554"
+white = "#d7c483"
