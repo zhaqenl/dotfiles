@@ -14,7 +14,6 @@ Contents
 | `.emacs`, `.emacs.d/` | Emacs | Text editor with daemon support |
 | `alacritty.toml` | Alacritty | GPU-accelerated terminal emulator |
 | `keyd/` | keyd | System-wide keyboard remapping |
-| `systemd/` | Systemd | User service files |
 | `Autostart/` | Desktop | XDG autostart entries |
 
 
@@ -72,7 +71,7 @@ Tmux Configuration
 
 **Key bindings:**
 - `Prefix + c` - Show clock
-- `Prefix + C` - New window (swapped from defaults)
+- `Prefix + t` - New window (swapped from defaults)
 - Windows and panes start at index 1, not 0
 - Automatic window renumbering on close
 
