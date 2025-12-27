@@ -124,6 +124,8 @@ alias e='emacsclient -t'
 export SUDO_EDITOR='emacsclient -t --alternate-editor='
 alias es='sudo -e'
 
+alias zhaqenl="eval '$(ssh-agent -s)' && ssh-add ~/.ssh/id_ed25519_zhaqenl_github"
+
 gfo() {
     git fetch origin "$(git branch --show-current)"
 }
@@ -131,6 +133,8 @@ gfo() {
 gpo() {
     git push origin "$(git branch --show-current)"
 }
+
+alias zgpo='zhaqenl && gpo'
 
 alias gs='git status'
 alias gd='git diff'
@@ -156,8 +160,6 @@ alias xc='xclip -sel clipboard'
 
 # Odoo-specific ripgrep
 alias rgo="rg -S --glob '!*.po'"
-
-alias zhaqenl="eval '$(ssh-agent -s)' && ssh-add ~/.ssh/id_ed25519_zhaqenl_github"
 
 alias cl="claude"
 alias clr="claude --resume"
