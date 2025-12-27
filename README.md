@@ -86,10 +86,10 @@ System-wide keyboard remapping via keyd daemon.
 - `Alt+s` - Open tmux session switcher
 
 **Typographic characters** (Meta/Compose key layer):
-- `` ` `` - Left single quote (')
-- `'` - Right single quote (')
-- `Shift+`` ` `` - Left double quote (")
-- `Shift+'` - Right double quote (")
+- `` ` `` - Left single quote (‘)
+- `'` - Right single quote (’)
+- `Shift + [` - Left double quote (“)
+- `Shift + ]` - Right double quote (”)
 - `-` - En-dash (–)
 - `Shift+-` - Em-dash (—)
 - `n` - ñ
