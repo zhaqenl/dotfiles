@@ -1,7 +1,0 @@
-
-# -*- mode: snippet; require-final-newline: nil -*-
-# name: Integer Field
-# key: odoo_field_integer
-# --
-${5:new_field} = fields.Integer(string="${10:Field name}", )
-    

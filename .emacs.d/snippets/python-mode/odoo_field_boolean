@@ -1,7 +1,0 @@
-
-# -*- mode: snippet; require-final-newline: nil -*-
-# name: Boolean Field
-# key: odoo_field_boolean
-# --
-${5:is_new_field} = fields.Boolean(string="${10:Field name}", )
-    

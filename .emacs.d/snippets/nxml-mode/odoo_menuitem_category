@@ -1,7 +1,0 @@
-
-# -*- mode: snippet; require-final-newline: nil -*-
-# name: Create menu item for category
-# key: odoo_menuitem_category
-# --
-<menuitem id="menu_$1" name="$2" parent="$3" sequence="$4"/>
-    
