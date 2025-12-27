@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Exec=alacritty -e sh -c "tmux attach -t 0"
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name[en_PH]=Start Alacritty Terminal
+Name=Start Alacritty Terminal
+Comment[en_PH]=
+Comment=
