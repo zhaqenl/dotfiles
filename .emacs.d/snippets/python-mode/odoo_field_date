@@ -1,7 +1,0 @@
-
-# -*- mode: snippet; require-final-newline: nil -*-
-# name: Date Field
-# key: odoo_field_date
-# --
-${5:new_field} = fields.Date(string="${10:Field name}", )
-    
