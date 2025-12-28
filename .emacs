@@ -22,6 +22,12 @@
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 (load-theme 'miasma t)
 
+;; Make terminal Emacs transparent (daemon mode)
+(add-hook 'after-make-frame-functions
+          (lambda (frame)
+            (unless (display-graphic-p frame)
+              (set-face-background 'default "unspecified-bg" frame))))
+
 ;; Python whitespace settings
 (add-hook 'python-mode-hook
           (lambda ()
