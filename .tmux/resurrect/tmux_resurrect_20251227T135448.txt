@@ -1,5 +1,0 @@
-pane	0	1	1	:*	1	lenovo-ThinkPad-X13-Gen-2i	:/home/lenovo	0	emacsclient	:emacsclient -t -a  .tmux.conf
-pane	0	1	1	:*	2	lenovo-ThinkPad-X13-Gen-2i	:/home/lenovo	0	emacsclient	:emacsclient -t -a  .tmux/resurrect/last
-pane	0	1	1	:*	3	lenovo-ThinkPad-X13-Gen-2i	:/home/lenovo	1	bash	:
-window	0	1	:bash	1	:*	d3c5,191x34,0,0{95x34,0,0,1,95x34,96,0[95x17,96,0,2,95x16,96,18,3]}	:
-state	0	
