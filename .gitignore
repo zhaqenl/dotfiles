@@ -3,3 +3,5 @@
 .*~
 .ICEauthority
 .Xauthority
+tmux_resurrect*.txt
+eln-cache
