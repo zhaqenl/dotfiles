@@ -1,3 +1,0 @@
-pane	0	1	1	:*	1	lenovo-ThinkPad-X13-Gen-2i	:/home/lenovo	1	emacsclient	:emacsclient -nw .tmux.conf
-window	0	1	:emacsclient	1	:*	bb40,191x34,0,0,3	:
-state	0	
