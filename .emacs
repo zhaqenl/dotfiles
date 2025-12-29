@@ -19,6 +19,12 @@
 
 (menu-bar-mode -1)
 
+;; Raymund: I added the following, since when an emacsclient was ran
+;; on a symbolically-linked file, it does not retain being opened when
+;; “tmux-resurrected”
+;; Automatically follow symbolic links when visiting files
+(setq find-file-visit-truename t)
+
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 (load-theme 'miasma t)
 
