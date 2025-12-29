@@ -8,11 +8,8 @@
 
 (package-initialize)
 
-;; (unless (package-installed-p 'sudo-edit)
-;;   (package-refresh-contents)
-;;   (package-install 'sudo-edit))
-
-;; (require 'sudo-edit)
+(setq treesit-language-source-alist
+      '((python "https://github.com/tree-sitter/tree-sitter-python" "v0.20.4")))
 
 ;; Enable line numbers globally
 (global-display-line-numbers-mode t)
@@ -33,6 +30,15 @@
           (lambda (frame)
             (unless (display-graphic-p frame)
               (set-face-background 'default "unspecified-bg" frame))))
+
+;; (add-to-list 'auto-mode-alist '("\\.py\\'" . python-ts-mode))
+;; (with-eval-after-load 'eglot
+;;   (add-to-list 'eglot-server-programs '(python-ts-mode . ("basedpyright-langserver" "--stdio"))))
+;; (add-hook 'python-ts-mode-hook 'eglot-ensure)
+;; (add-hook 'python-ts-mode-hook
+;;           (lambda ()
+;;             (setq indent-tabs-mode nil)
+;;             (add-hook 'before-save-hook 'whitespace-cleanup nil t)))
 
 ;; Python whitespace settings
 (add-hook 'python-mode-hook
