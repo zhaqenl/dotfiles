@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-Exec=alacritty -e sh -c "tmux attach -t 0"
+Exec=alacritty -e sh -c "tmux new-session -d -s main 2>/dev/null; tmux kill-session -at main 2>/dev/null; tmux attach -t main"
 Hidden=false
 NoDisplay=false
 X-GNOME-Autostart-enabled=true
