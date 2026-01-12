@@ -126,6 +126,10 @@ alias es='sudo -e'
 
 alias zhaqenl="eval '$(ssh-agent -s)' && ssh-add ~/.ssh/id_ed25519_zhaqenl_github"
 
+pinggy() {
+    ssh -p 443 -R0:localhost:$1 free.pinggy.io
+}
+
 gfo() {
     git fetch origin "$(git branch --show-current)"
 }
