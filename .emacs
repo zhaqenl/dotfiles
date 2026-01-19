@@ -3,10 +3,15 @@
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
 
-;; (require 'package)
-;; (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 
 (package-initialize)
+
+;; Unobtrusively remove trailing whitespace (only on edited lines)
+(use-package ws-butler
+  :ensure t
+  :hook (prog-mode . ws-butler-mode))
 
 (setq treesit-language-source-alist
       '((python "https://github.com/tree-sitter/tree-sitter-python" "v0.20.4")))
@@ -40,19 +45,11 @@
 ;;             (setq indent-tabs-mode nil)
 ;;             (add-hook 'before-save-hook 'whitespace-cleanup nil t)))
 
-;; Python whitespace settings
+;; Python settings: use spaces, not tabs (PEP 8)
 (add-hook 'python-mode-hook
           (lambda ()
-            ;; Use spaces, not tabs (PEP 8)
-            (setq indent-tabs-mode nil)
-            ;; Clean whitespace on save
-            (add-hook 'before-save-hook 'whitespace-cleanup nil t)))
+            (setq indent-tabs-mode nil)))
 
-;; XML whitespace settings
-(add-hook 'nxml-mode-hook
-          (lambda ()
-            ;; Clean whitespace on save
-            (add-hook 'before-save-hook 'whitespace-cleanup nil t)))
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
