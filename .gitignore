@@ -5,3 +5,5 @@
 .Xauthority
 tmux_resurrect*.txt
 eln-cache
+# Emacs packages (auto-installed)
+.emacs.d/elpa/
