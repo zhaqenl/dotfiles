@@ -1,0 +1,77 @@
+{
+    "theme": "dark",
+    "display": {
+	"style": "powerline",
+	"charset": "unicode",
+	"colorCompatibility": "auto",
+	"autoWrap": true,
+	"lines": [
+	    {
+		"segments": {
+		    "directory": {
+			"enabled": true,
+			"style": "full"
+		    },
+		    "git": {
+			"enabled": true,
+			"showSha": false,
+			"showWorkingTree": true,
+			"showOperation": false,
+			"showTag": false,
+			"showTimeSinceCommit": true,
+			"showStashCount": false,
+			"showUpstream": false,
+			"showRepoName": false
+		    }
+		}
+	    },
+	    {
+		"segments": {
+		    "block": {
+			"enabled": true,
+			"type": "time",
+			"burnType": "none"
+		    },
+		    "metrics": {
+			"enabled": true,
+			"showResponseTime": false,
+			"showLastResponseTime": false,
+			"showDuration": false,
+			"showMessageCount": true,
+			"showLinesAdded": true,
+			"showLinesRemoved": true
+		    },
+		    "context": {
+			"enabled": true,
+			"showPercentageOnly": true
+		    },
+		    "today": {
+			"enabled": true,
+			"type": "cost"
+		    }
+		}
+	    },
+	    {
+		"segments": {
+		    "model": {
+			"enabled": true
+		    }
+		}
+	    }
+	]
+    },
+    "budget": {
+	"session": {
+	    "warningThreshold": 80
+	},
+	"today": {
+	    "amount": 5.0,
+	    "warningThreshold": 80
+	},
+	"block": {
+	    "amount": 20000000,
+	    "type": "tokens",
+	    "warningThreshold": 80
+	}
+    }
+}
