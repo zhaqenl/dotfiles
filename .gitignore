@@ -7,3 +7,4 @@ tmux_resurrect*.txt
 eln-cache
 # Emacs packages (auto-installed)
 .emacs.d/elpa/
+odoo-xmlrpc-api-reference.md
