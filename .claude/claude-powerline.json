@@ -27,27 +27,14 @@
 	    },
 	    {
 		"segments": {
-		    "block": {
-			"enabled": true,
-			"type": "time",
-			"burnType": "none"
-		    },
-		    "metrics": {
-			"enabled": true,
-			"showResponseTime": false,
-			"showLastResponseTime": false,
-			"showDuration": false,
-			"showMessageCount": true,
-			"showLinesAdded": true,
-			"showLinesRemoved": true
-		    },
 		    "context": {
 			"enabled": true,
 			"showPercentageOnly": true
 		    },
-		    "today": {
+		    "block": {
 			"enabled": true,
-			"type": "cost"
+			"type": "weighted",
+			"burnType": "cost"
 		    }
 		}
 	    },
