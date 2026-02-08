@@ -19,6 +19,12 @@
 ;; Enable line numbers globally
 (global-display-line-numbers-mode t)
 
+;; Auto-wrap lines in text and Markdown files
+(add-hook 'text-mode-hook 'auto-fill-mode)
+(use-package markdown-mode
+  :ensure t
+  :hook (markdown-mode . auto-fill-mode))
+
 (menu-bar-mode -1)
 
 ;; Raymund: I added the following, since when an emacsclient was ran
