@@ -5,6 +5,12 @@ TERM = "xterm-256color"
 startup_mode = "Maximized"
 decorations = "none"
 
+# Smooth cursor animation (from alacritty-smooth-cursor fork)
+[cursor]
+smooth_motion = true
+smooth_motion_factor = 0.35
+smooth_motion_spring = 0.5
+
 # size 22 -> 22.5, to remove empty line before status line
 [font]
 normal = { family = "JetBrainsMono Nerd Font", style = "Regular"}

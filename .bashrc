@@ -11,3 +11,4 @@ for f in ~/.bashrc.d/*.bash; do
     [ -r "$f" ] && . "$f"
 done
 unset f
+. "$HOME/.cargo/env"
