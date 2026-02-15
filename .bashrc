@@ -155,6 +155,25 @@ glp() {
     git log -1 --name-only --format="Commit: %h - %s%nPushed: %ad" --date=format:"%Y-%m-%d %H:%M:%S" "$remote_ref"
 }
 
+alias cl-pulse-update='cd ~/claude-pulse && python claude_status.py --update'
+
+# Add an Odoo MCP server to Claude Code
+cl-mcp-odoo() {
+    if [ $# -ne 5 ]; then
+        echo "Usage: cl-mcp-odoo <mcp-name> <url> <db> <user> <password>"
+        return 1
+    fi
+
+    claude mcp add --transport stdio \
+      --env ODOO_URL="$2" \
+      --env ODOO_DB="$3" \
+      --env ODOO_USER="$4" \
+      --env ODOO_PASSWORD="$5" \
+      --env ODOO_YOLO=true \
+      --scope local \
+      "$1" -- uvx mcp-server-odoo
+}
+
 alias dcu='docker compose down && docker compose up'
 alias dcd='docker compose down'
 
