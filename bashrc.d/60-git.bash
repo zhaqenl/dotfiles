@@ -24,9 +24,3 @@ glp() {
 
     git log -1 --name-only --format="Commit: %h - %s%nPushed: %ad" --date=format:"%Y-%m-%d %H:%M:%S" "$remote_ref"
 }
-
-# SSH agent with zhaqenl GitHub key
-alias zhaqenl="eval '$(ssh-agent -s)' && ssh-add ~/.ssh/id_ed25519_zhaqenl_github"
-
-# Auth + push in one step
-alias zgpo='zhaqenl && gpo'
