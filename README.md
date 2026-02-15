@@ -15,6 +15,7 @@ Contents
 | `.emacs`, `.emacs.d/` | Emacs | Text editor with daemon support |
 | `alacritty.toml` | Alacritty | GPU-accelerated terminal emulator |
 | `keyd/` | keyd | System-wide keyboard remapping |
+| `ssh/` | OpenSSH | SSH client configuration |
 | `Autostart/` | Desktop | XDG autostart entries |
 
 
@@ -112,6 +113,12 @@ ln -s $(pwd)/bashrc.d ~/.bashrc.d
 
 ```bash
 ln -s $(pwd)/alacritty.toml ~/.config/alacritty/alacritty.toml
+```
+
+**SSH:**
+
+```bash
+ln -sf $(pwd)/ssh/config ~/.ssh/config
 ```
 
 **keyd:**

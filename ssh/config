@@ -1,0 +1,8 @@
+ServerAliveInterval=15
+
+# Personal GitHub account
+Host github-zhaqenl
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/id_ed25519_zhaqenl_github
+  IdentitiesOnly yes
