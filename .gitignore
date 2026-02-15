@@ -1,6 +1,7 @@
 *.pyc
 *~
 .*~
+*.*~
 .ICEauthority
 .Xauthority
 tmux_resurrect*.txt
