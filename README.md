@@ -9,7 +9,8 @@ Contents
 
 | File/Directory | Application | Description |
 |----------------|-------------|-------------|
-| `.bashrc` | Bash | Shell configuration with git, docker, and editor aliases |
+| `.bashrc` | Bash | Thin loader that sources modular configs from `bashrc.d/` |
+| `bashrc.d/` | Bash | Modular shell config: history, prompt, aliases, git, Claude, PATH |
 | `.tmux.conf` | Tmux | Terminal multiplexer with session persistence |
 | `.emacs`, `.emacs.d/` | Emacs | Text editor with daemon support |
 | `alacritty.toml` | Alacritty | GPU-accelerated terminal emulator |
@@ -32,7 +33,7 @@ Consistent dark theme across all applications:
 Bash Configuration
 ------------------
 
-Key aliases defined in `.bashrc`:
+Modular configs live in `bashrc.d/`, sourced alphabetically by `.bashrc`. Key aliases:
 
 **Editor:**
 - `e <file>` - Open file in emacsclient (terminal)
@@ -100,10 +101,11 @@ Installation
 
 **Home directory dotfiles:**
 
-Create symbolic links for top-level dotfiles:
+Create symbolic links for top-level dotfiles and the `bashrc.d/` directory:
 
 ```bash
 ln -s `find $(pwd) -maxdepth 1 -not -type d -name "\.*" -not -name "\.gitignore"` ~
+ln -s $(pwd)/bashrc.d ~/.bashrc.d
 ```
 
 **Alacritty:**
