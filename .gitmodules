@@ -1,3 +1,6 @@
 [submodule ".claude"]
 	path = .claude
 	url = github-zhaqenl:zhaqenl/claude-config.git
+[submodule "tuja-vortaro"]
+	path = tuja-vortaro
+	url = https://gitlab.com/sstangl/tuja-vortaro.git
