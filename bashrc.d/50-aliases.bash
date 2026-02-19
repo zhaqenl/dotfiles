@@ -21,7 +21,19 @@ alias dcd='docker compose down'
 
 # Misc utilities
 alias mhost='make && python2.7 -m SimpleHTTPServer'
-alias xc='xclip -sel clipboard'
+alias xc='wl-copy'
+
+# Resolve hostname to IP and copy to clipboard
+hc() {
+    local ip
+    ip=$(host "$1" | awk '/has address/ {print $4; exit}')
+    if [ -n "$ip" ]; then
+        echo "$ip" | wl-copy
+        echo "$ip"
+    else
+        echo "No address found for $1" >&2
+    fi
+}
 
 # Odoo-specific ripgrep (excludes translation files)
 alias rgo="rg -S --glob '!*.po'"
