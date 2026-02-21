@@ -2,6 +2,8 @@
 
 alias cl="claude"
 alias clr="claude --resume"
+alias cld="claude --dangerously-skip-permissions"  # skip permission prompts
+alias clu="claude update"                          # update Claude Code
 alias cl-pulse-update='cd ~/claude-pulse && python claude_status.py --update'
 
 # Register an Odoo MCP server with Claude Code
