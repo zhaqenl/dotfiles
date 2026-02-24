@@ -13,7 +13,7 @@ smooth_motion_spring = 0.5
 
 # size 22 -> 22.5, to remove empty line before status line
 [font]
-normal = { family = "JetBrainsMono Nerd Font", style = "Regular"}
+normal = { family = "MapleMono NF", style = "Regular"}
 size = 22.5
 
 [keyboard]
