@@ -38,6 +38,9 @@ hc() {
 # Odoo-specific ripgrep (excludes translation files)
 alias rgo="rg -S --glob '!*.po'"
 
+# Start Google Workspace MCP server for timesheet logging
+alias timesheet-mcp='uv run main.py --transport streamable-http --tools chat contacts calendar --tool-tier extended'
+
 # Expose local port via pinggy.io tunnel
 pinggy() {
     ssh -p 443 -R0:localhost:$1 free.pinggy.io
