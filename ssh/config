@@ -1,5 +1,10 @@
 ServerAliveInterval=15
 
+Host ppdsi-ext
+  HostName 167.71.188.209
+  User op
+  Port 9876
+
 # Personal GitHub account
 Host github-zhaqenl
   HostName github.com
