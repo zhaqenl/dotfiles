@@ -39,7 +39,7 @@ hc() {
 alias rgo="rg -S --glob '!*.po'"
 
 # Start Google Workspace MCP server for timesheet logging
-alias timesheet-mcp='uv run main.py --transport streamable-http --tools chat contacts calendar --tool-tier extended'
+alias timesheet-mcp='cd /home/lenovo/google_workspace_mcp && uv run main.py --transport streamable-http --tools chat contacts calendar --tool-tier extended'
 
 # Expose local port via pinggy.io tunnel
 pinggy() {
