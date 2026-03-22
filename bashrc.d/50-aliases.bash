@@ -24,7 +24,7 @@ alias mhost='make && python2.7 -m SimpleHTTPServer'
 alias xc='wl-copy'
 
 # Resolve hostname to IP and copy to clipboard
-hc() {
+getip() {
     local ip
     ip=$(host "$1" | awk '/has address/ {print $4; exit}')
     if [ -n "$ip" ]; then
