@@ -1,0 +1,33 @@
+{
+  "planPath": "docs/superpowers/plans/2026-04-02-odoo12-db-restore.md",
+  "tasks": [
+    {
+      "id": 32,
+      "subject": "Task 1: Stop Odoo and Prepare Database",
+      "status": "pending",
+      "description": "**Goal:** Stop the Odoo service, drop the blank `odoo12` database, and create the `Loan_Smart` database ready for restore.\n\n**Verify:** `sudo -u odoo12 psql -l | grep Loan_Smart` → shows `Loan_Smart` with owner `odoo12`\n\n```json:metadata\n{\"files\": [\"/etc/odoo12.conf\"], \"verifyCommand\": \"sudo -u odoo12 psql -l | grep Loan_Smart\", \"acceptanceCriteria\": [\"Odoo service is stopped\", \"odoo12 database no longer exists\", \"Loan_Smart database exists owned by odoo12\"]}\n```"
+    },
+    {
+      "id": 33,
+      "subject": "Task 2: Restore SQL Dump",
+      "status": "pending",
+      "blockedBy": [32],
+      "description": "**Goal:** Restore the 37 GB `dump.sql` into the `Loan_Smart` database using `nohup` for SSH session resilience, then verify the restore completed successfully.\n\n**Verify:** `sudo -u odoo12 psql -c \"SELECT pg_size_pretty(pg_database_size('Loan_Smart'));\"` → multi-GB size\n\n```json:metadata\n{\"files\": [], \"verifyCommand\": \"sudo -u odoo12 psql -c \\\"SELECT pg_size_pretty(pg_database_size('Loan_Smart'));\\\"\", \"acceptanceCriteria\": [\"dump.sql fully restored into Loan_Smart\", \"No critical errors in restore log\", \"Database size is reasonable (multi-GB)\"]}\n```"
+    },
+    {
+      "id": 34,
+      "subject": "Task 3: Copy Filestore",
+      "status": "pending",
+      "blockedBy": [32],
+      "description": "**Goal:** Copy the 15 GB filestore (257 subdirs) into Odoo's data directory for the `Loan_Smart` database, with correct ownership.\n\n**Verify:** `ls /opt/odoo12/.local/share/Odoo/filestore/Loan_Smart/ | wc -l` → `257` (approximately)\n\n```json:metadata\n{\"files\": [], \"verifyCommand\": \"ls /opt/odoo12/.local/share/Odoo/filestore/Loan_Smart/ | wc -l\", \"acceptanceCriteria\": [\"Filestore exists at /opt/odoo12/.local/share/Odoo/filestore/Loan_Smart/\", \"Contains ~257 subdirectories\", \"All files owned by odoo12:odoo12\"]}\n```"
+    },
+    {
+      "id": 35,
+      "subject": "Task 4: Update Config, Restart, and Verify",
+      "status": "pending",
+      "blockedBy": [33, 34],
+      "description": "**Goal:** Add `db_name = Loan_Smart` to the Odoo config to restrict Odoo to this database, restart the service, and verify everything works.\n\n**Verify:** `curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8069/web/login` → `200`\n\n```json:metadata\n{\"files\": [\"/etc/odoo12.conf\"], \"verifyCommand\": \"curl -s -o /dev/null -w \\\"%{http_code}\\\" http://localhost:8069/web/login\", \"acceptanceCriteria\": [\"odoo12.conf contains db_name = Loan_Smart\", \"Odoo service is running\", \"HTTP 200 on port 8069\", \"No critical errors in Odoo logs\"]}\n```"
+    }
+  ],
+  "lastUpdated": "2026-04-02T10:00:00Z"
+}
