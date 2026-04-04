@@ -18,6 +18,7 @@ alias es='sudo -e'
 # Docker
 alias dcu='docker compose down && docker compose up'
 alias dcd='docker compose down'
+alias dcl='docker compose ls'
 
 # Misc utilities
 alias mhost='make && python2.7 -m SimpleHTTPServer'
