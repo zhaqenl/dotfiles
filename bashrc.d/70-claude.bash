@@ -2,8 +2,10 @@
 
 alias cl="claude"
 alias clr="claude --resume"
-alias cldr="claude --dangerously-skip-permissions --resume"  # resume + skip permissions
-alias cld="claude --dangerously-skip-permissions"  # skip permission prompts
+# TEMP: appending jcodemunch TWEAKCC system prompt via --append-system-prompt-file
+# (see ~/dotfiles/jcodemunch-policy.md). Revert these two aliases to drop it.
+alias cldr="claude --dangerously-skip-permissions --resume --append-system-prompt-file ~/dotfiles/jcodemunch-policy.md"  # resume + skip permissions
+alias cld="claude --dangerously-skip-permissions --append-system-prompt-file ~/dotfiles/jcodemunch-policy.md"  # skip permission prompts
 alias clu="claude update"                          # update Claude Code
 alias cl-pulse-update='cd ~/claude-pulse && python claude_status.py --update; cd -'
 
