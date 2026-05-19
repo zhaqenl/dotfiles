@@ -103,5 +103,31 @@ non-zero exit (config / auth / missing env)."
                (length agilis-projects--cache))
     (message "agilis-projects: fetch failed; see *Messages*")))
 
+(defconst agilis-projects--line-prefix-re "^Project: "
+  "Regex that must match from beginning of line for capf to fire.")
+
+(defun agilis-projects--capf ()
+  "Completion-at-point function for Agilis project names."
+  (when (and (derived-mode-p 'markdown-mode)
+             (save-excursion
+               (beginning-of-line)
+               (looking-at agilis-projects--line-prefix-re)))
+    (let ((beg (save-excursion
+                 (beginning-of-line)
+                 (match-end 0)))
+          (end (point)))
+      (unless agilis-projects--cache
+        (agilis-projects--fetch))
+      (when agilis-projects--cache
+        (list beg end agilis-projects--cache :exclusive 'no)))))
+
+;;;###autoload
+(defun agilis-projects-setup ()
+  "Install the capf in markdown buffers."
+  (add-hook 'markdown-mode-hook
+            (lambda ()
+              (add-hook 'completion-at-point-functions
+                        #'agilis-projects--capf nil t))))
+
 (provide 'agilis-projects)
 ;;; agilis-projects.el ends here
