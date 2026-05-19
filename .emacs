@@ -25,6 +25,31 @@
   :ensure t
   :hook (markdown-mode . auto-fill-mode))
 
+;; In-buffer completion UI for capf
+(use-package corfu
+  :ensure t
+  :custom
+  (corfu-auto t)
+  (corfu-auto-prefix 2)
+  (corfu-auto-delay 0.1)
+  :init
+  (global-corfu-mode))
+
+(use-package cape
+  :ensure t)
+
+(use-package orderless
+  :ensure t
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-overrides '((file (styles basic partial-completion)))))
+
+;; Agilis Odoo project name completion (manual package)
+(add-to-list 'load-path
+             (expand-file-name "~/.emacs.d/manual-packages/agilis-projects"))
+(require 'agilis-projects)
+(agilis-projects-setup)
+
 (menu-bar-mode -1)
 
 ;; Raymund: I added the following, since when an emacsclient was ran
