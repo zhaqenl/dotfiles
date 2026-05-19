@@ -22,7 +22,7 @@
 
 (defcustom agilis-projects-helper
   (expand-file-name
-   "~/dotfiles/.emacs.d/manual-packages/agilis-projects/agilis-projects.py")
+   "~/dotfiles/.emacs.d/manual-packages/agilis-projects/agilis-helper.py")
   "Path to the XML-RPC helper script."
   :type 'file)
 
@@ -31,7 +31,8 @@
   :type 'string)
 
 (defvar agilis-projects--cache nil
-  "Cached list of project names, or nil if not yet fetched.")
+  "Cached alist of (NAME . (ID HAS-HELPDESK-TEAM)) for active projects.
+ID is an integer.  HAS-HELPDESK-TEAM is t or nil.  Nil before first fetch.")
 
 (defun agilis-projects--auth ()
   "Return plist with :user :password :database :url from auth-source."
@@ -51,11 +52,9 @@
          "agilis-projects: auth entry missing fields (need login, password, database, url)"))
       (list :user user :password pw :database db :url url))))
 
-(defun agilis-projects--fetch ()
-  "Run helper, parse stdout into `agilis-projects--cache'.
-Return t on success.  Return nil and message on transient (exit 3)
-network failure (cache untouched).  Signal `user-error' on any other
-non-zero exit (config / auth / missing env)."
+(defun agilis-projects--run-helper (args)
+  "Run helper with ARGS (list of strings).
+Return list (EXIT STDOUT STDERR-FIRST-LINE)."
   (unless (file-executable-p agilis-projects-helper)
     (user-error "agilis-projects: helper not executable: %s"
                 agilis-projects-helper))
@@ -66,39 +65,59 @@ non-zero exit (config / auth / missing env)."
                         (format "ODOO_USER=%s" (plist-get auth :user))
                         (format "ODOO_PW=%s" (plist-get auth :password)))
                   process-environment))
-         (stdout-buf (generate-new-buffer " *agilis-projects-out*"))
-         (stderr-file (make-temp-file "agilis-projects-err")))
+         (stdout-buf (generate-new-buffer " *agilis-helper-out*"))
+         (stderr-file (make-temp-file "agilis-helper-err")))
     (unwind-protect
-        (let ((exit (call-process agilis-projects-helper
-                                  nil
-                                  (list stdout-buf stderr-file)
-                                  nil)))
-          (cond
-           ((zerop exit)
-            (with-current-buffer stdout-buf
-              (let ((lines (split-string (buffer-string) "\n" t "[ \t\r]+")))
-                (setq agilis-projects--cache lines)
-                t)))
-           (t
-            (let ((err (with-temp-buffer
-                         (insert-file-contents stderr-file)
-                         (car (split-string (buffer-string) "\n" t)))))
-              (if (= exit 3)
-                  (progn
-                    (message "agilis-projects: %s"
-                             (or err "network error"))
-                    nil)
-                (user-error "agilis-projects: helper exit %d: %s" exit
-                            (or err "no stderr")))))))
+        (let ((exit (apply #'call-process
+                           agilis-projects-helper
+                           nil
+                           (list stdout-buf stderr-file)
+                           nil
+                           args)))
+          (list exit
+                (with-current-buffer stdout-buf (buffer-string))
+                (with-temp-buffer
+                  (insert-file-contents stderr-file)
+                  (car (split-string (buffer-string) "\n" t)))))
       (kill-buffer stdout-buf)
       (delete-file stderr-file))))
 
+(defun agilis-projects--handle-exit (exit stderr-first what)
+  "Convert helper exit code into tri-state result.
+Returns t if EXIT is 0.  Returns nil after messaging on exit 3.
+Signals `user-error' otherwise.  WHAT is a short string label for messages."
+  (cond
+   ((zerop exit) t)
+   ((= exit 3)
+    (message "agilis-%s: %s" what (or stderr-first "network error"))
+    nil)
+   (t
+    (user-error "agilis-%s: helper exit %d: %s" what exit
+                (or stderr-first "no stderr")))))
+
+(defun agilis-projects--fetch-projects ()
+  "Fetch projects via helper, populate `agilis-projects--cache' alist.
+Tri-state return: t on success, nil + message on transient (exit 3),
+`user-error' otherwise."
+  (pcase-let ((`(,exit ,stdout ,stderr) (agilis-projects--run-helper '("projects"))))
+    (when (agilis-projects--handle-exit exit stderr "projects")
+      (let (alist)
+        (dolist (line (split-string stdout "\n" t "[ \t\r]+"))
+          (let ((parts (split-string line "\t")))
+            (when (= (length parts) 3)
+              (push (cons (nth 0 parts)
+                          (list (string-to-number (nth 1 parts))
+                                (string= "1" (nth 2 parts))))
+                    alist))))
+        (setq agilis-projects--cache (nreverse alist))
+        t))))
+
 ;;;###autoload
 (defun agilis-projects-refresh ()
-  "Clear the cache and refetch project names from Agilis Odoo."
+  "Clear caches and refetch project names from Agilis Odoo."
   (interactive)
   (setq agilis-projects--cache nil)
-  (if (agilis-projects--fetch)
+  (if (agilis-projects--fetch-projects)
       (message "agilis-projects: %d cached"
                (length agilis-projects--cache))
     (message "agilis-projects: fetch failed; see *Messages*")))
@@ -117,9 +136,11 @@ non-zero exit (config / auth / missing env)."
                  (match-end 0)))
           (end (point)))
       (unless agilis-projects--cache
-        (agilis-projects--fetch))
+        (agilis-projects--fetch-projects))
       (when agilis-projects--cache
-        (list beg end agilis-projects--cache :exclusive 'no)))))
+        (list beg end
+              (mapcar #'car agilis-projects--cache)
+              :exclusive 'no)))))
 
 ;;;###autoload
 (defun agilis-projects-setup ()
