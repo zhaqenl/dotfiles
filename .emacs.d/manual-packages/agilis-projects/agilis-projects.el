@@ -112,11 +112,42 @@ Tri-state return: t on success, nil + message on transient (exit 3),
         (setq agilis-projects--cache (nreverse alist))
         t))))
 
+(defvar agilis-tasks--cache nil
+  "Hash-table mapping project-id (int) to list of task names.
+Nil before first use.  Daemon-lifetime.")
+
+(defun agilis-tasks--cache-ensure ()
+  "Create the tasks hash-table on first use."
+  (unless agilis-tasks--cache
+    (setq agilis-tasks--cache (make-hash-table :test 'eql))))
+
+(defun agilis-projects--fetch-tasks (project-id)
+  "Fetch task names for PROJECT-ID via helper, populate hash entry.
+Tri-state return like `agilis-projects--fetch-projects'."
+  (pcase-let ((`(,exit ,stdout ,stderr)
+               (agilis-projects--run-helper
+                (list "tasks" (number-to-string project-id)))))
+    (when (agilis-projects--handle-exit exit stderr "tasks")
+      (agilis-tasks--cache-ensure)
+      (puthash project-id
+               (split-string stdout "\n" t "[ \t\r]+")
+               agilis-tasks--cache)
+      t)))
+
+(defun agilis-projects--current-project-id ()
+  "Return id of the project named on the closest preceding Project line, or nil."
+  (save-excursion
+    (when (re-search-backward "^Project: \\(.+\\)$" nil t)
+      (let* ((name (string-trim (match-string 1)))
+             (entry (assoc name agilis-projects--cache)))
+        (and entry (nth 1 entry))))))
+
 ;;;###autoload
 (defun agilis-projects-refresh ()
-  "Clear caches and refetch project names from Agilis Odoo."
+  "Clear all agilis caches and refetch project names from Agilis Odoo."
   (interactive)
-  (setq agilis-projects--cache nil)
+  (setq agilis-projects--cache nil
+        agilis-tasks--cache nil)
   (if (agilis-projects--fetch-projects)
       (message "agilis-projects: %d cached"
                (length agilis-projects--cache))
@@ -150,13 +181,37 @@ CHOSEN is the inserted project name; STATUS is the capf finish status."
               :exclusive 'no
               :exit-function #'agilis-projects--exit-function)))))
 
+(defconst agilis-tasks--line-prefix-re "^  \\* Task: "
+  "Regex that must match from beginning of line for the tasks capf to fire.")
+
+(defun agilis-tasks--capf ()
+  "Completion-at-point function for project.task names scoped to preceding Project line."
+  (when (and (derived-mode-p 'markdown-mode)
+             (save-excursion
+               (beginning-of-line)
+               (looking-at agilis-tasks--line-prefix-re)))
+    (let* ((beg (save-excursion
+                  (beginning-of-line)
+                  (match-end 0)))
+           (end (point))
+           (pid (agilis-projects--current-project-id)))
+      (when pid
+        (agilis-tasks--cache-ensure)
+        (unless (gethash pid agilis-tasks--cache)
+          (agilis-projects--fetch-tasks pid))
+        (let ((names (gethash pid agilis-tasks--cache)))
+          (when names
+            (list beg end names :exclusive 'no)))))))
+
 ;;;###autoload
 (defun agilis-projects-setup ()
-  "Install the capf in markdown buffers."
+  "Install agilis capfs in markdown buffers."
   (add-hook 'markdown-mode-hook
             (lambda ()
               (add-hook 'completion-at-point-functions
-                        #'agilis-projects--capf nil t))))
+                        #'agilis-projects--capf nil t)
+              (add-hook 'completion-at-point-functions
+                        #'agilis-tasks--capf nil t))))
 
 (provide 'agilis-projects)
 ;;; agilis-projects.el ends here
