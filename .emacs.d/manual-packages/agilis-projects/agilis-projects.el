@@ -22,7 +22,7 @@
 
 (defcustom agilis-projects-helper
   (expand-file-name
-   "~/dotfiles/.emacs.d/manual-packages/agilis-projects/agilis-helper.py")
+   "~/dotfiles/.emacs.d/manual-packages/agilis-projects/agilis-projects.py")
   "Path to the XML-RPC helper script."
   :type 'file)
 
@@ -31,8 +31,7 @@
   :type 'string)
 
 (defvar agilis-projects--cache nil
-  "Cached alist of (NAME . (ID HAS-HELPDESK-TEAM)) for active projects.
-ID is an integer.  HAS-HELPDESK-TEAM is t or nil.  Nil before first fetch.")
+  "Cached list of project names, or nil if not yet fetched.")
 
 (defun agilis-projects--auth ()
   "Return plist with :user :password :database :url from auth-source."
@@ -52,9 +51,11 @@ ID is an integer.  HAS-HELPDESK-TEAM is t or nil.  Nil before first fetch.")
          "agilis-projects: auth entry missing fields (need login, password, database, url)"))
       (list :user user :password pw :database db :url url))))
 
-(defun agilis-projects--run-helper (args)
-  "Run helper with ARGS (list of strings).
-Return list (EXIT STDOUT STDERR-FIRST-LINE)."
+(defun agilis-projects--fetch ()
+  "Run helper, parse stdout into `agilis-projects--cache'.
+Return t on success.  Return nil and message on transient (exit 3)
+network failure (cache untouched).  Signal `user-error' on any other
+non-zero exit (config / auth / missing env)."
   (unless (file-executable-p agilis-projects-helper)
     (user-error "agilis-projects: helper not executable: %s"
                 agilis-projects-helper))
@@ -65,141 +66,45 @@ Return list (EXIT STDOUT STDERR-FIRST-LINE)."
                         (format "ODOO_USER=%s" (plist-get auth :user))
                         (format "ODOO_PW=%s" (plist-get auth :password)))
                   process-environment))
-         (stdout-buf (generate-new-buffer " *agilis-helper-out*"))
-         (stderr-file (make-temp-file "agilis-helper-err")))
+         (stdout-buf (generate-new-buffer " *agilis-projects-out*"))
+         (stderr-file (make-temp-file "agilis-projects-err")))
     (unwind-protect
-        (let ((exit (apply #'call-process
-                           agilis-projects-helper
-                           nil
-                           (list stdout-buf stderr-file)
-                           nil
-                           args)))
-          (list exit
-                (with-current-buffer stdout-buf (buffer-string))
-                (with-temp-buffer
-                  (insert-file-contents stderr-file)
-                  (car (split-string (buffer-string) "\n" t)))))
+        (let ((exit (call-process agilis-projects-helper
+                                  nil
+                                  (list stdout-buf stderr-file)
+                                  nil)))
+          (cond
+           ((zerop exit)
+            (with-current-buffer stdout-buf
+              (let ((lines (split-string (buffer-string) "\n" t "[ \t\r]+")))
+                (setq agilis-projects--cache lines)
+                t)))
+           (t
+            (let ((err (with-temp-buffer
+                         (insert-file-contents stderr-file)
+                         (car (split-string (buffer-string) "\n" t)))))
+              (if (= exit 3)
+                  (progn
+                    (message "agilis-projects: %s"
+                             (or err "network error"))
+                    nil)
+                (user-error "agilis-projects: helper exit %d: %s" exit
+                            (or err "no stderr")))))))
       (kill-buffer stdout-buf)
       (delete-file stderr-file))))
 
-(defun agilis-projects--handle-exit (exit stderr-first what)
-  "Convert helper exit code into tri-state result.
-Returns t if EXIT is 0.  Returns nil after messaging on exit 3.
-Signals `user-error' otherwise.  WHAT is a short string label for messages."
-  (cond
-   ((zerop exit) t)
-   ((= exit 3)
-    (message "agilis-%s: %s" what (or stderr-first "network error"))
-    nil)
-   (t
-    (user-error "agilis-%s: helper exit %d: %s" what exit
-                (or stderr-first "no stderr")))))
-
-(defun agilis-projects--fetch-projects ()
-  "Fetch projects via helper, populate `agilis-projects--cache' alist.
-Tri-state return: t on success, nil + message on transient (exit 3),
-`user-error' otherwise."
-  (pcase-let ((`(,exit ,stdout ,stderr) (agilis-projects--run-helper '("projects"))))
-    (when (agilis-projects--handle-exit exit stderr "projects")
-      (let (alist)
-        (dolist (line (split-string stdout "\n" t "[ \t\r]+"))
-          (let ((parts (split-string line "\t")))
-            (when (= (length parts) 3)
-              (push (cons (nth 0 parts)
-                          (list (string-to-number (nth 1 parts))
-                                (string= "1" (nth 2 parts))))
-                    alist))))
-        (setq agilis-projects--cache (nreverse alist))
-        t))))
-
-(defvar agilis--uid nil
-  "Cached authenticated user id, or nil if not yet fetched.")
-
-(defun agilis-projects--uid ()
-  "Return the authenticated user id, fetching once via helper."
-  (or agilis--uid
-      (pcase-let ((`(,exit ,stdout ,stderr)
-                   (agilis-projects--run-helper '("uid"))))
-        (when (agilis-projects--handle-exit exit stderr "uid")
-          (setq agilis--uid (string-to-number
-                             (string-trim stdout)))))))
-
-(defvar agilis-tasks--cache nil
-  "Hash-table mapping project-id (int) to list of task names.
-Nil before first use.  Daemon-lifetime.")
-
-(defun agilis-tasks--cache-ensure ()
-  "Create the tasks hash-table on first use."
-  (unless agilis-tasks--cache
-    (setq agilis-tasks--cache (make-hash-table :test 'eql))))
-
-(defun agilis-projects--fetch-tasks (project-id)
-  "Fetch task names for PROJECT-ID via helper, populate hash entry.
-Tri-state return like `agilis-projects--fetch-projects'."
-  (pcase-let ((`(,exit ,stdout ,stderr)
-               (agilis-projects--run-helper
-                (list "tasks" (number-to-string project-id)))))
-    (when (agilis-projects--handle-exit exit stderr "tasks")
-      (agilis-tasks--cache-ensure)
-      (puthash project-id
-               (split-string stdout "\n" t "[ \t\r]+")
-               agilis-tasks--cache)
-      t)))
-
-(defvar agilis-tickets--cache nil
-  "Hash-table mapping project-id (int) to list of ticket names.
-Nil before first use.")
-
-(defun agilis-tickets--cache-ensure ()
-  "Create the tickets hash-table on first use."
-  (unless agilis-tickets--cache
-    (setq agilis-tickets--cache (make-hash-table :test 'eql))))
-
-(defun agilis-projects--fetch-tickets (project-id uid)
-  "Fetch ticket names for PROJECT-ID assigned to UID, populate hash entry.
-Tri-state return like sibling fetchers."
-  (pcase-let ((`(,exit ,stdout ,stderr)
-               (agilis-projects--run-helper
-                (list "tickets"
-                      (number-to-string project-id)
-                      (number-to-string uid)))))
-    (when (agilis-projects--handle-exit exit stderr "tickets")
-      (agilis-tickets--cache-ensure)
-      (puthash project-id
-               (split-string stdout "\n" t "[ \t\r]+")
-               agilis-tickets--cache)
-      t)))
-
-(defun agilis-projects--current-project-id ()
-  "Return id of the project named on the closest preceding Project line, or nil."
-  (save-excursion
-    (when (re-search-backward "^Project: \\(.+\\)$" nil t)
-      (let* ((name (string-trim (match-string 1)))
-             (entry (assoc name agilis-projects--cache)))
-        (and entry (nth 1 entry))))))
-
 ;;;###autoload
 (defun agilis-projects-refresh ()
-  "Clear all agilis caches and refetch project names from Agilis Odoo."
+  "Clear the cache and refetch project names from Agilis Odoo."
   (interactive)
-  (setq agilis-projects--cache nil
-        agilis-tasks--cache nil
-        agilis-tickets--cache nil
-        agilis--uid nil)
-  (if (agilis-projects--fetch-projects)
+  (setq agilis-projects--cache nil)
+  (if (agilis-projects--fetch)
       (message "agilis-projects: %d cached"
                (length agilis-projects--cache))
     (message "agilis-projects: fetch failed; see *Messages*")))
 
 (defconst agilis-projects--line-prefix-re "^Project: "
   "Regex that must match from beginning of line for capf to fire.")
-
-(defun agilis-projects--exit-function (chosen status)
-  "Post-insertion hook: emit a Task or Ticket scaffold line.
-CHOSEN is the inserted project name; STATUS is the capf finish status."
-  (when (eq status 'finished)
-    (when-let ((entry (assoc chosen agilis-projects--cache)))
-      (insert (if (nth 2 entry) "\n  * Ticket: " "\n  * Task: ")))))
 
 (defun agilis-projects--capf ()
   "Completion-at-point function for Agilis project names."
@@ -212,69 +117,17 @@ CHOSEN is the inserted project name; STATUS is the capf finish status."
                  (match-end 0)))
           (end (point)))
       (unless agilis-projects--cache
-        (agilis-projects--fetch-projects))
+        (agilis-projects--fetch))
       (when agilis-projects--cache
-        (list beg end
-              (mapcar #'car agilis-projects--cache)
-              :exclusive 'no
-              :exit-function #'agilis-projects--exit-function)))))
-
-(defconst agilis-tasks--line-prefix-re "^  \\* Task: "
-  "Regex that must match from beginning of line for the tasks capf to fire.")
-
-(defun agilis-tasks--capf ()
-  "Completion-at-point function for project.task names scoped to preceding Project line."
-  (when (and (derived-mode-p 'markdown-mode)
-             (save-excursion
-               (beginning-of-line)
-               (looking-at agilis-tasks--line-prefix-re)))
-    (let* ((beg (save-excursion
-                  (beginning-of-line)
-                  (match-end 0)))
-           (end (point))
-           (pid (agilis-projects--current-project-id)))
-      (when pid
-        (agilis-tasks--cache-ensure)
-        (unless (gethash pid agilis-tasks--cache)
-          (agilis-projects--fetch-tasks pid))
-        (let ((names (gethash pid agilis-tasks--cache)))
-          (when names
-            (list beg end names :exclusive 'no)))))))
-
-(defconst agilis-tickets--line-prefix-re "^  \\* Ticket: "
-  "Regex that must match from beginning of line for the tickets capf to fire.")
-
-(defun agilis-tickets--capf ()
-  "Completion-at-point function for helpdesk.ticket names scoped to project + me."
-  (when (and (derived-mode-p 'markdown-mode)
-             (save-excursion
-               (beginning-of-line)
-               (looking-at agilis-tickets--line-prefix-re)))
-    (let* ((beg (save-excursion
-                  (beginning-of-line)
-                  (match-end 0)))
-           (end (point))
-           (pid (agilis-projects--current-project-id))
-           (uid (and pid (agilis-projects--uid))))
-      (when (and pid uid)
-        (agilis-tickets--cache-ensure)
-        (unless (gethash pid agilis-tickets--cache)
-          (agilis-projects--fetch-tickets pid uid))
-        (let ((names (gethash pid agilis-tickets--cache)))
-          (when names
-            (list beg end names :exclusive 'no)))))))
+        (list beg end agilis-projects--cache :exclusive 'no)))))
 
 ;;;###autoload
 (defun agilis-projects-setup ()
-  "Install agilis capfs in markdown buffers."
+  "Install the capf in markdown buffers."
   (add-hook 'markdown-mode-hook
             (lambda ()
               (add-hook 'completion-at-point-functions
-                        #'agilis-projects--capf nil t)
-              (add-hook 'completion-at-point-functions
-                        #'agilis-tasks--capf nil t)
-              (add-hook 'completion-at-point-functions
-                        #'agilis-tickets--capf nil t))))
+                        #'agilis-projects--capf nil t))))
 
 (provide 'agilis-projects)
 ;;; agilis-projects.el ends here
