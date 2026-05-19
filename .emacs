@@ -35,6 +35,13 @@
   :init
   (global-corfu-mode))
 
+;; Corfu's popup is GUI-only (child-frame); fall back to overlay popup in TTY
+(use-package corfu-terminal
+  :ensure t
+  :after corfu
+  :config
+  (corfu-terminal-mode +1))
+
 (use-package cape
   :ensure t)
 
