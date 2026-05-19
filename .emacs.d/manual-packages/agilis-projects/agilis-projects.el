@@ -125,6 +125,13 @@ Tri-state return: t on success, nil + message on transient (exit 3),
 (defconst agilis-projects--line-prefix-re "^Project: "
   "Regex that must match from beginning of line for capf to fire.")
 
+(defun agilis-projects--exit-function (chosen status)
+  "Post-insertion hook: emit a Task or Ticket scaffold line.
+CHOSEN is the inserted project name; STATUS is the capf finish status."
+  (when (eq status 'finished)
+    (when-let ((entry (assoc chosen agilis-projects--cache)))
+      (insert (if (nth 2 entry) "\n  * Ticket: " "\n  * Task: ")))))
+
 (defun agilis-projects--capf ()
   "Completion-at-point function for Agilis project names."
   (when (and (derived-mode-p 'markdown-mode)
@@ -140,7 +147,8 @@ Tri-state return: t on success, nil + message on transient (exit 3),
       (when agilis-projects--cache
         (list beg end
               (mapcar #'car agilis-projects--cache)
-              :exclusive 'no)))))
+              :exclusive 'no
+              :exit-function #'agilis-projects--exit-function)))))
 
 ;;;###autoload
 (defun agilis-projects-setup ()
