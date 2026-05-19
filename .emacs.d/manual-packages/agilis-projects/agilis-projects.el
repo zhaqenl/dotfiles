@@ -112,6 +112,18 @@ Tri-state return: t on success, nil + message on transient (exit 3),
         (setq agilis-projects--cache (nreverse alist))
         t))))
 
+(defvar agilis--uid nil
+  "Cached authenticated user id, or nil if not yet fetched.")
+
+(defun agilis-projects--uid ()
+  "Return the authenticated user id, fetching once via helper."
+  (or agilis--uid
+      (pcase-let ((`(,exit ,stdout ,stderr)
+                   (agilis-projects--run-helper '("uid"))))
+        (when (agilis-projects--handle-exit exit stderr "uid")
+          (setq agilis--uid (string-to-number
+                             (string-trim stdout)))))))
+
 (defvar agilis-tasks--cache nil
   "Hash-table mapping project-id (int) to list of task names.
 Nil before first use.  Daemon-lifetime.")
@@ -134,6 +146,30 @@ Tri-state return like `agilis-projects--fetch-projects'."
                agilis-tasks--cache)
       t)))
 
+(defvar agilis-tickets--cache nil
+  "Hash-table mapping project-id (int) to list of ticket names.
+Nil before first use.")
+
+(defun agilis-tickets--cache-ensure ()
+  "Create the tickets hash-table on first use."
+  (unless agilis-tickets--cache
+    (setq agilis-tickets--cache (make-hash-table :test 'eql))))
+
+(defun agilis-projects--fetch-tickets (project-id uid)
+  "Fetch ticket names for PROJECT-ID assigned to UID, populate hash entry.
+Tri-state return like sibling fetchers."
+  (pcase-let ((`(,exit ,stdout ,stderr)
+               (agilis-projects--run-helper
+                (list "tickets"
+                      (number-to-string project-id)
+                      (number-to-string uid)))))
+    (when (agilis-projects--handle-exit exit stderr "tickets")
+      (agilis-tickets--cache-ensure)
+      (puthash project-id
+               (split-string stdout "\n" t "[ \t\r]+")
+               agilis-tickets--cache)
+      t)))
+
 (defun agilis-projects--current-project-id ()
   "Return id of the project named on the closest preceding Project line, or nil."
   (save-excursion
@@ -147,7 +183,9 @@ Tri-state return like `agilis-projects--fetch-projects'."
   "Clear all agilis caches and refetch project names from Agilis Odoo."
   (interactive)
   (setq agilis-projects--cache nil
-        agilis-tasks--cache nil)
+        agilis-tasks--cache nil
+        agilis-tickets--cache nil
+        agilis--uid nil)
   (if (agilis-projects--fetch-projects)
       (message "agilis-projects: %d cached"
                (length agilis-projects--cache))
@@ -203,6 +241,29 @@ CHOSEN is the inserted project name; STATUS is the capf finish status."
           (when names
             (list beg end names :exclusive 'no)))))))
 
+(defconst agilis-tickets--line-prefix-re "^  \\* Ticket: "
+  "Regex that must match from beginning of line for the tickets capf to fire.")
+
+(defun agilis-tickets--capf ()
+  "Completion-at-point function for helpdesk.ticket names scoped to project + me."
+  (when (and (derived-mode-p 'markdown-mode)
+             (save-excursion
+               (beginning-of-line)
+               (looking-at agilis-tickets--line-prefix-re)))
+    (let* ((beg (save-excursion
+                  (beginning-of-line)
+                  (match-end 0)))
+           (end (point))
+           (pid (agilis-projects--current-project-id))
+           (uid (and pid (agilis-projects--uid))))
+      (when (and pid uid)
+        (agilis-tickets--cache-ensure)
+        (unless (gethash pid agilis-tickets--cache)
+          (agilis-projects--fetch-tickets pid uid))
+        (let ((names (gethash pid agilis-tickets--cache)))
+          (when names
+            (list beg end names :exclusive 'no)))))))
+
 ;;;###autoload
 (defun agilis-projects-setup ()
   "Install agilis capfs in markdown buffers."
@@ -211,7 +272,9 @@ CHOSEN is the inserted project name; STATUS is the capf finish status."
               (add-hook 'completion-at-point-functions
                         #'agilis-projects--capf nil t)
               (add-hook 'completion-at-point-functions
-                        #'agilis-tasks--capf nil t))))
+                        #'agilis-tasks--capf nil t)
+              (add-hook 'completion-at-point-functions
+                        #'agilis-tickets--capf nil t))))
 
 (provide 'agilis-projects)
 ;;; agilis-projects.el ends here
