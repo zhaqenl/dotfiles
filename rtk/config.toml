@@ -34,7 +34,7 @@ consent_given = true
 consent_date = "2026-04-14T09:12:48.290768602+00:00"
 
 [hooks]
-exclude_commands = ["log", "git.status", "git.add", "git.stash", "jest", "vitest", "pytest", "lint", "ruff", "ls", "wc", "pip", "pnpm", "smart"]
+exclude_commands = []
 
 [limits]
 grep_max_results = 200
