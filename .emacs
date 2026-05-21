@@ -30,7 +30,7 @@
   :ensure t
   :custom
   (corfu-auto t)
-  (corfu-auto-prefix 2)
+  (corfu-auto-prefix 1)
   (corfu-auto-delay 0.1)
   :init
   (global-corfu-mode))
@@ -56,6 +56,8 @@
              (expand-file-name "~/.emacs.d/manual-packages/agilis-projects"))
 (require 'agilis-projects)
 (agilis-projects-setup)
+(with-eval-after-load 'markdown-mode
+  (define-key markdown-mode-map (kbd "C-c t") #'agilis-project-task-ticket))
 
 (menu-bar-mode -1)
 

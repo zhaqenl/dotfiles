@@ -9,6 +9,10 @@
 ;; project.project names on lines that begin with "Project: " in
 ;; markdown buffers.  Names are fetched once per Emacs session via a
 ;; small Python XML-RPC helper.
+;;
+;; Also provides the `agilis-project-task-ticket' command, which scans
+;; backward for the nearest "Project: " line and inserts a Task or
+;; Ticket scaffold line based on the project's Odoo helpdesk status.
 
 ;;; Code:
 
@@ -95,9 +99,10 @@ non-zero exit (config / auth / missing env)."
 
 ;;;###autoload
 (defun agilis-projects-refresh ()
-  "Clear the cache and refetch project names from Agilis Odoo."
+  "Clear the caches and refetch project names from Agilis Odoo."
   (interactive)
   (setq agilis-projects--cache nil)
+  (clrhash agilis-projects--tt-cache)
   (if (agilis-projects--fetch)
       (message "agilis-projects: %d cached"
                (length agilis-projects--cache))
@@ -123,11 +128,97 @@ non-zero exit (config / auth / missing env)."
 
 ;;;###autoload
 (defun agilis-projects-setup ()
-  "Install the capf in markdown buffers."
+  "Install the capfs in markdown buffers."
   (add-hook 'markdown-mode-hook
             (lambda ()
               (add-hook 'completion-at-point-functions
-                        #'agilis-projects--capf nil t))))
+                        #'agilis-projects--capf nil t)
+              (add-hook 'completion-at-point-functions
+                        #'agilis-projects--tt-capf nil t))))
+
+(defvar agilis-projects--tt-cache (make-hash-table :test 'equal)
+  "Hash table mapping a project name to its cached Task/Ticket names.
+Populated by `agilis-project-task-ticket', read by
+`agilis-projects--tt-capf'.  Daemon-lifetime; cleared by
+`agilis-projects-refresh'.")
+
+(defun agilis-projects--fetch-scaffold (name)
+  "Fetch Task/Ticket data for project NAME from Agilis Odoo.
+Run the helper's `scaffold' subcommand, cache the returned candidate
+names in `agilis-projects--tt-cache' under NAME, and return the symbol
+`ticket' or `task' for the project's kind.  Signal `user-error' on any
+non-zero exit (network, auth, or unknown project)."
+  (unless (file-executable-p agilis-projects-helper)
+    (user-error "agilis-projects: helper not executable: %s"
+                agilis-projects-helper))
+  (let* ((auth (agilis-projects--auth))
+         (process-environment
+          (append (list (format "ODOO_URL=%s" (plist-get auth :url))
+                        (format "ODOO_DB=%s" (plist-get auth :database))
+                        (format "ODOO_USER=%s" (plist-get auth :user))
+                        (format "ODOO_PW=%s" (plist-get auth :password)))
+                  process-environment))
+         (stdout-buf (generate-new-buffer " *agilis-projects-out*"))
+         (stderr-file (make-temp-file "agilis-projects-err")))
+    (unwind-protect
+        (let ((exit (call-process agilis-projects-helper
+                                  nil
+                                  (list stdout-buf stderr-file)
+                                  nil
+                                  "scaffold" name)))
+          (if (zerop exit)
+              (with-current-buffer stdout-buf
+                (let ((lines (split-string (buffer-string) "\n" t "[ \t\r]+")))
+                  (puthash name (cdr lines) agilis-projects--tt-cache)
+                  (if (equal (car lines) "ticket") 'ticket 'task)))
+            (let ((err (with-temp-buffer
+                         (insert-file-contents stderr-file)
+                         (car (split-string (buffer-string) "\n" t)))))
+              (user-error "agilis-projects: helper exit %d: %s" exit
+                          (or err "no stderr")))))
+      (kill-buffer stdout-buf)
+      (delete-file stderr-file))))
+
+;;;###autoload
+(defun agilis-project-task-ticket ()
+  "Insert a Task or Ticket scaffold line below point.
+Scan backward for the nearest \"Project: \" line, fetch that project's
+Task or Ticket data from Agilis Odoo, and insert a new line:
+\"  * Ticket: \" when the project has a helpdesk team, otherwise
+\"  * Task: \".  Point is left after the trailing space.  The fetched
+names are cached so `agilis-projects--tt-capf' can complete them."
+  (interactive)
+  (let ((name (save-excursion
+                (when (re-search-backward "^Project: \\(.+\\)$" nil t)
+                  (string-trim (match-string 1))))))
+    (unless name
+      (user-error "agilis-projects: no preceding `Project:' line"))
+    (end-of-line)
+    (insert (if (eq (agilis-projects--fetch-scaffold name) 'ticket)
+                "\n  * Ticket: "
+              "\n  * Task: "))))
+
+(defconst agilis-projects--tt-line-re "^  \\* \\(?:Task\\|Ticket\\): "
+  "Regex that must match from beginning of line for the Task/Ticket capf.")
+
+(defun agilis-projects--tt-capf ()
+  "Completion-at-point function for Agilis Task/Ticket names.
+Offer the names cached by `agilis-project-task-ticket' for the project
+on the nearest preceding \"Project: \" line.  Performs no network
+access: a cache miss simply yields no completion."
+  (when (and (derived-mode-p 'markdown-mode)
+             (save-excursion
+               (beginning-of-line)
+               (looking-at agilis-projects--tt-line-re)))
+    (let ((beg (save-excursion (beginning-of-line) (match-end 0)))
+          (end (point))
+          (name (save-excursion
+                  (when (re-search-backward "^Project: \\(.+\\)$" nil t)
+                    (string-trim (match-string 1))))))
+      (when name
+        (let ((cands (gethash name agilis-projects--tt-cache)))
+          (when cands
+            (list beg end cands :exclusive 'no)))))))
 
 (provide 'agilis-projects)
 ;;; agilis-projects.el ends here
