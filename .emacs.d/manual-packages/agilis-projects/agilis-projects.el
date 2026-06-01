@@ -124,7 +124,8 @@ non-zero exit (config / auth / missing env)."
       (unless agilis-projects--cache
         (agilis-projects--fetch))
       (when agilis-projects--cache
-        (list beg end agilis-projects--cache :exclusive 'no)))))
+        (list beg end agilis-projects--cache :exclusive 'no
+              :exit-function #'agilis-projects--exit-function)))))
 
 ;;;###autoload
 (defun agilis-projects-setup ()
@@ -179,6 +180,23 @@ non-zero exit (network, auth, or unknown project)."
       (kill-buffer stdout-buf)
       (delete-file stderr-file))))
 
+(defun agilis-projects--insert-tt-line (name)
+  "Fetch project NAME's scaffold and insert a Task/Ticket line at point.
+Insert \"\\n  * Ticket: \" when the project has a helpdesk team,
+otherwise \"\\n  * Task: \".  Point ends up after the trailing space.
+NAME is trimmed before lookup."
+  (insert (if (eq (agilis-projects--fetch-scaffold (string-trim name)) 'ticket)
+              "\n  * Ticket: "
+            "\n  * Task: ")))
+
+(defun agilis-projects--exit-function (chosen status)
+  "Scaffold a Task/Ticket line after CHOSEN project candidate is inserted.
+Runs only when STATUS is `finished'.  CHOSEN is the picked project name;
+it is trimmed by `agilis-projects--insert-tt-line' before the scaffold lookup."
+  (when (eq status 'finished)
+    ;; Point is at end of the inserted candidate (end of the Project line).
+    (agilis-projects--insert-tt-line chosen)))
+
 ;;;###autoload
 (defun agilis-project-task-ticket ()
   "Insert a Task or Ticket scaffold line below point.
@@ -194,9 +212,7 @@ names are cached so `agilis-projects--tt-capf' can complete them."
     (unless name
       (user-error "agilis-projects: no preceding `Project:' line"))
     (end-of-line)
-    (insert (if (eq (agilis-projects--fetch-scaffold name) 'ticket)
-                "\n  * Ticket: "
-              "\n  * Task: "))))
+    (agilis-projects--insert-tt-line name)))
 
 (defconst agilis-projects--tt-line-re "^  \\* \\(?:Task\\|Ticket\\): "
   "Regex that must match from beginning of line for the Task/Ticket capf.")
