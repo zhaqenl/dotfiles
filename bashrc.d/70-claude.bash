@@ -1,9 +1,6 @@
 # Claude CLI shortcuts and tools
-
-alias cl="claude"
-alias clr="claude --resume"
-alias cldr="claude --dangerously-skip-permissions --resume"  # resume + skip permissions
-alias cld="claude --dangerously-skip-permissions"  # skip permission prompts
+alias cl="claude --permission-mode auto"  # auto mode (no prompts, safety checks on)
+alias clr="claude --permission-mode auto --resume"  # resume + auto mode (no prompts, safety checks on)
 alias clu="claude update"                          # update Claude Code
 alias cl-pulse-update='cd ~/claude-pulse && python claude_status.py --update; cd -'
 
