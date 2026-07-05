@@ -20,33 +20,33 @@ size = 22.5
 # Shift+Return sends ESC+Enter (same as Option+Enter) to work in tmux
 bindings = [{ key = "Return", mods = "Shift", chars = "\u001b\r" }] 
 
-# colors (miasma) https://github.com/xero/miasma.nvim
+# colors (melange dark) https://github.com/savq/melange-nvim
 [colors]
-indexed_colors = [{ index = 16, color = "0x222222"}]
+indexed_colors = [{ index = 16, color = "0x292522"}]
 
 # Primary colors
 [colors.primary]
-background = "#222222"
-foreground = "#c2c2b0"
+background = "#292522"
+foreground = "#ECE1D7"
 
 # Normal colors
 [colors.normal]
-black = "#222222"
-red = "#685742"
-green = "#5f875f"
-yellow = "#b36d43"
-blue = "#78824b"
-magenta = "#bb7744"
-cyan = "#c9a554"
-white = "#d7c483"
+black = "#34302C"
+red = "#BD8183"
+green = "#78997A"
+yellow = "#E49B5D"
+blue = "#7F91B2"
+magenta = "#B380B0"
+cyan = "#7B9695"
+white = "#C1A78E"
 
 # Bright colors
 [colors.bright]
-black = "#666666"
-red = "#685742"
-green = "#5f875f"
-yellow = "#b36d43"
-blue = "#78824b"
-magenta = "#bb7744"
-cyan = "#c9a554"
-white = "#d7c483"
+black = "#867462"
+red = "#D47766"
+green = "#85B695"
+yellow = "#EBC06D"
+blue = "#A3A9CE"
+magenta = "#CF9BC2"
+cyan = "#89B3B6"
+white = "#ECE1D7"
