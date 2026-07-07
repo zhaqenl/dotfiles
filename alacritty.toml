@@ -13,40 +13,40 @@ smooth_motion_spring = 0.5
 
 # size 22 -> 22.5, to remove empty line before status line
 [font]
-normal = { family = "Maple Mono NF", style = "Regular"}
+normal = { family = "GeistMono Nerd Font", style = "Regular"}
 size = 22.5
 
 [keyboard]
 # Shift+Return sends ESC+Enter (same as Option+Enter) to work in tmux
 bindings = [{ key = "Return", mods = "Shift", chars = "\u001b\r" }] 
 
-# colors (melange dark) https://github.com/savq/melange-nvim
+# colors (ayu mirage) https://github.com/ayu-theme/ayu-vim
 [colors]
-indexed_colors = [{ index = 16, color = "0x292522"}]
+indexed_colors = [{ index = 16, color = "0x1F2430"}]
 
 # Primary colors
 [colors.primary]
-background = "#292522"
-foreground = "#ECE1D7"
+background = "#1F2430"
+foreground = "#CBCCC6"
 
 # Normal colors
 [colors.normal]
-black = "#34302C"
-red = "#BD8183"
-green = "#78997A"
-yellow = "#E49B5D"
-blue = "#7F91B2"
-magenta = "#B380B0"
-cyan = "#7B9695"
-white = "#C1A78E"
+black = "#191E2A"
+red = "#ED8274"
+green = "#A6CC70"
+yellow = "#FFD173"
+blue = "#6DCBFA"
+magenta = "#CFBAFA"
+cyan = "#90E1C6"
+white = "#C7C7C7"
 
 # Bright colors
 [colors.bright]
-black = "#867462"
-red = "#D47766"
-green = "#85B695"
-yellow = "#EBC06D"
-blue = "#A3A9CE"
-magenta = "#CF9BC2"
-cyan = "#89B3B6"
-white = "#ECE1D7"
+black = "#686868"
+red = "#F28779"
+green = "#BAE67E"
+yellow = "#FFD580"
+blue = "#73D0FF"
+magenta = "#D4BFFF"
+cyan = "#95E6CB"
+white = "#FFFFFF"
