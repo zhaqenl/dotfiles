@@ -20,33 +20,33 @@ size = 22.5
 # Shift+Return sends ESC+Enter (same as Option+Enter) to work in tmux
 bindings = [{ key = "Return", mods = "Shift", chars = "\u001b\r" }] 
 
-# colors (gruvbox dark) https://terminalcolors.com/themes/gruvbox/dark/
+# colors (catppuccin macchiato) https://gogh-co.github.io/Gogh/
 [colors]
-indexed_colors = [{ index = 16, color = "0x282828"}]
+indexed_colors = [{ index = 16, color = "0x24273A"}]
 
 # Primary colors
 [colors.primary]
-background = "#282828"
-foreground = "#ebdbb2"
+background = "#24273A"
+foreground = "#CAD3F5"
 
 # Normal colors
 [colors.normal]
-black = "#282828"
-red = "#cc241d"
-green = "#98971a"
-yellow = "#d79921"
-blue = "#458588"
-magenta = "#b16286"
-cyan = "#689d6a"
-white = "#a89984"
+black = "#494D64"
+red = "#ED8796"
+green = "#A6DA95"
+yellow = "#EED49F"
+blue = "#8AADF4"
+magenta = "#F5BDE6"
+cyan = "#8BD5CA"
+white = "#B8C0E0"
 
 # Bright colors
 [colors.bright]
-black = "#928374"
-red = "#fb4934"
-green = "#b8bb26"
-yellow = "#fabd2f"
-blue = "#83a598"
-magenta = "#d3869b"
-cyan = "#8ec07c"
-white = "#ebdbb2"
+black = "#5B6078"
+red = "#ED8796"
+green = "#A6DA95"
+yellow = "#EED49F"
+blue = "#8AADF4"
+magenta = "#F5BDE6"
+cyan = "#8BD5CA"
+white = "#A5ADCB"
