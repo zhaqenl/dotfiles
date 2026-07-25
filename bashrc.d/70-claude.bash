@@ -1,6 +1,6 @@
 # Claude CLI shortcuts and tools
-alias cl="claude --permission-mode auto"  # auto mode (no prompts, safety checks on)
-alias clr="claude --permission-mode auto --resume"  # resume + auto mode (no prompts, safety checks on)
+alias cl="claude"                                  # mode comes from settings.json defaultMode
+alias clr="claude --resume"
 alias clu="claude update"                          # update Claude Code
 alias cl-pulse-update='cd ~/claude-pulse && python claude_status.py --update; cd -'
 
