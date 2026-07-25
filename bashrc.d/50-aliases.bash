@@ -46,3 +46,21 @@ alias timesheet-mcp='cd /home/lenovo/google_workspace_mcp && uv run main.py --tr
 pinggy() {
     ssh -p 443 -R0:localhost:$1 free.pinggy.io
 }
+
+# ngrok the current Odoo project's port (host port mapped to container 8069)
+# Usage: ongrok        # read port from ./docker-compose.yml
+#        ongrok 9000   # explicit port
+ongrok() {
+    local port=$1 f
+    if [ -z "$port" ]; then
+        for f in docker-compose.yml docker-compose.yaml; do
+            [ -f "$f" ] && break
+        done
+        [ -f "$f" ] || { echo "ongrok: no docker-compose.yml here" >&2; return 1; }
+        # ponytail: grep the "host:8069" mapping instead of parsing YAML; pass a port explicitly if a compose file gets exotic
+        port=$(grep -oE '[0-9]+:8069' "$f" | head -1 | cut -d: -f1)
+        [ -n "$port" ] || { echo "ongrok: no port mapped to 8069 in $f" >&2; return 1; }
+    fi
+    echo "ngrok http $port"
+    ngrok http "$port"
+}
