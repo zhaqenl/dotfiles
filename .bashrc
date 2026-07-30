@@ -26,3 +26,7 @@ if [ -f '/home/lenovo/google-cloud-sdk/path.bash.inc' ]; then . '/home/lenovo/go
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/home/lenovo/google-cloud-sdk/completion.bash.inc' ]; then . '/home/lenovo/google-cloud-sdk/completion.bash.inc'; fi
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
