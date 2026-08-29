@@ -30,3 +30,9 @@ if [ -f '/home/lenovo/google-cloud-sdk/completion.bash.inc' ]; then . '/home/len
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+# Added by JetBrains Context CLI installer
+case ":$PATH:" in
+    *":/home/lenovo/.jbcontext/bin:"*) ;;
+    *) export PATH="$PATH:/home/lenovo/.jbcontext/bin" ;;
+esac
