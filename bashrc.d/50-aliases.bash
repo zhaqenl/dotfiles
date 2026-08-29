@@ -42,25 +42,35 @@ alias rgo="rg -S --glob '!*.po'"
 # Start Google Workspace MCP server for timesheet logging
 alias timesheet-mcp='cd /home/lenovo/google_workspace_mcp && uv run main.py --transport streamable-http --tools chat contacts calendar --tool-tier extended'
 
-# Expose local port via pinggy.io tunnel
-pinggy() {
-    ssh -p 443 -R0:localhost:$1 free.pinggy.io
+# Host port mapped to container 8069 in ./docker-compose.yml
+# ponytail: grep the "host:8069" mapping instead of parsing YAML; pass a port explicitly if a compose file gets exotic
+_odoo_port() {
+    local f
+    for f in docker-compose.yml docker-compose.yaml; do
+        [ -f "$f" ] && break
+    done
+    [ -f "$f" ] || { echo "no docker-compose.yml here" >&2; return 1; }
+    local port=$(grep -oE '[0-9]+:8069' "$f" | head -1 | cut -d: -f1)
+    [ -n "$port" ] || { echo "no port mapped to 8069 in $f" >&2; return 1; }
+    echo "$port"
 }
 
-# ngrok the current Odoo project's port (host port mapped to container 8069)
+# Expose local port via pinggy.io tunnel
+# Usage: pinggy        # read port from ./docker-compose.yml
+#        pinggy 9000   # explicit port
+pinggy() {
+    local port=${1:-$(_odoo_port)}
+    [ -n "$port" ] || return 1
+    echo "pinggy -> localhost:$port"
+    ssh -p 443 -R0:localhost:$port free.pinggy.io
+}
+
+# ngrok the current Odoo project's port
 # Usage: ongrok        # read port from ./docker-compose.yml
 #        ongrok 9000   # explicit port
 ongrok() {
-    local port=$1 f
-    if [ -z "$port" ]; then
-        for f in docker-compose.yml docker-compose.yaml; do
-            [ -f "$f" ] && break
-        done
-        [ -f "$f" ] || { echo "ongrok: no docker-compose.yml here" >&2; return 1; }
-        # ponytail: grep the "host:8069" mapping instead of parsing YAML; pass a port explicitly if a compose file gets exotic
-        port=$(grep -oE '[0-9]+:8069' "$f" | head -1 | cut -d: -f1)
-        [ -n "$port" ] || { echo "ongrok: no port mapped to 8069 in $f" >&2; return 1; }
-    fi
+    local port=${1:-$(_odoo_port)}
+    [ -n "$port" ] || return 1
     echo "ngrok http $port"
     ngrok http "$port"
 }
