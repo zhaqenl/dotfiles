@@ -36,3 +36,5 @@ case ":$PATH:" in
     *":/home/lenovo/.jbcontext/bin:"*) ;;
     *) export PATH="$PATH:/home/lenovo/.jbcontext/bin" ;;
 esac
+
+alias agilis='cd /opt/odoo17ent/custom_addons/agilisgroup17'
