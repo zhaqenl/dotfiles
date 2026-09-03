@@ -158,6 +158,12 @@ sudo systemctl start keyd
 ln -s $(pwd)/Autostart/alacritty.desktop ~/.config/autostart/alacritty.desktop
 ```
 
+**Autostart (PulseAudio Volume Control):**
+
+```bash
+ln -s $(pwd)/Autostart/pavucontrol.desktop ~/.config/autostart/pavucontrol.desktop
+```
+
 **Emacs daemon:**
 
 Uses the unit Emacs ships at `/usr/lib/systemd/user/emacs.service`; no unit file lives in this repo.
